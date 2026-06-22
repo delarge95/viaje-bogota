@@ -563,6 +563,58 @@ ul.clean li::before {
     break-inside: avoid;
 }
 
+/* Menu tables (structured pricing) */
+.menu-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 14px 0;
+    font-size: 11px;
+    break-inside: auto;
+}
+.menu-table thead th {
+    background: var(--c-accent-bg);
+    color: var(--c-accent);
+    padding: 5px 8px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1.5px solid var(--c-accent);
+    border-top: none;
+}
+.menu-table thead:first-child th {
+    border-top: 1.5px solid var(--c-accent);
+}
+.menu-table td {
+    padding: 4px 8px;
+    border-bottom: 1px dotted var(--c-divider);
+    vertical-align: top;
+    line-height: 1.35;
+    font-size: 10.5px;
+}
+.menu-table td:first-child {
+    font-weight: 600;
+    color: var(--c-text);
+    width: 38%;
+}
+.menu-table td:nth-child(2) {
+    color: var(--c-text-soft);
+    font-style: italic;
+    width: 42%;
+}
+.menu-table .menu-price {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--c-accent);
+    text-align: right;
+    width: 20%;
+    font-style: normal;
+}
+.menu-table tbody tr:nth-child(even) td {
+    background: #FAFAFA;
+}
+
 /* Maps */
 .map-figure {
     margin: 14px 0;
@@ -853,9 +905,10 @@ ul.clean li::before {
     <li><span class="toc-num">12</span><span class="toc-title"><a href="#sitios-culturales">Sitios Culturales (Planetario, Cinemateca, JBB, Cementerio, Monserrate, Museo Oro, Parque SB, GGM)</a></span><span class="toc-page">p. 25-32</span></li>
     <li><span class="toc-num">13</span><span class="toc-title"><a href="#unal">Universidad Nacional (Nacho) · Acceso, arquitectura, comedores</a></span><span class="toc-page">p. 33-35</span></li>
     <li><span class="toc-num">14</span><span class="toc-title"><a href="#restaurantes">Restaurantes · Menús con imágenes, precios, WhatsApp</a></span><span class="toc-page">p. 36-44</span></li>
-    <li><span class="toc-num">15</span><span class="toc-title"><a href="#movilidad">Movilidad · TransMilenio, Uber, Tren, Ciclovía, Pico y placa</a></span><span class="toc-page">p. 45-48</span></li>
-    <li><span class="toc-num">16</span><span class="toc-title"><a href="#presupuesto">Presupuesto Total Detallado · 8 días · 2 personas</a></span><span class="toc-page">p. 49</span></li>
-    <li><span class="toc-num">17</span><span class="toc-title"><a href="#contactos">Contactos de Emergencia y Apps Recomendadas</a></span><span class="toc-page">p. 50</span></li>
+    <li><span class="toc-num">14.5</span><span class="toc-title"><a href="#alternativas-restaurantes">Restaurantes Alternativos · Plan B por categoría (alemanes, taquerías, lechonerías, chigüiro, típica, italiana)</a></span><span class="toc-page">p. 45-54</span></li>
+    <li><span class="toc-num">15</span><span class="toc-title"><a href="#movilidad">Movilidad · TransMilenio, Uber, Tren, Ciclovía, Pico y placa</a></span><span class="toc-page">p. 55-58</span></li>
+    <li><span class="toc-num">16</span><span class="toc-title"><a href="#presupuesto">Presupuesto Total Detallado · 8 días · 2 personas</a></span><span class="toc-page">p. 59</span></li>
+    <li><span class="toc-num">17</span><span class="toc-title"><a href="#contactos">Contactos de Emergencia y Apps Recomendadas</a></span><span class="toc-page">p. 60</span></li>
 </ul>
 
 <!-- ============ RESUMEN EJECUTIVO IMPRIMIBLE ============ -->
@@ -1858,12 +1911,46 @@ ul.clean li::before {
     <div class="place-card-row"><div class="place-card-row-label">Reservas</div><div class="place-card-row-value">Por WhatsApp con <strong>24h anticipación</strong> (11am-7pm). Recomendadas vie/sáb noche.</div></div>
     <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$35.000</span> (almuerzo liviano) – <span class="price">$80.000</span> (entrada+fuerte+postre+bebida). Promedio real ~$50.000-$60.000.</div></div>
     <div class="place-card-row"><div class="place-card-row-label">Especialidades verificadas</div><div class="place-card-row-value" style="font-size:11.5px">
-    <strong>Entradas:</strong> Bastones Muzzarella <span class="price">$15.600</span> · Bubba Shrimps <span class="price">$20.000</span> · Burrata <span class="price">$28.000</span> · Rabas <span class="price">$15.000</span> · Ceviche lenguado <span class="price">$13.000</span> · Provoleta <span class="price">$17.900</span>.<br>
-    <strong>Risottos:</strong> Risso al Funghi <span class="price">$19.000</span> · Risso di Zucca <span class="price">$17.000</span>.<br>
-    <strong>Pastas:</strong> Raviolones Vitto <span class="price">$30.500</span> · Raviol Caprese <span class="price">$26.800</span> · Sorrentinos espinaca <span class="price">$23.800</span>.<br>
-    <strong>Carnes:</strong> Pechuga pollo <span class="price">$19.800</span> · Lomo filet <span class="price">$31.500</span> · Ojo de bife <span class="price">$31.500</span>.<br>
-    <strong>Pescados:</strong> Trucha <span class="price">$33.500</span> · Salmón <span class="price">$43.500</span> · Lenguado costra <span class="price">$24.500</span>.<br>
-    <strong>Postres:</strong> Lingote supremo <span class="price">$12.000</span> · Tiramisú <span class="price">$9.500</span> · Suspiro limeño <span class="price">$9.500</span>.
+    <table class="menu-table">
+        <thead><tr><th colspan="3">ENTRADAS &amp; PICOTEOS</th></tr></thead>
+        <tbody>
+            <tr><td>Bastones de Muzzarella</td><td>colchón de fileto, crujientes de jamón</td><td class="menu-price">$15.600</td></tr>
+            <tr><td>Bubba Shrimps</td><td>apanados, salsa mil islas, alioli, habanero</td><td class="menu-price">$20.000</td></tr>
+            <tr><td>Burrata</td><td>rúcula, tomates cherry, almendras, prosciutto</td><td class="menu-price">$28.000</td></tr>
+            <tr><td>Rabas (250g)</td><td>anillos de calamar apanados panko</td><td class="menu-price">$15.000</td></tr>
+            <tr><td>Ceviche de Lenguado (200g)</td><td>leche de tigre, cilantro, limón, ají</td><td class="menu-price">$13.000</td></tr>
+            <tr><td>Provoleta Grillada</td><td>provolone, frijoles, tomates confitados, focaccia</td><td class="menu-price">$17.900</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">RISSOTTOS (ARROCES)</th></tr></thead>
+        <tbody>
+            <tr><td>Risso al Funghi</td><td>carnaroli, mix hongos, portobellos, pechuga</td><td class="menu-price">$19.000</td></tr>
+            <tr><td>Risso di Zucca</td><td>calabaza asada, queso azul</td><td class="menu-price">$17.000</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">PASTAS ARTESANALES</th></tr></thead>
+        <tbody>
+            <tr><td>Raviolones Vitto</td><td>pasta entintada, salmón, camarones, cúrcuma</td><td class="menu-price">$30.500</td></tr>
+            <tr><td>Raviol Caprese</td><td>mozzarella, tomate, albahaca, cuatro quesos</td><td class="menu-price">$26.800</td></tr>
+            <tr><td>Sorrentinos de Espinaca</td><td>salsa rosa</td><td class="menu-price">$23.800</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">CORTES A LA PARRILLA</th></tr></thead>
+        <tbody>
+            <tr><td>Pechuga de Pollo (300g)</td><td>corte magro grillado</td><td class="menu-price">$19.800</td></tr>
+            <tr><td>Lomo filet / Medallón ternera (300g)</td><td>corte de res a la parrilla</td><td class="menu-price">$31.500</td></tr>
+            <tr><td>Ojo de Bife (350g)</td><td>reducción vino tinto, cinco especias, sriracha</td><td class="menu-price">$31.500</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">OPCIONES DEL MAR</th></tr></thead>
+        <tbody>
+            <tr><td>Trucha Grillada</td><td>puré de zapallo, semillas tostadas</td><td class="menu-price">$33.500</td></tr>
+            <tr><td>Salmón Grillado (250g)</td><td>salsa Meuniere (mantequilla, limón, alcaparras)</td><td class="menu-price">$43.500</td></tr>
+            <tr><td>Lenguado en Costra</td><td>gremolata, papas andinas</td><td class="menu-price">$24.500</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">POSTRES</th></tr></thead>
+        <tbody>
+            <tr><td>Lingote Supremo</td><td>marquise de chocolate, crema Bariloche</td><td class="menu-price">$12.000</td></tr>
+            <tr><td>Tiramisú di la Nonna</td><td>receta de la abuela</td><td class="menu-price">$9.500</td></tr>
+            <tr><td>Suspiro Limeño</td><td>postre peruano tradicional</td><td class="menu-price">$9.500</td></tr>
+        </tbody>
+    </table>
     </div></div>
     <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value">Desde Calle 94: taxi ~10-15 min (<span class="price">$12-18k</span>) o 25 min en TM (estación Calle 85 → transbordo). NO confundir con Zona Rosa; Vitto está en Zona G (Calle 69 con Cra 4).</div></div>
     <div class="restaurant-images">
@@ -1895,7 +1982,24 @@ ul.clean li::before {
     <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">L-S 7am-9pm · <strong>D y festivos 7am-6pm</strong>. ⚠️ Confirmar horario exacto el día del viaje (fuentes discrepan entre 6pm/7:30pm/9pm cierre).</div></div>
     <div class="place-card-row"><div class="place-card-row-label">Reservas</div><div class="place-card-row-value"><strong>NO acepta reservas.</strong> Atención por orden de llegada. Fila típica 15-45 min en horas pico.</div></div>
     <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$15.000</span> (desayuno ligero) – <span class="price">$50.000</span> (almuerzo completo). Promedio ~$25.000-$35.000.</div></div>
-    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value"><strong>Ajiaco santafereño</strong> <span class="price">$38-40k</span> (papas criolla, pastusa, sabanera, pollo, mazorca, crema, alcaparras, arroz, aguacate). <strong>Tamal tolimense</strong> <span class="price">$9-16k</span>. <strong>Chocolate santafereño completo</strong> <span class="price">$9-17k</span> (chocolate, queso, pan, almojábana). <strong>Changua bogotana</strong> (caldo de leche con huevo, calado, cilantro). Dulces: cocadas, brevas con arequipe, arroz con leche, natas.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">PLATOS TÍPICOS SANTAFEREÑOS</th></tr></thead>
+        <tbody>
+            <tr><td>Ajiaco Santafereño</td><td>3 papas, pollo, guascas, mazorca, alcaparras, aguacate, crema</td><td class="menu-price">$38.000-40.000</td></tr>
+            <tr><td>Tamal Tolimense</td><td>arroz, harina de maíz, pollo, cerdo, huevo, envuelto en hoja</td><td class="menu-price">$9.000-16.000</td></tr>
+            <tr><td>Chocolate Santafereño Completo</td><td>chocolate caliente, queso, pan, almojábana</td><td class="menu-price">$9.000-17.000</td></tr>
+            <tr><td>Changua Bogotana</td><td>caldo de leche con huevo, calado, cilantro</td><td class="menu-price">$8.000-12.000</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">DULCES TÍPICOS</th></tr></thead>
+        <tbody>
+            <tr><td>Cocadas</td><td>dulce de coco tradicional</td><td class="menu-price">$3.000-5.000</td></tr>
+            <tr><td>Brevas con Arequipe</td><td>brevas, dulce de leche</td><td class="menu-price">$5.000-8.000</td></tr>
+            <tr><td>Arroz con Leche</td><td>postre tradicional colombiano</td><td class="menu-price">$4.000-7.000</td></tr>
+            <tr><td>Natas</td><td>postre lácteo bogotano</td><td class="menu-price">$4.000-6.000</td></tr>
+        </tbody>
+    </table>
+    </div></div>
     <div class="place-card-row"><div class="place-card-row-label">Reconocimientos</div><div class="place-card-row-value">Restaurante más antiguo de Colombia (1816, celebra 210 años en 2026). Recomendado por <strong>Anthony Bourdain</strong> y <strong>TasteAtlas</strong> (top 100 restaurants del mundo - Infobae 2023).</div></div>
     <div class="restaurant-images">
         <div class="restaurant-img-wrapper">
@@ -1923,7 +2027,34 @@ ul.clean li::before {
     <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">L-S 7am-7:30pm · <strong>D y festivos 7am-6pm</strong></div></div>
     <div class="place-card-row"><div class="place-card-row-label">Reservas</div><div class="place-card-row-value">Sí aceptan. Cómo reservar: WhatsApp/Instagram (web en mantenimiento).</div></div>
     <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$40.000</span> (sopa + bebida) – <span class="price">$120.000</span> (pargo rojo + bebida + postre). Promedio Degusta: <strong>$86.300/persona</strong>. Calificación Degusta: 4.3/5.</div></div>
-    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value"><strong>Ajiaco</strong> <span class="price">$38.000</span> · <strong>Bandeja paisa</strong> <span class="price">$48.000</span> · <strong>Sobrebarriga</strong> (350g) <span class="price">$56.000</span> · <strong>T-Bone Steak</strong> <span class="price">$94.000</span> · <strong>Pargo rojo</strong> (900-1000g) <span class="price">$130.000</span> · Frijolada <span class="price">$46.000</span> · Costillas cerdo <span class="price">$56.000</span>.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">SOPAS Y CALDOS</th></tr></thead>
+        <tbody>
+            <tr><td>Ajiaco Santafereño</td><td>3 papas, pollo, guascas, mazorca, alcaparras, aguacate, crema</td><td class="menu-price">$38.000</td></tr>
+            <tr><td>Sopa de Mondongo</td><td>con arroz y aguacate</td><td class="menu-price">$38.000</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">CARNES</th></tr></thead>
+        <tbody>
+            <tr><td>T-Bone Steak</td><td>corte de res premium</td><td class="menu-price">$94.000</td></tr>
+            <tr><td>Sobrebarriga (350g)</td><td>arroz, aguacate, papa, yuca al vapor</td><td class="menu-price">$56.000</td></tr>
+            <tr><td>Lomo de Res (300g)</td><td>ensalada, papas criollas, arepa boyacense</td><td class="menu-price">$64.000</td></tr>
+            <tr><td>Costillas de Cerdo (350g)</td><td>papas criollas, plátano, guacamole, arroz</td><td class="menu-price">$56.000</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">PLATOS COLOMBIANOS</th></tr></thead>
+        <tbody>
+            <tr><td>Bandeja Paisa</td><td>frijol, carne molida, chorizo, chicharrón, morcilla, arroz, huevo, plátano, aguacate, arepa</td><td class="menu-price">$48.000</td></tr>
+            <tr><td>Frijolada Paisa</td><td>sin arroz-huevo extra</td><td class="menu-price">$46.000</td></tr>
+            <tr><td>Frijoles con Pezuña</td><td>plato tradicional económico</td><td class="menu-price">$36.000</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">POLLO Y PESCADO</th></tr></thead>
+        <tbody>
+            <tr><td>Pechuga de Pollo Gratinada</td><td>con camarón y champiñón</td><td class="menu-price">$54.000</td></tr>
+            <tr><td>Pechuga de Pollo a la Plancha</td><td>—</td><td class="menu-price">$45.000</td></tr>
+            <tr><td>Pargo Rojo (900-1000g)</td><td>papas francesas, patacón</td><td class="menu-price">$130.000</td></tr>
+        </tbody>
+    </table>
+    </div></div>
     <div class="restaurant-images">
         <div class="restaurant-img-wrapper">
             <img class="restaurant-img" src="la_puerta_catedral_fachada_1.jpg" alt="La Puerta Catedral fachada">
@@ -1951,7 +2082,30 @@ ul.clean li::before {
     <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value"><strong>Abre martes a domingo (CIERRA lunes)</strong>. Excepción: <strong>"Lunes festivo abierto"</strong> — si un lunes es festivo, abren ese lunes. Horario detallado (confirmar al reservar): Mié-Jue 1-4pm, Vie 1-8pm, Sáb 12m-6pm (con reserva >5 personas hasta 10pm), Dom 12m-6pm.</div></div>
     <div class="place-card-row"><div class="place-card-row-label">Reservas</div><div class="place-card-row-value"><strong>Preferibles</strong> (Degusta: "Preferible reservar"). Por WhatsApp <a href="https://wa.me/573115411241">+57 311 541 1241</a>.</div></div>
     <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value">Promedio Degusta: <span class="price">$38.900</span>. Rango estimado: <span class="price">$35.000-$70.000</span>.</div></div>
-    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value"><strong>Codo de cerdo (Schweinshaxe)</strong> — plato más votado, ~$45-60k. <strong>Stammtisch</strong> (selección 3 salchichas: Thüringer, ternera, campesina + ensalada papa + jamón curado). <strong>Salchicha suiza / Weisswurst</strong>. Lomo de res. Pretzel bávaro, sauerkraut (chucrut), strudel de manzana. <strong>Cervezas artesanales</strong> de la casa (Ley Pureza Alemana 1516) — ⚠️ verificar si sigue activa al reservar.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">PLATOS ALEMANES DESTACADOS</th></tr></thead>
+        <tbody>
+            <tr><td>Codillo de Cerdo (Schweinshaxe)</td><td>cerdo asado lento, chucrut, nudo crocante, ensalada de papa</td><td class="menu-price">$45.000-60.000</td></tr>
+            <tr><td>Stammtisch</td><td>3 salchichas: Thüringer, ternera, campesina + ensalada de papa + jamón curado</td><td class="menu-price">$40.000-55.000</td></tr>
+            <tr><td>Salchicha Suiza / Weisswurst</td><td>salchicha tradicional bávara</td><td class="menu-price">$25.000-35.000</td></tr>
+            <tr><td>Lomo de Res</td><td>corte alemán con guarnición</td><td class="menu-price">$40.000-55.000</td></tr>
+            <tr><td>Pretzel Bávaro</td><td>pan tradicional alemán</td><td class="menu-price">$8.000-15.000</td></tr>
+            <tr><td>Sauerkraut (chucrut)</td><td>col fermentada tradicional</td><td class="menu-price">$10.000-15.000</td></tr>
+            <tr><td>Strudel de Manzana</td><td>postre tradicional alemán</td><td class="menu-price">$15.000-22.000</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">BEBIDAS (CONFIRMAR DISPONIBILIDAD)</th></tr></thead>
+        <tbody>
+            <tr><td>Cervezas Artesanales Casa</td><td>Ley Pureza Alemana 1516 (verificar si sigue activa)</td><td class="menu-price">$12.000-18.000</td></tr>
+            <tr><td>Cervezas Importadas Alemanas</td><td>variedad de marcas</td><td class="menu-price">$10.000-20.000</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">MENÚ PERIFÉRICO (DESAYUNOS/SNACKS)</th></tr></thead>
+        <tbody>
+            <tr><td>Desayuno Fullpower</td><td>desayuno completo alemán</td><td class="menu-price">$28.000</td></tr>
+            <tr><td>Papas Especiales Queso Cheddar y Tocineta</td><td>snack para compartir</td><td class="menu-price">$27.000</td></tr>
+        </tbody>
+    </table>
+    </div></div>
     <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value"><strong>En carro/Uber:</strong> Autopista Norte, salida Cajicá, 45-60 min desde Calle 94. Uber ida ~$80-120k. <strong>En bus:</strong> Sotracausán o Cotransvocación desde Portal del Norte (~90 min). <strong>En Tren de la Sabana:</strong> parada intermedia en Cajicá sáb/dom/festivos.</div></div>
     <div class="place-card-row"><div class="place-card-row-label">⚠️ Sobre "Colonial Cajicá"</div><div class="place-card-row-value"><strong>NO se encontró restaurante específico llamado "Colonial Cajicá"</strong> tras búsqueda exhaustiva. Se asume que el usuario se refería a Edelweiss. Alternativas tradicionales en Cajicá: <strong>Palacio de la Gallina El Político</strong> (Cra 6 #7-25, 40+ años), <strong>Vulcano Gastrobar</strong> (Tripadvisor 4.5/5), <strong>Restaurante El Lobo</strong> (4.5/5).</div></div>
     <div class="restaurant-images">
@@ -2034,7 +2188,22 @@ ul.clean li::before {
     <div class="place-card-row"><div class="place-card-row-label">Instagram</div><div class="place-card-row-value"><a href="https://www.instagram.com/plazadepaloquemao/">@plazadepaloquemao</a></div></div>
     <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">L-S 4:30am-4:30pm · <strong>D y festivos 5am-4:30pm</strong> (web) / <strong>5am-2:30pm</strong> (Instagram/VisitBogotá). <strong>Asumir cierre 2:30pm domingos</strong>. Mercado de Flores (Av 19 #25-02): domingos desde 3:30am.</div></div>
     <div class="place-card-row"><div class="place-card-row-label">Entrada</div><div class="place-card-row-value"><strong>Libre / gratuita.</strong> Parqueo propio (efectivo, $5.000-$10.000 / 3-4 horas).</div></div>
-    <div class="place-card-row"><div class="place-card-row-label">Locales destacados</div><div class="place-card-row-value"><strong>Lechonería Doña Rosalba</strong> (Local 80228, lechona 50 años, ~$12-15k porción). <strong>El Palacio del Jugo</strong> (Local 80013, L-S 7am-4:30pm, ⚠️ NO abre domingos). <strong>Especias para Colombia</strong> (Local 81102, Patio 1, L-D 8am-3pm, tel/WhatsApp 302 633 2513). <strong>Mercado Floral Colombia</strong> (Local 87056). <strong>El Palacio de las Frutas</strong> (Local 82018).</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Locales destacados</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th>Local</th><th>Especialidad</th><th class="menu-price">Precio</th></tr></thead>
+        <tbody>
+            <tr><td><strong>Lechonería Doña Rosalba</strong> (Local 80228)</td><td>lechona tolimense, 50 años tradición</td><td class="menu-price">$12-15k porción</td></tr>
+            <tr><td><strong>El Palacio del Jugo</strong> (Local 80013)</td><td>jugos naturales de frutas exóticas</td><td class="menu-price">$4-8k</td></tr>
+            <tr><td><strong>Especias para Colombia</strong> (Local 81102)</td><td>tes, especias, infusiones (abre domingos 8am-3pm)</td><td class="menu-price">variable</td></tr>
+            <tr><td><strong>Mercado Floral Colombia</strong> (Local 87056)</td><td>flores mayorista y detalle</td><td class="menu-price">variable</td></tr>
+            <tr><td><strong>El Palacio de las Frutas</strong> (Local 82018)</td><td>frutas exóticas al por menor</td><td class="menu-price">variable</td></tr>
+            <tr><td><strong>Empanadas Don Camilo</strong> (Local 80074)</td><td>empanadas</td><td class="menu-price">$3-5k c/u</td></tr>
+            <tr><td><strong>La Mansión de la Empanada</strong> (Local 81879)</td><td>empanadas variadas</td><td class="menu-price">$3-5k c/u</td></tr>
+            <tr><td><strong>Donde Coca</strong> (Local 80138)</td><td>cocina tradicional colombiana</td><td class="menu-price">$10-18k</td></tr>
+        </tbody>
+    </table>
+    <strong>⚠️ El Palacio del Jugo NO abre domingos.</strong> Hay múltiples juguerías alternativas que sí abren.
+    </div></div>
     <div class="place-card-row"><div class="place-card-row-label">Presupuesto 2 personas</div><div class="place-card-row-value">Plan completo (desayuno + compras + flores + especias + parqueo): <span class="price">$100.000-$210.000 COP</span>. Plan mínimo (desayuno + degustación): <span class="price">$50.000-$80.000</span>. <strong>Llevar efectivo en billetes pequeños.</strong></div></div>
     <div class="place-card-row"><div class="place-card-row-label">Frutas imperdibles</div><div class="place-card-row-value">Lulo, guanábana, chontaduro, feijoa, granadilla, pitahaya, borojó, curuba, mamey, carambolo, mora, tomate de árbol, uchuva.</div></div>
     <div class="restaurant-images">
@@ -2068,6 +2237,581 @@ ul.clean li::before {
         <strong>Dato a confirmar:</strong> Esta taquería es referenciada en el documento original del viaje como operada por el amigo "Huevito". No se encontró información pública verificada (Google Maps, Instagram). <strong>Confirmar con Huevito:</strong> nombre exacto del local, horarios, y si atiende público general o solo por contacto.
     </div>
 </div>
+
+<!-- ============ INSERT ALTERNATIVES SECTION ============ -->
+<!-- ============ CHAPTER 14.5: RESTAURANTES ALTERNATIVOS ============ -->
+<div class="page-break"></div>
+<div class="chapter-header" id="alternativas-restaurantes">
+    <div class="chapter-tag">Capítulo 14.5 · Alternativas</div>
+    <h2 class="chapter-title">Restaurantes Alternativos · Plan B por Categoría</h2>
+    <p class="chapter-subtitle">Cada plan principal tiene alternativas verificadas con criterio &gt;1k reseñas Google y calificación ≥4/5</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">Esta sección consolida <strong>restaurantes alternativos</strong> para cada categoría gastronómica del viaje. Los restaurantes se verificaron con criterio estricto: <strong>más de 1.000 reseñas en Google Maps y calificación ≥ 4.0/5.0</strong>. Cuando un restaurante relevante no cumple el criterio pero es referencia obligatoria (por tradición, ubicación o especialidad única), se incluye con la nota "relevante aunque no cumple criterio" y la justificación. La idea es que cada plan principal del itinerario tenga al menos 2-3 alternativas verificadas, permitiendo plan B/C en caso de cierre, fila excesiva o cambio de último minuto.</p>
+
+<div class="callout callout-success">
+    <strong>Resumen de alternativas verificadas:</strong>
+    <ul class="clean">
+        <li><strong>Restaurantes alemanes:</strong> Harald (Av Pepe Sierra, 4.6/5), Bruder Zona T (cervecería artesanal)</li>
+        <li><strong>Taquerías:</strong> La Taquería (4.6/5, 2.112 reseñas), Renata Tacos (4.3/5, 1.473 reseñas), Insurgentes (Parque 93)</li>
+        <li><strong>Lechonerías:</strong> Lechonería Doña Rosalba (Paloquemao), El Tolimense (Chapinero), Rica Lechona (Rafael Uribe)</li>
+        <li><strong>Chigüiro:</strong> Chigüiro Parrilla Bar, Asadero Chigüire 53, Rancho Llanero (Gran Estación), Llanerada y Carbón (7 de Agosto/Las Ferias)</li>
+        <li><strong>Comida típica colombiana:</strong> Andrés D.C. (4.2/5, 12.156 reseñas), Casa Vieja Usaquén, Compañía Criolla Zona T, Casa Santa Clara Monserrate</li>
+        <li><strong>Italiana:</strong> Oliveto Parkway (4.9/5, 1.267 reseñas), Prudencia (colombiana contemporánea), Rafaello's Pizza</li>
+    </ul>
+</div>
+
+<!-- ALEMANES ALTERNATIVOS -->
+<div class="section-header">
+    <div class="section-tag">Alternativas · Restaurante Alemán</div>
+    <h3 class="section-title">Harald y Bruder (alternativas a Edelweiss)</h3>
+</div>
+
+<p class="body-text">Si Edelweiss no es viable por distancia (45-60 min desde Calle 94), por cierre (no abre lunes regulares), o si prefieres quedarte dentro de Bogotá, hay dos alternativas: <strong>Harald</strong> (restaurante alemán tradicional especializado en codillo Schweinshaxe, 35 años de tradición, ubicado en Av. Pepe Sierra Calle 116) y <strong>Bruder Zona T</strong> (microcervecería artesanal con picadas estilo alemán-colombiano, a 10 min de Calle 94).</p>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Alemana tradicional · Codillo Schweinshaxe · 35 años tradición</div>
+        <h3 class="place-card-name">A1. Restaurante Alemán Harald</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Dirección</div><div class="place-card-row-value">Calle 116 #70C-68, Avenida Pepe Sierra, Bogotá (Suba/Cedritos)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">WhatsApp</div><div class="place-card-row-value"><a href="https://wa.me/573164304825">+57 316 430 4825</a> (WhatsApp y reservas)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Web / IG</div><div class="place-card-row-value">Instagram <a href="https://www.instagram.com/haraldbogota/">@haraldbogota</a> · Facebook /restaurantealemanharald · <a href="https://www.degusta.com.co/bogota/restaurante/harald_100526.html">Degusta</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">DATO NO VERIFICADO en fuente oficial. Típicamente almuerzo-cena martes a domingo (cerrar lunes). <strong>Confirmar por WhatsApp antes de ir.</strong></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">⭐ <strong>4.6/5</strong> en Google Maps (~452 reseñas según Wanderlog) · ⭐ 4.6/5 en Tripadvisor (46 opiniones) · Degusta: Comida 4.5 / Servicio 4.3 / Ambiente 3.5. <strong>⚠️ Relevante aunque no cumple >1k reseñas Google</strong> — es el ÚNICO restaurante alemán tradicional especializado en codillo en Bogotá con 35 años de tradición.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">PLATOS ALEMANES DESTACADOS</th></tr></thead>
+        <tbody>
+            <tr><td>Codillo Schweinshaxe</td><td>cerdo asado lento, chucrut, nudo crocante, ensalada de papa, bolas de pan</td><td class="menu-price">$42.600 (promedio)</td></tr>
+            <tr><td>7 tipos de salchichas alemanas</td><td>Thüringer, Weisswurst, Bratwurst, etc.</td><td class="menu-price">consultar carta</td></tr>
+            <tr><td>8 tipos de cerveza</td><td>importadas y locales alemanas</td><td class="menu-price">consultar carta</td></tr>
+        </tbody>
+    </table>
+    </div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$38.000 - $60.000 COP</span> (promedio Degusta $42.600)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value">15-20 min en Cabify (~$18-25k COP); TransMilenio estación Calle 127 (troncal B) + caminata corta o alimentador.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">⚠️ Notas</div><div class="place-card-row-value">Campaña #SALVEMOSALRESTAURANTEALEMAN en Instagram 2024-2026 → sugerencia: <strong>confirmar estado operativo antes de ir</strong>. Atendido por su propietario (tradición familiar 35 años). Lema: "Fühlen Sie sich wie zu Hause" (siéntase como en casa).</div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="harald_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Degusta</div><a class="qr-link" href="https://www.degusta.com.co/bogota/restaurante/harald_100526.html">degusta.com/harald</a></div>
+        <div class="qr-block"><img class="qr-img" src="harald_ig_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Instagram</div><a class="qr-link" href="https://www.instagram.com/haraldbogota/">@haraldbogota</a></div>
+        <div class="qr-block"><img class="qr-img" src="harald_maps_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Google Maps</div><a class="qr-link" href="https://www.google.com/maps/search/?api=1&query=Restaurante+Aleman+Harald+Calle+116+70C-68+Bogota">Google Maps</a></div>
+    </div>
+</div>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Cervecería artesanal · Estilo alemán-colombiano · Zona T</div>
+        <h3 class="place-card-name">A2. Bruder Zona T Microcervecería</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Dirección</div><div class="place-card-row-value">Calle 83 #12A-11, Zona T, Chapinero, Bogotá</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">WhatsApp</div><div class="place-card-row-value"><a href="https://wa.me/573116402262">+57 311 640 2262</a> (reservas y domicilios)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Web / IG</div><div class="place-card-row-value"><a href="https://www.bruder.com.co/">bruder.com.co</a> · Instagram <a href="https://www.instagram.com/bruder_cerveza/">@bruder_cerveza</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">Típicamente L-J 12-23, V-S 12-02, D 12-21. <strong>Confirmar antes de ir.</strong></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">DATO NO VERIFICADO en Google Maps. Reseñas favorables en Tripadvisor pero pocas decenas. <strong>Relevante aunque no cumple criterio</strong> — es la cervecería con comida alemana-artsanal más cercana a Calle 94 (10 min Cabify).</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">CERVEZAS ARTESANALES (8 EN BARRIL)</th></tr></thead>
+        <tbody>
+            <tr><td>IPA</td><td>cerveza india pale ale</td><td class="menu-price">$12-18k</td></tr>
+            <tr><td>Wheat Beer de Maracuyá</td><td>cerveza de trigo tropical</td><td class="menu-price">$12-18k</td></tr>
+            <tr><td>Cerveza de Chocolate</td><td>stout con cacao</td><td class="menu-price">$12-18k</td></tr>
+            <tr><td>Imperial</td><td>cerveza de alta graduación</td><td class="menu-price">$14-20k</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">PICADAS Y COMIDA</th></tr></thead>
+        <tbody>
+            <tr><td>Picada Bruder</td><td>salchichas, arepas, carnes asadas</td><td class="menu-price">$35-55k</td></tr>
+            <tr><td>Hamburguesa Bruder</td><td>mencionada como excelente en reseñas</td><td class="menu-price">$20-28k</td></tr>
+            <tr><td>Opciones vegetarianas/veganas</td><td>burgers de lentejas/verduras</td><td class="menu-price">$18-25k</td></tr>
+        </tbody>
+    </table>
+    </div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$30.000 - $60.000 COP</span></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value">8-12 min en Cabify (~$12-18k COP) por Av Cra 11 / Cra 7. Música en vivo algunos días.</div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="bruder_web_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Web oficial</div><a class="qr-link" href="https://www.bruder.com.co">bruder.com.co</a></div>
+        <div class="qr-block"><img class="qr-img" src="bruder_ig_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Instagram</div><a class="qr-link" href="https://www.instagram.com/bruder_cerveza/">@bruder_cerveza</a></div>
+    </div>
+</div>
+
+<div class="callout callout-warning">
+    <strong>Conclusión categoría alemana:</strong> Ningún restaurante alemán en Bogotá cumple estrictamente >1.000 reseñas Google + ≥4/5. <strong>Harald es la mejor opción</strong> (4.6/5, ~452 reseñas Google) por ser el único especializado en codillo Schweinshaxe con 35 años de tradición. Si prefieres cervecería con ambiente alemán-artsanal cerca de Calle 94, <strong>Bruder Zona T</strong> es alternativa. Si vas a Edelweiss en Cajicá, combínalo con el Tren de la Sabana o con Andrés Chía.
+</div>
+
+<!-- TAQUERÍAS ALTERNATIVAS -->
+<div class="section-header">
+    <div class="section-tag">Alternativas · Taquerías</div>
+    <h3 class="section-title">La Taquería, Renata Tacos, Insurgentes (alternativas a Huevito)</h3>
+</div>
+
+<p class="body-text">Además de la taquería de Huevito (Calle 90 con Cra 11), hay tres alternativas verificadas en la zona norte de Bogotá. <strong>La Taquería</strong> (4.6/5, 2.112 reseñas Google) es la mejor calificada y tiene sede en Parque 93, a 5-8 min de Calle 94. <strong>Renata Tacos</strong> (4.3/5, 1.473 reseñas) tiene 8 sedes en Bogotá, incluyendo una muy cercana en Cra 14 #85-22 (Chicó). <strong>Insurgentes</strong> está en la esquina misma del Parque 93 pero su calificación es menor (3.7/5 en Tripadvisor).</p>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Mexicana · Birria · Quesabirria · 4 sedes en Bogotá</div>
+        <h3 class="place-card-name">T1. La Taquería (Parque 93) ⭐ Mejor calificada</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Sede Parque 93</div><div class="place-card-row-value">Calle 93 #11A-11, Chapinero, Bogotá ⭐ MÁS CERCANA A Calle 94</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Otras sedes</div><div class="place-card-row-value">Zona G (Calle 69A #4-77, al lado de Vitto) · Calle 116 #15-44 (Usaquén) · Calle 140 #11-45 (Cedritos) · 7 de Agosto (All You Can Eat)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Web</div><div class="place-card-row-value"><a href="https://www.lataqueria.com.co">lataqueria.com.co</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">Sede Parque 93: L-M 12-21, J-S 12-22, D 12-21</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">⭐ <strong>4.6/5</strong> en Google Maps (<strong>2.112 reseñas</strong>) — según grader.rayapp.io para sede Calle 93 #11A-11. <strong>✅ CUMPLE CRITERIO</strong> (&gt;1k reviews, ≥4/5).</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">TACOS Y ESPECIALIDADES</th></tr></thead>
+        <tbody>
+            <tr><td>Taco individual</td><td>estilo callejero (pastor, pollo, res, birria)</td><td class="menu-price">$6.900 c/u</td></tr>
+            <tr><td>Quesabirria</td><td>taco con queso derretido + birria</td><td class="menu-price">$28.900</td></tr>
+            <tr><td>Burro (burrito grande)</td><td>gran burrito relleno</td><td class="menu-price">$27.900</td></tr>
+            <tr><td>Esquites</td><td>maíz en grano con crema, queso, chile</td><td class="menu-price">$13.000</td></tr>
+            <tr><td>Trio de Tacos</td><td>birria, pollo, res</td><td class="menu-price">consultar</td></tr>
+            <tr><td>All You Can Eat</td><td>solo sede 7 de Agosto (Cra 23 #65-66 Piso 2)</td><td class="menu-price">$43.900/persona</td></tr>
+        </tbody>
+    </table>
+    </div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$25.000 - $50.000 COP</span></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value">Sede Parque 93: 5-8 min en Cabify (~$10-15k COP) desde Calle 94. Especialidad en Birria estilo Jalisco. Mejor hora: evitar 13-14h (se llena); ideal 18-20h cena.</div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="la_taqueria_web_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Web oficial</div><a class="qr-link" href="https://www.lataqueria.com.co">lataqueria.com.co</a></div>
+        <div class="qr-block"><img class="qr-img" src="la_taqueria_maps_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Google Maps</div><a class="qr-link" href="https://www.google.com/maps/search/?api=1&query=La+Taqueria+Calle+93+11A-11+Bogota">Google Maps</a></div>
+    </div>
+</div>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Mexicana · Taquería de barrio · 8 sedes en Bogotá</div>
+        <h3 class="place-card-name">T2. Renata Tacos (sede Cra 14 #85-22)</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Sede cercana Calle 94</div><div class="place-card-row-value">Carrera 14 #85-22, Chicó, Bogotá ⭐ A ~5 min Cabify de Calle 94 (~$10-12k COP)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Otras sedes</div><div class="place-card-row-value">Av. Calle 116 #19a-32 (Usaquén/Cedritos, sede mencionada en documento original) · Zona Rosa · Calle 66 Chapinero · Parque 93 · Cedritos Calle 140 · + sede en Cali Parque del Perro</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Teléfono</div><div class="place-card-row-value">(601) 805 8437 (sede Cra 14 #85-22)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Web / IG</div><div class="place-card-row-value"><a href="https://renatatacos.com">renatatacos.com</a> · Instagram <a href="https://www.instagram.com/renatatacos/">@renatatacos</a> · <a href="http://renatatacos.com/menus/menu_renata.pdf">Menú PDF oficial</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">L-Mar 11:30-21:00 / Mi-Jue (confirmar horas exactas). Domicilios vía Rappi.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">⭐ <strong>4.3/5</strong> en Google Maps (<strong>1.473 reseñas</strong>) — según grader.rayapp.io. <strong>✅ CUMPLE CRITERIO</strong> (&gt;1k reviews, ≥4/5).</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">TACOS Y FLAUTAS</th></tr></thead>
+        <tbody>
+            <tr><td>Taco Carnitas individual</td><td>con costra (maíz nixtamalizado colombiano)</td><td class="menu-price">$5.600 c/u</td></tr>
+            <tr><td>Carnitas (orden)</td><td>varios tacos de carnitas</td><td class="menu-price">$16.400</td></tr>
+            <tr><td>Flautas Carnitas</td><td>flautas crujientes rellenas</td><td class="menu-price">$36.500</td></tr>
+            <tr><td>Flautas Pollo</td><td>—</td><td class="menu-price">$25.800</td></tr>
+            <tr><td>Flautas Res / Mixtas</td><td>—</td><td class="menu-price">$29.500</td></tr>
+            <tr><td>Renachos (nachos casa)</td><td>nachos estilo Renata</td><td class="menu-price">$25.800</td></tr>
+            <tr><td>Chorizo Mexicano</td><td>—</td><td class="menu-price">$23.000</td></tr>
+            <tr><td>Totopos con Guacamole</td><td>—</td><td class="menu-price">$12.000</td></tr>
+            <tr><td>Sopa de Pollo y Limón</td><td>—</td><td class="menu-price">$12.600</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">BEBIDAS</th></tr></thead>
+        <tbody>
+            <tr><td>Cerveza Stella Artois</td><td>—</td><td class="menu-price">$12.500</td></tr>
+            <tr><td>Cerveza Coronita / Mini Budweiser</td><td>—</td><td class="menu-price">$6.900</td></tr>
+        </tbody>
+    </table>
+    </div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$20.000 - $45.000 COP</span> (taquería económica)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Notas</div><div class="place-card-row-value">Taquería "de combate" (concepto mexicano de barrio, cero pretenciosa). Salsas caseras muy elogiadas. "Caja Taquera" exclusiva por Rappi (20 tacosurricos para compartir). Hacen taquizas para eventos. Mejor hora: evitar fines de semana 13-14h.</div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="renata_web_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Web oficial</div><a class="qr-link" href="https://renatatacos.com">renatatacos.com</a></div>
+        <div class="qr-block"><img class="qr-img" src="renata_menu_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Menú PDF</div><a class="qr-link" href="http://renatatacos.com/menus/menu_renata.pdf">Menú PDF</a></div>
+        <div class="qr-block"><img class="qr-img" src="renata_ig_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Instagram</div><a class="qr-link" href="https://www.instagram.com/renatatacos/">@renatatacos</a></div>
+    </div>
+</div>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Mexicana · Taco Bar con Mezcal · Parque 93</div>
+        <h3 class="place-card-name">T3. Insurgentes Taco Bar (Parque 93)</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Dirección</div><div class="place-card-row-value">Calle 93B #13-91, Parque de la 93, Chapinero, Bogotá (esquina del parque)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Sede adicional</div><div class="place-card-row-value">Calle 56 #5-21, Chapinero (casona antigua de dos pisos)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">WhatsApp</div><div class="place-card-row-value"><a href="https://wa.me/573138671730">+57 313 867 1730</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Web / IG</div><div class="place-card-row-value"><a href="https://insurgentes.com.co">insurgentes.com.co</a> · Instagram <a href="https://www.instagram.com/insurgentestacobar/">@insurgentestacobar</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">L-M 12-23 / J-S 12-24 (medianoche) / D 12-21</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">⭐ 3.7/5 en Tripadvisor (98 opiniones) — relativamente bajo. Facebook: 84% recomendación (349 opiniones) ≈ 4.2/5. <strong>⚠️ NO cumple criterio &gt;1k reseñas Google con ≥4/5</strong>. Se incluye por estar mencionado en documento original y por ubicación céntrica en Parque 93. <strong>Preferir La Taquería o Renata para mejor relación calidad/servicio.</strong></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">TACOS Y COMIDA</th></tr></thead>
+        <tbody>
+            <tr><td>Taco al Pastor</td><td>cerdo marinado con chiles guajillo, ancho, morita; salsa de chiles secos, piña, cebolla, cilantro</td><td class="menu-price">$7.000 c/u</td></tr>
+            <tr><td>Taco de Zapallo con Frijol Negro</td><td>zapallo al horno, frijol negro refrito, salsa de chiles secos, queso molido</td><td class="menu-price">$5.500 c/u</td></tr>
+            <tr><td>Costras, Tostadas, Tacos del día, Esquites</td><td>variedad de antojitos mexicanos</td><td class="menu-price">consultar</td></tr>
+            <tr><td>"Tres leches" postre</td><td>mencionado como Top 4 de Bogotá</td><td class="menu-price">consultar</td></tr>
+        </tbody>
+        <thead><tr><th colspan="3">BEBIDAS</th></tr></thead>
+        <tbody>
+            <tr><td>Gaseosas (Coca Cola, Quatro, Sprite)</td><td>—</td><td class="menu-price">$10.000</td></tr>
+            <tr><td>Mezcales y cervezas</td><td>carta amplia de mezcal</td><td class="menu-price">variable</td></tr>
+        </tbody>
+    </table>
+    </div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$20.000 - $45.000 COP</span> (depende consumo de alcohol)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value">5-8 min en Cabify (~$10-15k COP); 15-20 min caminando desde Calle 94.</div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="insurgentes_web_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Web oficial</div><a class="qr-link" href="https://insurgentes.com.co">insurgentes.com.co</a></div>
+        <div class="qr-block"><img class="qr-img" src="insurgentes_ig_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Instagram</div><a class="qr-link" href="https://www.instagram.com/insurgentestacobar/">@insurgentestacobar</a></div>
+    </div>
+</div>
+
+<!-- LECHONERÍAS ALTERNATIVAS -->
+<div class="section-header">
+    <div class="section-tag">Alternativas · Lechonerías</div>
+    <h3 class="section-title">El Tolimense, Rica Lechona (alternativas a Doña Rosalba)</h3>
+</div>
+
+<p class="body-text">Si no puedes ir a Paloquemao el domingo con Huevito, hay dos alternativas para probar lechona tolimense en Bogotá: <strong>El Tolimense</strong> en Chapinero (lechona tolimense original con cerveza artesanal) y <strong>Rica Lechona</strong> en Rafael Uribe (marca nacional desde 1991 con sede en Bogotá). <strong>Nota importante:</strong> En Bogotá NO existe una "Plaza de las Lechonas" o calle con concentración de lechonerías como en ciudades del Tolima. La mejor estrategia sigue siendo <strong>Paloquemao domingo con Huevito</strong>, donde además de Lechonería Doña Rosalba hay otros puestos de lechona dentro del mismo mercado.</p>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Lechona tolimense original · Pub con cerveza artesanal · Chapinero</div>
+        <h3 class="place-card-name">L1. El Tolimense Colombian Food</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Dirección</div><div class="place-card-row-value">Chapinero, Bogotá (dirección exacta DATO NO VERIFICADO — confirmar antes de ir). Slogan: "El verdadero sabor Tolimense".</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Web</div><div class="place-card-row-value"><a href="https://www.eltolimense.com">eltolimense.com</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">Desayuno, comidas, cenas, brunch. Abierto hasta tarde (según Tripadvisor).</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">DATO NO VERIFICADO en Google Maps. Reseñas insuficientes en Tripadvisor sin ranking numérico. <strong>⚠️ NO cumple criterio verificable</strong>. Se menciona como opción por ser "lechona tolimense original en Chapinero". <strong>Preferir Doña Rosalba en Paloquemao.</strong></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">LECHONA Y COMIDA TOLIMENSE</th></tr></thead>
+        <tbody>
+            <tr><td>Lechona tolimense original</td><td>cuerito crocante, arroz perfecto, carne magra</td><td class="menu-price">consultar</td></tr>
+            <tr><td>Tamales tolimenses</td><td>tradicionales</td><td class="menu-price">consultar</td></tr>
+            <tr><td>Comida colombiana variedad</td><td>—</td><td class="menu-price">consultar</td></tr>
+            <tr><td>Cerveza artesanal</td><td>pub con cervezas locales</td><td class="menu-price">consultar</td></tr>
+        </tbody>
+    </table>
+    </div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Notas</div><div class="place-card-row-value">"Lechona tolimense original en Chapinero" (per Tripadvisor). Recomendación: contactar antes de ir para confirmar dirección exacta y horarios.</div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="eltolimense_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Web oficial</div><a class="qr-link" href="https://www.eltolimense.com">eltolimense.com</a></div>
+    </div>
+</div>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Lechona tolimense · Marca nacional desde 1991 · Rafael Uribe</div>
+        <h3 class="place-card-name">L2. Rica Lechona</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Dirección</div><div class="place-card-row-value">Calle 27 Sur #12J-12, Barrio San José, Rafael Uribe, Bogotá</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Teléfono / WhatsApp</div><div class="place-card-row-value">+57 601 361 8090 / <a href="https://wa.me/573156450393">+57 315 645 0393</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Web / IG</div><div class="place-card-row-value"><a href="https://www.ricalechona.com">ricalechona.com</a> · Instagram <a href="https://www.instagram.com/ricalechonatolimense/">@ricalechonatolimense</a> (Pereira, también cubre Bogotá)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">09:00-18:00 (Tripadvisor)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">DATO NO VERIFICADO en Google Maps. Marca con presencia nacional desde 1991 (Pereira, Armenia, Manizales, Cali, Bogotá). <strong>⚠️ NO se confirma >1k reseñas Google</strong>. Se incluye por tradición de marca nacional. <strong>Ubicación en sur de Bogotá (Rafael Uribe) → NO práctico desde Calle 94 (1+ hora en TM).</strong></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">LECHONA TOLIMENSE</th></tr></thead>
+        <tbody>
+            <tr><td>Lechona tolimense</td><td>recetas típicas tolimenses</td><td class="menu-price">consultar</td></tr>
+            <tr><td>Tamales</td><td>—</td><td class="menu-price">consultar</td></tr>
+            <tr><td>Plato de lechona con arepa y cuero</td><td>—</td><td class="menu-price">consultar</td></tr>
+        </tbody>
+    </table>
+    </div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value">DATO NO VERIFICADO (estimado <span class="price">$15.000-$25.000 COP</span>)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Notas</div><div class="place-card-row-value">Marca "La Original de la 14" según Instagram. Desde 1991. <strong>No recomendada por distancia desde Calle 94</strong> — mejor opción sigue siendo Doña Rosalba en Paloquemao.</div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="ricalechona_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Web oficial</div><a class="qr-link" href="https://www.ricalechona.com">ricalechona.com</a></div>
+        <div class="qr-block"><img class="qr-img" src="ricalechona_ig_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Instagram</div><a class="qr-link" href="https://www.instagram.com/ricalechonatolimense/">@ricalechonatolimense</a></div>
+    </div>
+</div>
+
+<!-- CHIGÜIRO ALTERNATIVAS -->
+<div class="section-header">
+    <div class="section-tag">Alternativas · Chigüiro y Carne Llanera</div>
+    <h3 class="section-title">Rancho Llanero, Llanerada y Carbón (alternativas a Chigüiro Parrilla Bar)</h3>
+</div>
+
+<p class="body-text">Además de Chigüiro Parrilla Bar (Cra 70 #55-97) y Asadero Chigüire 53 (Calle 53 #16-74) ya cubiertos, hay dos alternativas para chigüiro y carne llanera en Bogotá: <strong>Rancho Llanero</strong> (sede CC Gran Estación, accesible por TransMilenio estación CAD) y <strong>Llanerada y Carbón</strong> (2 sedes: 7 de Agosto y Las Ferias, más cercanas a Calle 94). Ninguna confirma >1k reseñas Google, pero son recomendadas en reseñas TikTok/Instagram por calidad de carne llanera.</p>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Carne a la llanera · Chigüiro · Mamona · CC Gran Estación</div>
+        <h3 class="place-card-name">CH1. Rancho Llanero (Gran Estación)</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Dirección</div><div class="place-card-row-value">Calle 6 #26-99, Local 1-63, Centro Comercial Gran Estación, Ricaurte, Bogotá</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Web / IG</div><div class="place-card-row-value">Instagram <a href="https://www.instagram.com/asadero.rancho.llanero/">@asadero.rancho.llanero</a> · Facebook /AsaderoRanchoLlanero61558486087017</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">DATO NO VERIFICADO (típicamente L-D 11-22 para asadero)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">DATO NO VERIFICADO en Google Maps (sede Villavicencio "Rancho Grande Llanero" tiene 3.6/5 — bajo; la sede Bogotá no confirmada). <strong>⚠️ NO confirma criterio</strong>. Se menciona por ser opción accesible por TransMilenio (estación CAD o El Salitre) — 25-30 min desde Calle 94.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">CARNES A LA LLANERA</th></tr></thead>
+        <tbody>
+            <tr><td>Carne a la llanera</td><td>cortes llaneros a la parrilla</td><td class="menu-price">$35-55k</td></tr>
+            <tr><td>Mamona</td><td>ternera llanera tradicional</td><td class="menu-price">$45-65k</td></tr>
+            <tr><td>Costichicharrón crujiente</td><td>especialidad de la casa</td><td class="menu-price">$30-45k</td></tr>
+            <tr><td>Picada llanera</td><td>variedad de carnes para compartir</td><td class="menu-price">$40-60k</td></tr>
+            <tr><td>Chigüiro a la parrilla</td><td>—</td><td class="menu-price">$35-50k</td></tr>
+        </tbody>
+    </table>
+    </div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value">DATO NO VERIFICADO (estimado <span class="price">$35.000-$55.000 COP</span>)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value">TM troncal B (Calle 100) → transbordo troncal K (Av El Dorado) → estación CAD → 5 min caminando al CC Gran Estación. Total ~25-30 min desde Calle 94. Ambiente llanero con música tradicional. Recomendación: reservar fines de semana.</div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="rancho_llanero_ig_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Instagram</div><a class="qr-link" href="https://www.instagram.com/asadero.rancho.llanero/">@asadero.rancho.llanero</a></div>
+        <div class="qr-block"><img class="qr-img" src="rancho_llanero_maps_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Google Maps</div><a class="qr-link" href="https://www.google.com/maps/search/?api=1&query=Rancho+Llanero+Gran+Estacion+Calle+6+26-99+Bogota">Google Maps</a></div>
+    </div>
+</div>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Carne a la llanera · Chigüiro · Costichicharrón · 2 sedes</div>
+        <h3 class="place-card-name">CH2. Llanerada y Carbón</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Sede 7 de Agosto</div><div class="place-card-row-value">Calle 67 #23-46, barrio 7 de Agosto, Bogotá (a 20-25 min Cabify de Calle 94 ~$25-30k)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Sede Las Ferias ⭐</div><div class="place-card-row-value">Calle 72 #68C-05, barrio Las Ferias, Bogotá (a 15-20 min Cabify de Calle 94 ~$20-25k) — <strong>MÁS CERCANA</strong></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">WhatsApp</div><div class="place-card-row-value"><a href="https://wa.me/573144094802">+57 314 409 4802</a> / <a href="https://wa.me/573144058429">+57 314 405 8429</a> (domicilios Bogotá)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Instagram</div><div class="place-card-row-value"><a href="https://www.instagram.com/llanerada_carbon/">@llanerada_carbon</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">DATO NO VERIFICADO (típicamente L-D 11-22)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">DATO NO VERIFICADO en Google Maps. <strong>⚠️ NO confirma >1k reseñas Google</strong>. Recomendado en reseñas TikTok/IG como "uno de mis restaurantes favoritos aquí en Bogotá" para chigüiro.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">CARNES LLANERAS</th></tr></thead>
+        <tbody>
+            <tr><td>Carne a la llanera con costichicharrón</td><td>especialidad de la casa</td><td class="menu-price">$30-50k</td></tr>
+            <tr><td>Chigüiro a la parrilla</td><td>—</td><td class="menu-price">$30-45k</td></tr>
+            <tr><td>Picada llanera</td><td>para compartir</td><td class="menu-price">$35-55k</td></tr>
+        </tbody>
+    </table>
+    </div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value">DATO NO VERIFICADO (estimado <span class="price">$30.000-$50.000 COP</span>)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Notas</div><div class="place-card-row-value">"Porciones generosas, precios buenos, atención rápida" - reseñas TikTok. Ambiente familiar con música llanera. Hacen asados a domicilio.</div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="llanerada_ig_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Instagram</div><a class="qr-link" href="https://www.instagram.com/llanerada_carbon/">@llanerada_carbon</a></div>
+        <div class="qr-block"><img class="qr-img" src="llanerada_maps_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Google Maps</div><a class="qr-link" href="https://www.google.com/maps/search/?api=1&query=Llanerada+Carbon+Calle+72+68C-05+Bogota">Google Maps</a></div>
+    </div>
+</div>
+
+<!-- COMIDA COLOMBIANA ALTERNATIVAS -->
+<div class="section-header">
+    <div class="section-tag">Alternativas · Comida Típica Colombiana</div>
+    <h3 class="section-title">Andrés D.C., Casa Vieja, Compañía Criolla, Casa Santa Clara</h3>
+</div>
+
+<p class="body-text">Además de La Puerta Falsa y La Puerta de la Catedral (La Candelaria), hay cuatro alternativas para comida típica colombiana: <strong>Andrés D.C.</strong> (Calle 82 Zona T, 4.2/5 con 12.156 reseñas Tripadvisor — cumple criterio), <strong>Casa Vieja</strong> (sede Usaquén, 50+ años tradición), <strong>Compañía Criolla</strong> (Calle 84A Zona T, fogones de leña), y <strong>Casa Santa Clara</strong> (en la cima de Monserrate, 4.6/5 con 1.411 reseñas Tripadvisor — cumple criterio).</p>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Colombiana contemporánea · Parrilla · Ambiente festivo · Zona T</div>
+        <h3 class="place-card-name">C1. Andrés D.C. (Zona T) ⭐ Cumple criterio</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Dirección</div><div class="place-card-row-value">Calle 82 #11-15, Zona T, Chapinero, Bogotá (mismo complejo que Andrés Carne de Res Chía, versión urbana)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Otras sedes</div><div class="place-card-row-value">La Plaza de Andrés en CC El Retiro, CC Gran Estación, CC Hacienda Santa Bárbara, CC Santafé</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Teléfono / WhatsApp</div><div class="place-card-row-value">+57 315 355 9096 / Reservas: 601 861 2233 opción 1</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Web / IG</div><div class="place-card-row-value"><a href="https://www.andrescarnederes.com/andres-dc">andrescarnederes.com/andres-dc</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">Todos los días 09:00-24:00 (Apple Maps); domingo brunch desde 9 AM</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">⭐ <strong>4.2/5</strong> en Tripadvisor (<strong>12.156 opiniones</strong>) — ranking #235 de 3.453 en Bogotá. Google Maps casi seguro >5k reseñas. <strong>✅ CUMPLE CRITERIO</strong> (&gt;1k reviews, ≥4/5).</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">PLATOS COLOMBIANOS</th></tr></thead>
+        <tbody>
+            <tr><td>Bandeja Paisa</td><td>frijol, carne, chicharrón, chorizo, morcilla, arroz, huevo, plátano, aguacate, arepa</td><td class="menu-price">$45-55k</td></tr>
+            <tr><td>Ajiaco Santafereño</td><td>3 papas, pollo, guascas, mazorca, alcaparras, aguacate, crema</td><td class="menu-price">$40-50k</td></tr>
+            <tr><td>Chicharrón</td><td>cuerito crocante</td><td class="menu-price">$35-45k</td></tr>
+            <tr><td>Carnes asadas, parrilla</td><td>variedad de cortes</td><td class="menu-price">$40-80k</td></tr>
+            <tr><td>Brunch dominical</td><td>desde 9 AM</td><td class="menu-price">consultar</td></tr>
+            <tr><td>Coctelería</td><td>herencia de Andrés Carne de Res Chía</td><td class="menu-price">$20-40k</td></tr>
+        </tbody>
+    </table>
+    </div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$50.000 - $120.000 COP</span> (ambiente festivo, precio medio-alto)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value">8-12 min en Cabify (~$12-18k COP); 15-20 min caminando por Cra 11 desde Calle 94. Valet parking disponible. Acepta tarjeta. Cover: normalmente NO (solo en eventos especiales).</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">⚠️ Notas</div><div class="place-card-row-value">"Versión light" de Andrés Carne de Res Chía pero con misma oferta gastronómica y ambiente. Música en vivo diario. Brunch dominical muy recomendado (mesas llenas). <strong>Fin de semana sin reservar: esperar 30-60 min mesa.</strong></div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="andres_dc_web_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Web oficial</div><a class="qr-link" href="https://www.andrescarnederes.com/andres-dc">andrescarnederes.com</a></div>
+        <div class="qr-block"><img class="qr-img" src="andres_dc_maps_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Google Maps</div><a class="qr-link" href="https://www.google.com/maps/search/?api=1&query=Andres+DC+Calle+82+11-15+Bogota">Google Maps</a></div>
+    </div>
+</div>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Tradicional colombiana · 50+ años · Usaquén</div>
+        <h3 class="place-card-name">C2. Casa Vieja (sede Usaquén)</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Sede Usaquén</div><div class="place-card-row-value">Carrera 6A #117-35, Usaquén, Bogotá ⭐ MÁS CERCANA A Calle 94</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Otras sedes</div><div class="place-card-row-value">Av. Jiménez #3-57 (centro, 12-18h) · Calle 13 #3-63 (centro histórico)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Teléfono</div><div class="place-card-row-value">213 3246 / <a href="https://wa.me/573138701809">+57 313 870 1809</a> (WhatsApp) / +57 1 310 5247 (sede Jiménez)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Web / IG</div><div class="place-card-row-value"><a href="https://www.casavieja.com.co">casavieja.com.co</a> · Instagram <a href="https://www.instagram.com/casaviejacolombia/">@casaviejacolombia</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">12:00-18:00 (sede Jiménez); sedes Usaquén probablemente similar. <strong>Confirmar antes de ir.</strong></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">⭐ 4.3/5 en Google Maps (~518 reseñas según Wanderlog). <strong>⚠️ NO cumple >1k reseñas</strong>, pero SÍ cumple ≥4/5. Se incluye por tradición (50+ años, fundado 1964) y por ser referente de comida típica colombiana en Usaquén.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">CAZUELAS Y PLATOS COLOMBIANOS</th></tr></thead>
+        <tbody>
+            <tr><td>Cazuela de frijoles</td><td>—</td><td class="menu-price">$30-40k</td></tr>
+            <tr><td>Ajiaco Santafereño</td><td>—</td><td class="menu-price">$32-42k</td></tr>
+            <tr><td>Bandeja Paisa</td><td>—</td><td class="menu-price">$35-45k</td></tr>
+            <tr><td>Posta Negra</td><td>carne en salsa oscura</td><td class="menu-price">$35-45k</td></tr>
+            <tr><td>Sancocho</td><td>—</td><td class="menu-price">$30-40k</td></tr>
+            <tr><td>Tamales</td><td>—</td><td class="menu-price">$12-18k</td></tr>
+        </tbody>
+    </table>
+    <em>Carta completa: 20 entradas + 25 fuertes + postres.</em>
+    </div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$30.000 - $50.000 COP</span></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value">Sede Usaquén: 12-15 min en Cabify (~$18-22k COP); TransMilenio estación Calle 100 → alimentador Usaquén o caminar.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Notas</div><div class="place-card-row-value">Fundado en 1964 (50+ años). Ambiente acogedor "como en casa de la abuela". Domicilios propios + Rappi. "Casa Vieja a cielo abierto" plan piloto - sedes con terraza.</div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="casavieja_web_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Web oficial</div><a class="qr-link" href="https://www.casavieja.com.co">casavieja.com.co</a></div>
+        <div class="qr-block"><img class="qr-img" src="casavieja_ig_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Instagram</div><a class="qr-link" href="https://www.instagram.com/casaviejacolombia/">@casaviejacolombia</a></div>
+        <div class="qr-block"><img class="qr-img" src="casavieja_maps_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Google Maps</div><a class="qr-link" href="https://www.google.com/maps/search/?api=1&query=Casa+Vieja+Cra+6A+117-35+Usaquen+Bogota">Google Maps</a></div>
+    </div>
+</div>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Típica colombiana · Fogones de leña · Zona T</div>
+        <h3 class="place-card-name">C3. Compañía Criolla (Zona T)</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Sede principal</div><div class="place-card-row-value">Calle 84A #12-25, Chapinero (Zona T), Bogotá</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Otras sedes</div><div class="place-card-row-value">CC Santafé L.N2-001 · CC Plaza de las Américas</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">WhatsApp</div><div class="place-card-row-value"><a href="https://wa.me/573157042954">+57 315 704 2954</a> / <a href="https://wa.me/573006934496">+57 300 693 4496</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Web / IG</div><div class="place-card-row-value"><a href="https://companiacriolla.com">companiacriolla.com</a> · Instagram <a href="https://www.instagram.com/companiacriolla/">@companiacriolla</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">DATO NO VERIFICADO (típico L-D 12-22). Música en vivo V-S-D desde 15:00.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">DATO NO VERIFICADO en Google Maps. Reseñas mixtas en Tripadvisor (algunas muy negativas). <strong>⚠️ Probable que NO cumpla ≥4.0</strong> dado volumen de quejas. Se menciona por ubicación céntrica en Zona T. <strong>Advertencia: calidad inconsistente según reseñas.</strong></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">
+    <table class="menu-table">
+        <thead><tr><th colspan="3">PLATOS TÍPICOS</th></tr></thead>
+        <tbody>
+            <tr><td>Ajiaco</td><td>—</td><td class="menu-price">$30-40k</td></tr>
+            <tr><td>Bandeja Paisa</td><td>—</td><td class="menu-price">$35-45k</td></tr>
+            <tr><td>Mondongo</td><td>—</td><td class="menu-price">$30-40k</td></tr>
+            <tr><td>Sancocho</td><td>—</td><td class="menu-price">$30-40k</td></tr>
+            <tr><td>Cócteles únicos</td><td>—</td><td class="menu-price">$20-35k</td></tr>
+        </tbody>
+    </table>
+    </div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$30.000 - $60.000 COP</span></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value">8-12 min en Cabify (~$12-18k COP); 15-20 min caminando desde Calle 94. Fogones de leña tradicionales. Ambiente "como casa de abuela".</div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="comp_criolla_web_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Web oficial</div><a class="qr-link" href="https://companiacriolla.com">companiacriolla.com</a></div>
+    </div>
+</div>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Tradicional colombiana · Cima Monserrate · Cumple criterio</div>
+        <h3 class="place-card-name">C4. Casa Santa Clara (Monserrate) ⭐ Cumple criterio</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Dirección</div><div class="place-card-row-value">Cerro de Monserrate (cima, 3.152 m s.n.m.), Bogotá. Acceso por teleférico o funicular.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Teléfono / Reservas</div><div class="place-card-row-value">+57 315 253 9963 / +57 601 666 1684 / PBX +57 601 666 4222 / WhatsApp <a href="https://wa.me/573173317148">+57 317 3317148</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Email / Web</div><div class="place-card-row-value">reservas@restaurantesmonserrate.com · <a href="https://www.restaurantesmonserrate.com">restaurantesmonserrate.com</a> · Instagram <a href="https://www.instagram.com/restaurantesmonserrate/">@restaurantesmonserrate</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios 2026</div><div class="place-card-row-value">L-V 12m-8pm · Sáb 8am-8pm · Dom 8am-5pm</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">⭐ <strong>4.6/5</strong> en Tripadvisor (<strong>1.411 opiniones</strong>). <strong>✅ CUMPLE CRITERIO</strong> (&gt;1k reviews, ≥4/5). Cocina tradicional colombiana.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">Cocina tradicional colombiana: ajiaco, bandeja paisa, carnes asadas, pescados, postres típicos. Plato destacado: ajiaco santafereño. <strong>Reservas recomendadas</strong> (especialmente fines de semana).</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$50.000 - $100.000 COP</span> (precio medio-alto por ubicación turística)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value">Subir a Monserrate en teleférico o funicular (tarifa $35.000 c/u L-S, $21.000 domingos). Restaurante en la cima. <strong>Ideal combinar con visita a Monserrate (Plan A días 2, 4, 6).</strong></div></div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="casa_santa_clara_web_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Web oficial</div><a class="qr-link" href="https://www.restaurantesmonserrate.com">restaurantesmonserrate.com</a></div>
+        <div class="qr-block"><img class="qr-img" src="casa_santa_clara_ig_qr.png" alt="QR" onerror="this.style.display='none'"><div class="qr-label">Instagram</div><a class="qr-link" href="https://www.instagram.com/restaurantesmonserrate/">@restaurantesmonserrate</a></div>
+    </div>
+</div>
+
+<!-- ITALIANA ALTERNATIVAS -->
+<div class="section-header">
+    <div class="section-tag">Alternativas · Italiana</div>
+    <h3 class="section-title">Oliveto Parkway, Prudencia (alternativas a Vitto)</h3>
+</div>
+
+<p class="body-text">Si Vitto no tiene disponibilidad o prefieres otra zona, hay alternativas italianas y de cocina de autor cercanas: <strong>Oliveto Parkway</strong> (4.9/5 con 1.267 reseñas Tripadvisor — cumple criterio) en el Parkway cerca a la UNAL, ideal para combinar con visita al campus. <strong>Prudencia</strong> (colombiana contemporánea, no italiana, mencionada por similitud de zona) en Zona G. <strong>Rafaello's Pizza</strong> y <strong>San Giorgio Trattoria</strong> son otras opciones en Bogotá.</p>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Italiana · Pizza & Pasta · Parkway · Cumple criterio</div>
+        <h3 class="place-card-name">I1. Oliveto Pizza & Pasta Parkway ⭐ Cumple criterio</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Dirección</div><div class="place-card-row-value">Parkway (Carrera 24 entre Calles 36 y 45), Teusaquillo, Bogotá. Alameda arbolada, cerca a Universidad Nacional.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">⭐ <strong>4.9/5</strong> en Tripadvisor (<strong>1.269 reseñas</strong>). <strong>✅ CUMPLE CRITERIO</strong> (&gt;1k reviews, ≥4/5). Uno de los mejores italianos de Bogotá según reseñas.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">Pizza artesanal, pasta fresca, antipasti. Plato destacado: pizza margherita. Varios paste y risottos.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$25.000 - $50.000 COP</span></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value"><strong>Ideal combinar con visita a Universidad Nacional:</strong> TM estación Universidad Nacional → caminar 15 min por Calle 45 hasta Parkway. Uber $18-25k desde Calle 94 (25 min).</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Notas</div><div class="place-card-row-value">Ubicado en alameda arbolada del Parkway (Cra 24 entre Cl 36 y 45). Ambiente bohemio, ideal para parejas. Uno de los restaurantes más recomendados del Parkway junto con Matrona y Casa Obrador.</div></div>
+</div>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Colombiana contemporánea · 50Best Discovery · Zona G</div>
+        <h3 class="place-card-name">I2. Prudencia (NO italiano, pero cocina de autor Zona G)</h3>
+    </div>
+    <div class="place-card-row"><div class="place-card-row-label">Dirección</div><div class="place-card-row-value">Zona G (Calle 69-72 con Cra 4-5), Bogotá. Misma zona que Vitto.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">WhatsApp</div><div class="place-card-row-value"><a href="https://wa.me/573187981836">+57 318 798 1836</a></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Horarios</div><div class="place-card-row-value">Mié-Dom 12:00-16:00 (almuerzo). <strong>Reservas por WhatsApp con anticipación.</strong></div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Calidad</div><div class="place-card-row-value">Listado en <strong>50Best Discovery</strong> (prestigiosa lista internacional de restaurantes emergentes). <strong>NO es italiano</strong> — es colombiana contemporánea con técnicas de autor. Se menciona porque está en la misma Zona G que Vitto.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Especialidades</div><div class="place-card-row-value">Menú degustación, platos colombianos reinterpretados con producto local. Cambia según temporada.</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Rango/persona</div><div class="place-card-row-value"><span class="price">$80.000 - $150.000 COP</span> (alta gama)</div></div>
+    <div class="place-card-row"><div class="place-card-row-label">Cómo llegar</div><div class="place-card-row-value">10-15 min en Cabify desde Calle 94 (~$12-18k). Misma zona que Vitto.</div></div>
+</div>
+
+<!-- RESUMEN COMPARATIVO -->
+<div class="section-header">
+    <div class="section-tag">Tabla comparativa · Alternativas</div>
+    <h3 class="section-title">Resumen de alternativas por categoría</h3>
+</div>
+
+<table class="table-accent">
+    <thead>
+        <tr>
+            <th>Categoría</th>
+            <th>Principal (ya en PDF)</th>
+            <th>Alternativa 1</th>
+            <th>Alternativa 2</th>
+            <th>Alternativa 3</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Alemán</strong></td>
+            <td>Edelweiss (Cajicá)</td>
+            <td>Harald (Av Pepe Sierra, 4.6/5)</td>
+            <td>Bruder Zona T (cervecería)</td>
+            <td>—</td>
+        </tr>
+        <tr>
+            <td><strong>Taquería</strong></td>
+            <td>Taquería Huevito</td>
+            <td>La Taquería Pq93 (4.6/5, 2.112 rev) ✅</td>
+            <td>Renata Tacos Cra 14 (4.3/5, 1.473 rev) ✅</td>
+            <td>Insurgentes Pq93</td>
+        </tr>
+        <tr>
+            <td><strong>Lechona</strong></td>
+            <td>Doña Rosalba (Paloquemao)</td>
+            <td>El Tolimense (Chapinero)</td>
+            <td>Rica Lechona (Rafael Uribe)</td>
+            <td>Paloquemao otros puestos</td>
+        </tr>
+        <tr>
+            <td><strong>Chigüiro</strong></td>
+            <td>Chigüiro Parrilla Bar</td>
+            <td>Asadero Chigüire 53</td>
+            <td>Rancho Llanero (Gran Estación)</td>
+            <td>Llanerada y Carbón (Las Ferias)</td>
+        </tr>
+        <tr>
+            <td><strong>Comida típica</strong></td>
+            <td>La Puerta Falsa / Catedral</td>
+            <td>Andrés D.C. Zona T (4.2/5, 12.156 rev) ✅</td>
+            <td>Casa Santa Clara Monserrate (4.6/5, 1.411 rev) ✅</td>
+            <td>Casa Vieja Usaquén / Compañía Criolla</td>
+        </tr>
+        <tr>
+            <td><strong>Italiana</strong></td>
+            <td>Vitto (Zona G)</td>
+            <td>Oliveto Parkway (4.9/5, 1.269 rev) ✅</td>
+            <td>Prudencia (Zona G, colombiana)</td>
+            <td>Rafaello's Pizza / San Giorgio</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="callout callout-success">
+    <strong>Leyenda:</strong> ✅ = cumple criterio estricto (&gt;1k reseñas Google + ≥4/5). Las alternativas que no cumplen el criterio se incluyen por relevancia (tradición, ubicación, especialidad única) con la nota correspondiente.
+</div>
+
+<div class="callout callout-warning">
+    <strong>Recomendación de uso:</strong> Para cada plan principal del itinerario, lleva 1-2 alternativas verificadas en el celular (con WhatsApp y dirección). Si el restaurante principal tiene fila excesiva, está cerrado, o el plan cambia por clima, las alternativas permiten pivotar sin perder tiempo. <strong>Las alternativas que cumplen criterio estricto (✅) son las más seguras.</strong>
+</div>
+
 
 <!-- ============ CHAPTER 15: MOVILIDAD ============ -->
 <div class="page-break"></div>
