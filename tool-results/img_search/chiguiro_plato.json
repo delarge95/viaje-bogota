@@ -1,0 +1,43 @@
+{
+  "success": true,
+  "query": "chiguiro asado parrilla colombiano plato carne Bogota",
+  "count": 5,
+  "ranked": false,
+  "results": [
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/3efdf0363014.jpg",
+      "caption": "",
+      "source": "DiDi Global",
+      "original_width": "1200px",
+      "original_height": "900px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/0a8c034dbc41.jpg",
+      "caption": "",
+      "source": "DiDi Global",
+      "original_width": "1200px",
+      "original_height": "900px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/49c7842d3cf0.jpg",
+      "caption": "",
+      "source": "DiDi Global",
+      "original_width": "1500px",
+      "original_height": "1125px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/72f0e098018c.jpg",
+      "caption": "",
+      "source": "Tripadvisor",
+      "original_width": "1100px",
+      "original_height": "1100px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/d1ea4d6e642e.jpg",
+      "caption": "",
+      "source": "DiDi Global",
+      "original_width": "1022px",
+      "original_height": "1080px"
+    }
+  ]
+}

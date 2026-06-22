@@ -1,0 +1,43 @@
+{
+  "success": true,
+  "query": "Plaza de Mercado Paloquemao Bogota mercado frutas verduras",
+  "count": 5,
+  "ranked": false,
+  "results": [
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/a7b5098185ad.jpg",
+      "caption": "",
+      "source": "Tripadvisor",
+      "original_width": "1200px",
+      "original_height": "1200px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/1bdf1f42d9f9.jpeg",
+      "caption": "",
+      "source": "Visit Bogotá",
+      "original_width": "1280px",
+      "original_height": "720px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/e4650060e80e.jpg",
+      "caption": "",
+      "source": "YouTube",
+      "original_width": "1280px",
+      "original_height": "720px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/048086f538de.jpg",
+      "caption": "",
+      "source": "Alamy",
+      "original_width": "866px",
+      "original_height": "1390px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/815740bae4b2.jpg",
+      "caption": "",
+      "source": "Plaza de mercado Paloquemao",
+      "original_width": "1280px",
+      "original_height": "720px"
+    }
+  ]
+}

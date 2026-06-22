@@ -183,3 +183,43 @@ Stage Summary:
 - 41 códigos QR a webs oficiales (planetariodebogota.gov.co, jbb.gov.co, monserrat.co, banrepcultural.org, unal.edu.co, plazadepaloquemao.com, vittoresto.com, transmilenio.gov.co, turistren.com.co, etc.)
 - Datos verificados: horarios, tarifas 2025-2026, direcciones oficiales, teléfonos, WhatsApp, Instagram
 - Correcciones críticas vs documento original: Nacho = UNAL (no amigo), no cirugía (solo gotas dilatadoras), Paloquemao solo domingo con Huevito, Tren sale de CC Gran Estación (no Calle 13), Museo del Oro cierra lunes (no disponible 20 julio), JBB cierra martes 21 (mantenimiento post-festivo), Edelweiss confirmado en Cajicá
+
+---
+Task ID: IMG-1
+Agent: image-downloader
+Task: Descargar imágenes de menús y fachadas de restaurantes
+
+Work Log:
+- Leí el worklog.md para entender el contexto: plan de viaje a Bogotá 15-22 julio 2026, PDF maestro ya compilado, resta agregar imágenes reales de restaurantes para futuras ediciones/improvement del PDF.
+- Invocqué Skill(image-search) para aprender a usar el CLI `z-ai image-search` (servicio ZAI in-house). Hallazgo: el flag `-o <path>` del CLI no escribe el archivo en esta versión; capturo stdout y parseo JSON manualmente desde el primer `{`.
+- Descargué directamente el PDF oficial del menú de Vitto desde https://vittoresto.com/assets/carta_pdf/carta_menu_vitto.pdf (3.05 MB, 21 páginas, PDF v1.5) → scripts/restaurant_images/vitto_menu.pdf. ✓
+- Construí script Python `scripts/search_restaurant_images.py` para automatizar: 14 búsquedas (2 por cada uno de los 7 restaurantes), --gl us, --no-rank (sin captioning para mayor velocidad), --count 5, descarga directa de las 2 mejores imágenes por query.
+- Tras un timeout inicial en el bash tool, dividí la ejecución: batch 1 (10 búsquedas = Vitto, La Puerta Falsa, La Puerta Catedral, Edelweiss, Chigüiro) y batch 2 (4 búsquedas = Andrés Carne de Res, Paloquemao) vía `scripts/search_remaining_images.py`.
+- Las 14 búsquedas devolvieron 5 resultados cada una (70 URLs totales); descargué las 2 primeras de cada una = 28 imágenes, todas desde OSS rehosted de ZAI (sfile.chatglm.cn/images-ppt/...). Cada búsqueda tomó ~5 s; cada descarga ~1-3 s.
+- Verifiqué con `file` que las 28 imágenes son JPEG válidos (no HTML de error). Resoluciones entre 800x800 y 2400x3504.
+- Comprimí con PIL (Pillow 11.3) la única imagen >1 MB: vitto_plato_1.jpg (3.34 MB, 2336x3504, source=vittoresto.com - foto oficial) → re-encoded a q=85, 1066x1600 = 284 KB. Script: scripts/compress_images.py.
+- Todas las demás imágenes ya estaban en rango 50 KB–1 MB (la mayor tras compresión: chiguiro_plato_2.jpg = 934 KB; la menor: edelweiss_fachada_2.jpg = 86 KB).
+- Guardé los 14 JSON intermedios en tool-results/img_search/*.json para trazabilidad (cada uno con results[] incluyendo original_url, source, original_width/height).
+
+Stage Summary:
+- Total descargado: 28 imágenes JPG + 1 PDF (menú Vitto) = 29 archivos, ~12 MB totales en /home/z/my-project/scripts/restaurant_images/
+- Distribución por restaurante (2 fachada/interior + 2 plato/menú cada uno):
+  * Vitto (4 imgs): vitto_fachada_1.jpg (307 KB Tripadvisor), vitto_fachada_2.jpg (337 KB Tripadvisor), vitto_plato_1.jpg (284 KB vittoresto.com OFICIAL), vitto_plato_2.jpg (267 KB Tripadvisor). + vitto_menu.pdf (3.05 MB, 21 págs, PDF oficial con precios 2026).
+  * La Puerta Falsa (4 imgs): fachada_1 (301 KB Tripadvisor), fachada_2 (518 KB Pulzo), ajiaco_1 (186 KB Airial.Travel), ajiaco_2 (264 KB Infobae).
+  * La Puerta de la Catedral (4 imgs): fachada_1 (163 KB Degusta), fachada_2 (88 KB Visit Bogotá OFICIAL), plato_1 (223 KB My Colombian Recipes), plato_2 (350 KB Infobae).
+  * Edelweiss Cajicá (4 imgs): fachada_1 (129 KB Degusta), fachada_2 (87 KB Degusta), codillo_1 (319 KB Tripadvisor), codillo_2 (603 KB DAPSA).
+  * Chigüiro Parrilla Bar (4 imgs): fachada_1 (177 KB Tripadvisor), fachada_2 (238 KB Tripadvisor), plato_1 (896 KB DiDi Global), plato_2 (935 KB DiDi Global).
+  * Andrés Carne de Res Chía (4 imgs): fachada_1 (346 KB Tripadvisor), fachada_2 (583 KB Tripadvisor), plato_1 (148 KB Degusta), plato_2 (149 KB Tripadvisor).
+  * Paloquemao (4 imgs): plaza_1 (364 KB Tripadvisor), plaza_2 (205 KB Visit Bogotá OFICIAL), puesto_1 (429 KB Viator), puesto_2 (202 KB Impulse Travel).
+- Fuentes de imágenes: mayoritariamente plataformas de review públicas (Tripadvisor ~10 imágenes), sitios oficiales de turismo (Visit Bogotá 2), medios digitales colombianos (Infobae 2, Pulzo 1), blogs gastronómicos (Degusta 4, My Colombian Recipes 1), sitios de viaje (Viator 1, Impulse Travel 1, Airial.Travel 1) y la web oficial del propio Vitto (1). Se priorizó no usar stock ni AI.
+- Problemas encontrados:
+  1. El flag `-o <path>` de `z-ai image-search` no escribe el archivo en esta versión del CLI → workaround: captura stdout + parseo JSON desde primer `{`.
+  2. El bash tool corta por timeout global (~10 min) → dividí las 14 búsquedas en 2 scripts (10+4) ejecutados secuencialmente.
+  3. Una imagen (vitto_plato_1.jpg) pesaba 3.34 MB → comprimida a 284 KB con PIL (q=85, resize a 1066x1600) sin pérdida visible.
+- Archivos entregados:
+  * /home/z/my-project/scripts/restaurant_images/ — 28 JPG + 1 PDF (12 MB total)
+  * /home/z/my-project/scripts/search_restaurant_images.py — script principal de búsqueda
+  * /home/z/my-project/scripts/search_remaining_images.py — script para los 4 restaurantes restantes
+  * /home/z/my-project/scripts/compress_images.py — utilidad de compresión PIL
+  * /home/z/my-project/tool-results/img_search/ — 14 JSON con resultados completos (5 URLs por query, para trazabilidad y futuras selecciones alternativas)
+- Uso sugerido para el PDF: cada restaurante ya tiene 2 opciones de foto de fachada y 2 de plato/menú para elegir la mejor al diseñar; el PDF oficial de Vitto puede incrustarse directamente como Anexo o renderizar una página específica como imagen.

@@ -1,0 +1,310 @@
+{
+  "vitto_fachada": {
+    "query": "Vitto restaurante Bogota Zona G Calle 69 interior comedor",
+    "count": 5,
+    "saved": [
+      {
+        "path": "vitto_fachada_1.jpg",
+        "size_bytes": 306986,
+        "source": "Tripadvisor",
+        "width": "1100px",
+        "height": "1100px",
+        "url": "https://sfile.chatglm.cn/images-ppt/96629a986e99.jpg"
+      },
+      {
+        "path": "vitto_fachada_2.jpg",
+        "size_bytes": 336646,
+        "source": "Tripadvisor",
+        "width": "1100px",
+        "height": "1100px",
+        "url": "https://sfile.chatglm.cn/images-ppt/4fbb2bc7adcd.jpg"
+      }
+    ]
+  },
+  "vitto_plato": {
+    "query": "Vitto restaurante Bogota pasta risotto plato comida italiana",
+    "count": 5,
+    "saved": [
+      {
+        "path": "vitto_plato_1.jpg",
+        "size_bytes": 3344714,
+        "source": "vittoresto.com",
+        "width": "2336px",
+        "height": "3504px",
+        "url": "https://sfile.chatglm.cn/images-ppt/cd52d9771a6e.jpeg"
+      },
+      {
+        "path": "vitto_plato_2.jpg",
+        "size_bytes": 267480,
+        "source": "Tripadvisor",
+        "width": "1200px",
+        "height": "975px",
+        "url": "https://sfile.chatglm.cn/images-ppt/ea46b90260d6.jpg"
+      }
+    ]
+  },
+  "la_puerta_falsa_fachada": {
+    "query": "La Puerta Falsa restaurante Bogota La Candelaria fachada entrada",
+    "count": 5,
+    "saved": [
+      {
+        "path": "la_puerta_falsa_fachada_1.jpg",
+        "size_bytes": 301478,
+        "source": "Tripadvisor",
+        "width": "1100px",
+        "height": "1100px",
+        "url": "https://sfile.chatglm.cn/images-ppt/eb3e7681292c.jpg"
+      },
+      {
+        "path": "la_puerta_falsa_fachada_2.jpg",
+        "size_bytes": 518461,
+        "source": "Pulzo",
+        "width": "1536px",
+        "height": "2048px",
+        "url": "https://sfile.chatglm.cn/images-ppt/da6cfa34c4f9.jpeg"
+      }
+    ]
+  },
+  "la_puerta_falsa_ajiaco": {
+    "query": "ajiaco santafereño sopa tradicional Bogota La Puerta Falsa",
+    "count": 5,
+    "saved": [
+      {
+        "path": "la_puerta_falsa_ajiaco_1.jpg",
+        "size_bytes": 185567,
+        "source": "Airial.Travel",
+        "width": "1080px",
+        "height": "1920px",
+        "url": "https://sfile.chatglm.cn/images-ppt/7f4058d20b30.jpg"
+      },
+      {
+        "path": "la_puerta_falsa_ajiaco_2.jpg",
+        "size_bytes": 264037,
+        "source": "Infobae",
+        "width": "1600px",
+        "height": "1066px",
+        "url": "https://sfile.chatglm.cn/images-ppt/d6b03290a9a4.jpeg"
+      }
+    ]
+  },
+  "la_puerta_catedral_fachada": {
+    "query": "La Puerta de la Catedral restaurante Bogota fachada",
+    "count": 5,
+    "saved": [
+      {
+        "path": "la_puerta_catedral_fachada_1.jpg",
+        "size_bytes": 162766,
+        "source": "www.degusta.com.co",
+        "width": "1440px",
+        "height": "1080px",
+        "url": "https://sfile.chatglm.cn/images-ppt/fe2289bc42a9.jpg"
+      },
+      {
+        "path": "la_puerta_catedral_fachada_2.jpg",
+        "size_bytes": 87795,
+        "source": "Visit Bogotá",
+        "width": "1200px",
+        "height": "800px",
+        "url": "https://sfile.chatglm.cn/images-ppt/2d7dd8b0bee9.jpg"
+      }
+    ]
+  },
+  "la_puerta_catedral_plato": {
+    "query": "bandeja paisa plato tradicional colombiano restaurante Bogota",
+    "count": 5,
+    "saved": [
+      {
+        "path": "la_puerta_catedral_plato_1.jpg",
+        "size_bytes": 222907,
+        "source": "My Colombian Recipes",
+        "width": "800px",
+        "height": "1097px",
+        "url": "https://sfile.chatglm.cn/images-ppt/dfb21c546ff9.jpg"
+      },
+      {
+        "path": "la_puerta_catedral_plato_2.jpg",
+        "size_bytes": 349729,
+        "source": "Infobae",
+        "width": "2080px",
+        "height": "1575px",
+        "url": "https://sfile.chatglm.cn/images-ppt/0c6824f56d8e.jpg"
+      }
+    ]
+  },
+  "edelweiss_fachada": {
+    "query": "Edelweiss restaurante Cajica fachada aleman suizo",
+    "count": 5,
+    "saved": [
+      {
+        "path": "edelweiss_fachada_1.jpg",
+        "size_bytes": 129428,
+        "source": "www.degusta.com.co",
+        "width": "1280px",
+        "height": "1280px",
+        "url": "https://sfile.chatglm.cn/images-ppt/b8fe565f28f0.jpg"
+      },
+      {
+        "path": "edelweiss_fachada_2.jpg",
+        "size_bytes": 86623,
+        "source": "www.degusta.com.co",
+        "width": "1280px",
+        "height": "1280px",
+        "url": "https://sfile.chatglm.cn/images-ppt/7263bd6bff95.jpg"
+      }
+    ]
+  },
+  "edelweiss_codillo": {
+    "query": "codillo cerdo asado aleman plato restaurante Edelweiss",
+    "count": 5,
+    "saved": [
+      {
+        "path": "edelweiss_codillo_1.jpg",
+        "size_bytes": 318694,
+        "source": "Tripadvisor",
+        "width": "1100px",
+        "height": "1100px",
+        "url": "https://sfile.chatglm.cn/images-ppt/6df413f3df10.jpg"
+      },
+      {
+        "path": "edelweiss_codillo_2.jpg",
+        "size_bytes": 602615,
+        "source": "DAPSA",
+        "width": "2400px",
+        "height": "1350px",
+        "url": "https://sfile.chatglm.cn/images-ppt/e00754396b38.jpg"
+      }
+    ]
+  },
+  "chiguiro_fachada": {
+    "query": "Chiguiro Parrilla Bar Bogota Cra 70 Normandia fachada",
+    "count": 5,
+    "saved": [
+      {
+        "path": "chiguiro_fachada_1.jpg",
+        "size_bytes": 176560,
+        "source": "Tripadvisor",
+        "width": "1280px",
+        "height": "961px",
+        "url": "https://sfile.chatglm.cn/images-ppt/4376c9d86f73.jpg"
+      },
+      {
+        "path": "chiguiro_fachada_2.jpg",
+        "size_bytes": 237627,
+        "source": "Tripadvisor",
+        "width": "1280px",
+        "height": "961px",
+        "url": "https://sfile.chatglm.cn/images-ppt/0cdf5473f2e1.jpg"
+      }
+    ]
+  },
+  "chiguiro_plato": {
+    "query": "chiguiro asado parrilla colombiano plato carne Bogota",
+    "count": 5,
+    "saved": [
+      {
+        "path": "chiguiro_plato_1.jpg",
+        "size_bytes": 895624,
+        "source": "DiDi Global",
+        "width": "1200px",
+        "height": "900px",
+        "url": "https://sfile.chatglm.cn/images-ppt/3efdf0363014.jpg"
+      },
+      {
+        "path": "chiguiro_plato_2.jpg",
+        "size_bytes": 934671,
+        "source": "DiDi Global",
+        "width": "1200px",
+        "height": "900px",
+        "url": "https://sfile.chatglm.cn/images-ppt/0a8c034dbc41.jpg"
+      }
+    ]
+  },
+  "andres_fachada": {
+    "query": "Andres Carne de Res Chia restaurante fachada entrada",
+    "count": 5,
+    "saved": [
+      {
+        "path": "andres_fachada_1.jpg",
+        "size_bytes": 346104,
+        "source": "Tripadvisor",
+        "width": "1280px",
+        "height": "960px",
+        "url": "https://sfile.chatglm.cn/images-ppt/cf1d64980e74.jpg"
+      },
+      {
+        "path": "andres_fachada_2.jpg",
+        "size_bytes": 583442,
+        "source": "Andrés Carne de Res",
+        "width": "1500px",
+        "height": "1000px",
+        "url": "https://sfile.chatglm.cn/images-ppt/122b9d717d7f.jpg"
+      }
+    ]
+  },
+  "andres_plato": {
+    "query": "Andres Carne de Res plato bandeja paisa comida colombiana",
+    "count": 5,
+    "saved": [
+      {
+        "path": "andres_plato_1.jpg",
+        "size_bytes": 148499,
+        "source": "www.degusta.com.co",
+        "width": "1280px",
+        "height": "1280px",
+        "url": "https://sfile.chatglm.cn/images-ppt/eab27d707e76.jpg"
+      },
+      {
+        "path": "andres_plato_2.jpg",
+        "size_bytes": 149019,
+        "source": "www.degusta.com.co",
+        "width": "1280px",
+        "height": "1280px",
+        "url": "https://sfile.chatglm.cn/images-ppt/63288e12db52.jpg"
+      }
+    ]
+  },
+  "paloquemao_plaza": {
+    "query": "Plaza de Mercado Paloquemao Bogota mercado frutas verduras",
+    "count": 5,
+    "saved": [
+      {
+        "path": "paloquemao_plaza_1.jpg",
+        "size_bytes": 363733,
+        "source": "Hansa Tours",
+        "width": "1280px",
+        "height": "960px",
+        "url": "https://sfile.chatglm.cn/images-ppt/9ce28aa53260.jpg"
+      },
+      {
+        "path": "paloquemao_plaza_2.jpg",
+        "size_bytes": 205274,
+        "source": "YouTube",
+        "width": "1280px",
+        "height": "720px",
+        "url": "https://sfile.chatglm.cn/images-ppt/826b213f26e3.jpg"
+      }
+    ]
+  },
+  "paloquemao_puesto": {
+    "query": "Paloquemao mercado empanadas jugos frutas Bogota local",
+    "count": 5,
+    "saved": [
+      {
+        "path": "paloquemao_puesto_1.jpg",
+        "size_bytes": 429410,
+        "source": "Viator",
+        "width": "1280px",
+        "height": "960px",
+        "url": "https://sfile.chatglm.cn/images-ppt/cefa2d22fe59.jpg"
+      },
+      {
+        "path": "paloquemao_puesto_2.jpg",
+        "size_bytes": 224460,
+        "source": "Beyond Colombia Free Tours",
+        "width": "1280px",
+        "height": "720px",
+        "url": "https://sfile.chatglm.cn/images-ppt/e4650060e80e.jpg"
+      }
+    ]
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "success": true,
+  "query": "ajiaco santafereño sopa tradicional Bogota La Puerta Falsa",
+  "count": 5,
+  "ranked": false,
+  "results": [
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/7f4058d20b30.jpg",
+      "caption": "",
+      "source": "Airial.Travel",
+      "original_width": "1080px",
+      "original_height": "1920px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/d6b03290a9a4.jpeg",
+      "caption": "",
+      "source": "Infobae",
+      "original_width": "1600px",
+      "original_height": "1066px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/52bb02634717.jpg",
+      "caption": "",
+      "source": "Infobae",
+      "original_width": "1200px",
+      "original_height": "900px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/77f6e6d26b9a.jpg",
+      "caption": "",
+      "source": "Tripadvisor",
+      "original_width": "1100px",
+      "original_height": "1100px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/2112896bd915.jpg",
+      "caption": "",
+      "source": "Zipaquí",
+      "original_width": "1600px",
+      "original_height": "1236px"
+    }
+  ]
+}

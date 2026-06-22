@@ -1,0 +1,43 @@
+{
+  "success": true,
+  "query": "bandeja paisa plato tradicional colombiano restaurante Bogota",
+  "count": 5,
+  "ranked": false,
+  "results": [
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/dfb21c546ff9.jpg",
+      "caption": "",
+      "source": "My Colombian Recipes",
+      "original_width": "800px",
+      "original_height": "1097px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/0c6824f56d8e.jpg",
+      "caption": "",
+      "source": "Infobae",
+      "original_width": "2080px",
+      "original_height": "1575px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/22308c8a96cb.jpg",
+      "caption": "",
+      "source": "Semana",
+      "original_width": "2121px",
+      "original_height": "1414px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/4a5a164be952.jpg",
+      "caption": "",
+      "source": "Reddit",
+      "original_width": "1080px",
+      "original_height": "1440px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/48402804db9e.jpg",
+      "caption": "",
+      "source": "Gourmet de México",
+      "original_width": "1200px",
+      "original_height": "800px"
+    }
+  ]
+}

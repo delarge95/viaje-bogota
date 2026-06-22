@@ -1,0 +1,43 @@
+{
+  "success": true,
+  "query": "Edelweiss restaurante Cajica fachada aleman suizo",
+  "count": 5,
+  "ranked": false,
+  "results": [
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/b8fe565f28f0.jpg",
+      "caption": "",
+      "source": "www.degusta.com.co",
+      "original_width": "1280px",
+      "original_height": "1280px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/7263bd6bff95.jpg",
+      "caption": "",
+      "source": "www.degusta.com.co",
+      "original_width": "1280px",
+      "original_height": "1280px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/b81cc69b01a8.jpg",
+      "caption": "",
+      "source": "Tripadvisor",
+      "original_width": "2966px",
+      "original_height": "3955px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/0352457ae040.jpg",
+      "caption": "",
+      "source": "Tripadvisor",
+      "original_width": "1360px",
+      "original_height": "765px"
+    },
+    {
+      "original_url": "https://sfile.chatglm.cn/images-ppt/2f92e8b0fbb3.jpg",
+      "caption": "",
+      "source": "www.degusta.com.co",
+      "original_width": "1280px",
+      "original_height": "1280px"
+    }
+  ]
+}
