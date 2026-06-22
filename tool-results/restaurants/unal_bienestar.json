@@ -1,0 +1,21 @@
+{
+  "code": 200,
+  "data": {
+    "description": "",
+    "html": "",
+    "httpStatus": 500,
+    "httpStatusText": "",
+    "title": "",
+    "url": "https://bienestar.bogota.unal.edu.co/ver_noticia.php",
+    "usage": {
+      "tokens": 0
+    },
+    "warning": "Target URL returned error 500: Internal Server Error"
+  },
+  "meta": {
+    "usage": {
+      "tokens": 0
+    }
+  },
+  "status": 20000
+}

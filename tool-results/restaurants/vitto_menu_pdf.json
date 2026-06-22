@@ -1,0 +1,39 @@
+{
+  "code": 200,
+  "data": {
+    "description": "",
+    "html": "",
+    "httpStatus": 200,
+    "httpStatusText": "",
+    "metadata": {
+      "CreationDate": "D:20260609164546-03'00'",
+      "Creator": "Adobe Illustrator 30.5 (Windows)",
+      "Custom": {
+        "CreatorVersion": "21.0.0"
+      },
+      "EncryptFilterName": null,
+      "IsAcroFormPresent": false,
+      "IsCollectionPresent": false,
+      "IsLinearized": true,
+      "IsSignaturesPresent": false,
+      "IsXFAPresent": false,
+      "Language": null,
+      "ModDate": "D:20260609164546-03'00'",
+      "PDFFormatVersion": "1.5",
+      "Producer": "Adobe PDF library 18.00",
+      "Title": "carta_menu_vitto"
+    },
+    "publishedTime": "Wed, 10 Jun 2026 18:48:20 GMT",
+    "title": "carta_menu_vitto",
+    "url": "https://vittoresto.com/assets/carta_pdf/carta_menu_vitto.pdf",
+    "usage": {
+      "tokens": 0
+    }
+  },
+  "meta": {
+    "usage": {
+      "tokens": 0
+    }
+  },
+  "status": 20000
+}

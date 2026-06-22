@@ -1,0 +1,422 @@
+     1→# Transporte en Bogotá - Investigación
+     2→
+     3→> **Contexto del viaje**: Pareja, 15-22 julio 2026. Hospedaje Calle 94 / Chicó (Chapinero). Presupuesto económico. Movilidad: mayormente TransMilenio con algo de Uber.
+     4→> **Fechas críticas**: Mié 15 (llegada), Vie 17 (pupilas dilatadas), Sáb 18, Dom 19 (Ciclovía), Lun 20 (Feriado 20 de julio), Mar 21 (JBB cierra por mantenimiento post-festivo), Mié 22 (regreso).
+     5→> **Fecha de la investigación**: datos vigentes a junio 2026.
+     6→
+     7→---
+     8→
+     9→## 1. TransMilenio
+    10→
+    11→### Tarifa 2025/2026 (COP)
+    12→- **$3.550 COP** por pasaje, todo el día, sin horario pico/non-pico.
+    13→- Tarifa única aplica a: **TransMi (troncal)**, **TransMiZonal (SITP alimentadores)** y **TransMiCable**.
+    14→- Entró en vigencia el **14 de enero de 2025** (incremento del 8,47%, por debajo del salario mínimo 9,54%). Para 2026 no se han publicado nuevos ajustes a la fecha de esta investigación (junio 2026).
+    15→- **Fuente oficial**: https://www.transmilenio.gov.co/viaje-en-transmi/medios-de-pago/tarifas-del-sistema-transmilenio
+    16→
+    17→### Tarjeta TuLlave
+    18→- **Costo de la tarjeta**: **$8.000 COP** (no incluye saldo).
+    19→- Se compra en:
+    20→  - Todas las estaciones de TransMilenio (taquillas).
+    21→  - Puntos de personalización TuLlave (https://www.tullaveplus.gov.co/conoce-tullave/puntos-de-personalizacion).
+    22→  - Algunos puntos externos autorizados (almacenes Éxito, Carulla, SurtiMax).
+    23→- **Recarga**:
+    24→  - Puntos de recarga en estaciones TM (taquillas y máquinas).
+    25→  - Recarga digital vía app **Maas (TuLlave)** o **Daviplata**.
+    26→  - Cajas registradoras del Grupo Éxito (Éxito, SurtiMax, Carulla) → dinero queda en cuenta Tuya Pay → recargas la TuLlave desde la app Maas → validas la recarga en puntos identificados de estaciones o almacenes Éxito.
+    27→- **Tarjeta personalizada** (con cédula): beneficios extra
+    28→  - Hasta **2 viajes a crédito** por día (sin recargar) en troncal y/o zonal. Al hacer nueva recarga, pagas el crédito usado + un pasaje troncal, para mantener el beneficio al día siguiente.
+    29→  - **Tarifa integrada para transbordos** (troncal→zonal, zonal→zonal, zonal→troncal): pagas 1 sola tarifa por viaje completo dentro de ventana de integración (~2 horas).
+    30→- **Tarjeta anónima** (sin personalizar): NO permite transbordos integrados (pagas tarifa completa en cada transbordo) NI viajes a crédito.
+    31→
+    32→### Horarios de operación (vigentes 2025/2026)
+    33→- **Lunes a Viernes**: 04:00 a.m. – 11:00 p.m.
+    34→- **Sábado**: 05:00 a.m. – 11:00 p.m.
+    35→- **Domingos y festivos**: 05:00 a.m. – 10:00 p.m. (algunos servicios troncales ajustan operación; las rutas C25 y L25 operan desde 4:30 a.m. los domingos/festivos).
+    36→- **Sujeto a cambios** por mantenimiento o eventos especiales.
+    37→- **Fuente oficial**: https://www.transmilenio.gov.co (cabecera del home).
+    38→
+    39→### Estaciones cercanas a Calle 94 / Chicó
+    40→La Calle 94 NO tiene estación TransMilenio propia. Las estaciones cercanas en la **troncal B (Autopista Norte)** son:
+    41→
+    42→| Estación | Distancia desde Calle 94 (referencial) | Notas |
+    43→|----------|---|---|
+    44→| **Calle 100 – Marketmedios** | ~600 m (acceso directo por puente peatonal Calle 94 con Autopista Norte, inaugurado 2013) | La más cercana. 15 servicios troncales. |
+    45→| **Calle 106** | ~1,2 km al norte | |
+    46→| **Pepe Sierra – Utel Universidad** | ~2 km al norte | Renombrada en 2025 por alianza con Utel Universidad. |
+    47→| **La Castellana** | ~1 km al sur | |
+    48→
+    49→**Servicios troncales en estación Calle 100** (15 servicios):
+    50→`B1-F1 · B5-G5 · B10-D10 · B72 · B73-H74 · B13-H13 · B53-H52 · H61 · B74-J72 · B14-F14 · B12-G12 · B50-C61 · B94-D94 · B92-H92 · B90-G90`
+    51→
+    52→Las letras iniciales indican la troncal de destino (A=Caracas, B=Autopista Norte, C=Suba, D=Calle 80, E=NQS Central, F=Américas, G=NQS Sur, H=Caracas Sur, J=Eje Ambiental).
+    53→
+    54→### Rutas desde Calle 94 hacia:
+    55→
+    56→#### Universidad Nacional
+    57→- **Estación origen**: Calle 100 (troncal B Autopista Norte).
+    58→- **Estación destino**: **Universidad Nacional** (Av. NQS con Calle 47) — está en **troncal E (NQS Central)**, NO en troncal A (Caracas) como sugirió el usuario.
+    59→- **Ruta sugerida**: Calle 100 → servicio troncal que conecte con troncal E (ej. B5-G5 hasta estación NQS-Calle 75 o Avenida Chile, luego transbordo a troncal E hasta Universidad Nacional). 14 servicios troncales paran en Universidad Nacional.
+    60→- **Tiempo estimado**: 35-50 min (incluye transbordo).
+    61→- **Tarifa**: $3.550 COP (con tarjeta TuLlave personalizada y transbordo integrado).
+    62→- **Alternativa SITP zonal**: ruta A003 (TransMiZonal "Estación Universidad Nacional") — L-V 6:00 a.m. – 8:00 p.m.
+    63→
+    64→#### La Candelaria (Museo del Oro / Planetario)
+    65→- **Estación origen**: Calle 100 (troncal B).
+    66→- **Estación destino**: **Museo del Oro** (troncal A Caracas, Cra 6 con Cl 16). ⚠️ **Temporalmente cerrada por obras de adecuación de malla vial** (última actualización oficial). 
+    67→- **Alternativa funcional**: estación **Las Aguas – Centro Colombo Americano** (troncal A), a 2 min caminando del Museo del Oro.
+    68→- **Ruta sugerida**: Calle 100 → servicio B1-F1 / B14-F14 / etc. hasta Portal Norte o estación conectora → transbordo a troncal A (Caracas) → Las Aguas o Museo del Oro.
+    69→- **Tiempo estimado**: 45-60 min.
+    70→- **Tarifa**: $3.550 COP.
+    71→- **Para el Planetario de Bogotá** (Calle 26B #5-93): estación **Centro Memoria** o **Universidades** (troncal A Caracas) — ~10 min caminando.
+    72→
+    73→#### Paloquemao
+    74→- **Estación origen**: Calle 100 (troncal B).
+    75→- **Estación destino**: **Paloquemao** (Av. NQS con Cl 17A, troncal E NQS Central).
+    76→- **Ruta sugerida**: Calle 100 → servicio troncal hacia NQS → transbordo en estación NQS-Calle 75 o Avenida Chile a troncal E → Paloquemao. Alternativa: TransMiZonal A633 (Paloquemao directo).
+    77→- **Tiempo estimado**: 40-55 min.
+    78→- **Tarifa**: $3.550 COP.
+    79→
+    80→#### Jardín Botánico "José Celestino Mutis" (Av. Calle 63 #68-95)
+    81→- **Estación origen**: Calle 100 (troncal B).
+    82→- **Estación destino**: **Avenida Chile** (troncal E NQS Central, ~1,5 km caminando al JBB) o **Universidad Nacional** (~2 km). 
+    83→- **Mejor opción**: TransMiZonal (SITP) que pase por la Av. Calle 63 con Cra 68, o **Uber/taxi directo** desde Calle 94 (~$15.000-22.000 COP, 20-30 min).
+    84→- **Tarifa TM**: $3.550 COP (si usas TM + SITP integrado).
+    85→
+    86→#### Parque Simón Bolívar
+    87→- **Estación origen**: Calle 100 (troncal B).
+    88→- **Estación destino**: **Simón Bolívar** (troncal E NQS Central) o **Salitre – El Greco** (troncal K Av. El Dorado, a 450 m / 6 min caminando del Parque).
+    89→- **Ruta sugerida**: Calle 100 → conexión troncal E (NQS) → Simón Bolívar. Alternativa: TransMiZonal desde Calle 100.
+    90→- **Tiempo estimado**: 40-55 min.
+    91→- **Tarifa**: $3.550 COP.
+    92→
+    93→### Recomendaciones para turistas
+    94→1. **Compra la tarjeta TuLlave PERSONALIZADA** (con tu cédula/pasaporte) apenas llegues: te permite transbordos integrados y viajes a crédito. La anónima solo te servirá para viajes directos sin transbordo.
+    95→2. La tarjeta cuesta $8.000 + recarga mínima sugerida $10.000-20.000 = **$18.000-28.000 COP inicial**.
+    96→3. Evita horas pico (6-9 a.m. y 5-8 p.m. L-V): TM va saturado.
+    97→4. Descarga la app **TransMi App** o **Maas (TuLlave)** para planear rutas y recargar.
+    98→5. Cuida tus objetos personales en estaciones y buses (turistas con mochilas son objetivo fácil).
+    99→6. **Línea oficial de atención**: 195 (24 horas) / +57 601 4824304.
+   100→7. **Buscador oficial de rutas**: https://buscador-rutas.transmilenio.gov.co
+   101→
+   102→---
+   103→
+   104→## 2. SITP (Sistema Integrado de Transporte Público - buses alimentadores)
+   105→
+   106→### Cómo identificarlos
+   107→- Buses de color (según zona): **azul** = TransMiZonal (alimentadores). Las rutas empiezan con letras de zona (A, B, C, etc.) seguidas de 3 números (ej. A633 Paloquemao).
+   108→- **Naranja** = buses provisionales (sustitutos).
+   109→- Otros colores (rojo, verde) = buses antiguos pre-SITP en proceso de extinción.
+   110→- Todos los SITP oficiales aceptan la tarjeta TuLlave.
+   111→
+   112→### Tarifa integrada
+   113→- **Misma tarifa que TM**: $3.550 COP.
+   114→- **Tarifa integrada** (con TuLlave personalizada): si haces transbordo entre TM (troncal) y SITP (zonal) o entre dos SITP zonales, dentro de la ventana de integración (~2 h), solo pagas **1 tarifa completa** ($3.550).
+   115→
+   116→### Útiles para trayectos cortos
+   117→- Conectan barrios con estaciones troncales (alimentadores).
+   118→- Ejemplo útil: TransMiZonal **Calle 94** (según buscador de rutas TransMilenio) recorre zona Chicó / Calle 94.
+   119→- Para llegar al JBB desde Calle 100: TransMiZonal **A633 (Paloquemao)** o rutas que crucen Cra 68 con Calle 63.
+   120→
+   121→---
+   122→
+   123→## 3. Tren de la Sabana / Turistren
+   124→
+   125→### Estado actual (2025/2026)
+   126→- **SÍ sigue operando** el Tren Turístico de la Sabana (operador **Turistren**), todos los sábados, domingos y festivos.
+   127→- Ruta única: **Bogotá → Zipaquirá → Bogotá** (ida y regreso obligatorio, no venden solo trayecto).
+   128→- NO opera entre semana.
+   129→- ⚠️ **CAMBIO IMPORTANTE (permanente)**: Ya **NO sale** de la histórica "Estación de La Sabana" (Calle 13 #18-24). Ahora sale del **costado occidental del Centro Comercial Gran Estación** (Cra 66 con Cl 25/26, andén de la vía férrea frente a la Plazoleta de Los Alfiles). La taquilla Calle 13 #18-24 sigue abierta **solo para venta anticipada** de tiquetes (no aborda tren).
+   130→
+   131→### Itinerario (vigente 2026)
+   132→| Hora | Lugar | Acción |
+   133→|------|-------|--------|
+   134→| 8:45 a.m. | **Centro Comercial Gran Estación** (Cra 66 con Cl 25/26, Bogotá) | Salida |
+   135→| 9:05 a.m. | **Estación de Usaquén** (Av. Cra 9 #110-08, diagonal CC Santa Ana) | Llegada |
+   136→| 9:15 a.m. | Estación de Usaquén | Salida |
+   137→| 10:45 a.m. | **Estación de Zipaquirá** | Llegada |
+   138→| 10:45 a.m. – 3:15 p.m. | Zipaquirá | Permanencia 4 h 30 min |
+   139→| 3:15 p.m. | Estación de Zipaquirá | Salida de regreso |
+   140→| 4:45 p.m. | Estación de Usaquén | Llegada |
+   141→| 4:50 p.m. | Estación de Usaquén | Salida |
+   142→| 5:15 p.m. | Centro Comercial Gran Estación | Llegada final |
+   143→
+   144→- **Duración total**: 8 horas 30 minutos.
+   145→- **Fuente**: https://tuboleta.com/es/eventos/viaje-en-tren-zipaquira-0 y https://turistren.com.co/planifica-tu-viaje
+   146→
+   147→### ¿Pasa por Cajicá?
+   148→- **SÍ**. La Estación de La Sabana en Cajicá es parada intermedia del Tren Turístico (primera parada antes de Zipaquirá). Dirección: Estación del Tren de La Sabana, Cajicá. Teléfono (601) 3161300.
+   149→- **Fuente**: Detour Cundinamarca (https://detour.cundinamarca.gov.co/geomarker/estacion-del-tren-zipaquira) y Tripadvisor.
+   150→
+   151→### ¿Llega a Nemocón?
+   152→- **NO**. El tren turístico NO tiene ruta a Nemocón. Solo llega a Zipaquirá (con parada intermedia en Cajicá).
+   153→- **Para Nemocón**: tours privados por carretera (~65 km de Bogotá), costo ~$150.000 COP por persona con tour operador (refrigerio incluido). Tour privado recomendado por la pareja si quieren combinar Catedral de Sal + Mina de Nemocón.
+   154→
+   155→### Costo de boletas (vigente 2026, COP)
+   156→**Tarifas oficiales Turistren** (sin recargo):
+   157→- **Adultos**: $96.000 COP
+   158→- **Niños de 3 a 12 años y adultos mayores (60+)**: $90.000 COP
+   159→- **Bebés menores de 3 años**: NO pagan (si van en brazos y no ocupan puesto).
+   160→
+   161→**Tarifas vía Tuboleta** (incluye recargo por servicio):
+   162→- **Pasajero adulto**: $107.500 + $11.500 servicio = **$119.000 COP**
+   163→- **Niño (3-12) / Adulto mayor (60+)**: $100.800 + $10.800 servicio = **$111.600 COP**
+   164→- Recargo Tuboleta: $6.000 por pasaje + $8.000 por la localización total de la compra (transacción).
+   165→- **Descuento grupal**: 10% para grupos desde 15 personas.
+   166→
+   167→### Qué incluye / NO incluye
+   168→- **INCLUYE**: Viaje ida y regreso Bogotá – Zipaquirá – Bogotá.
+   169→- **NO INCLUYE**: alimentación, ni entrada a la Catedral de Sal de Zipaquirá (se compra aparte; en el tren solo en efectivo; también hay opcional bus de la estación a la Catedral).
+   170→
+   171→### Cómo comprar boletas
+   172→1. **Online**: https://www.tuboleta.com (eventos → "Viaje en tren a Zipaquirá 2026"). La venta se abre ~15 días antes de cada fecha.
+   173→2. **Taquilla Estación de La Sabana**: Calle 13 #18-24 (Bogotá) — **solo venta anticipada**, no aborda tren.
+   174→3. **Taquilla Estación de Usaquén**: Av. Cra 9 #110-08 — venta anticipada y el mismo día del viaje (sujeto a disponibilidad).
+   175→4. **Directamente en el tren** el día del viaje, sujeto a disponibilidad.
+   176→5. **Puntos físicos Tuboleta** a nivel nacional.
+   177→6. **Telefónico**: +57 601 5936300 (Tuboleta) / #593 desde celular en Colombia.
+   178→
+   179→### Contacto
+   180→- **Web oficial**: https://turistren.com.co
+   181→- **Teléfono Tuboleta**: +57 601 5936300 / #593
+   182→- **WhatsApp Turistren**: +57 3115338264 (según Facebook oficial)
+   183→- **Información Turistren**: +571 3161300
+   184→- **Taquilla Calle 13**: Calle 13 #18-24 (solo venta anticipada)
+   185→- **Taquilla Usaquén**: Av. Cra 9 #110-08
+   186→
+   187→### ⚠️ IMPORTANTE para el itinerario (15-22 julio 2026)
+   188→- **Domingo 19 julio**: SÍ opera tren (sábado/domingo/festivo).
+   189→- **Lunes 20 julio (feriado)**: SÍ opera tren (es festivo).
+   190→- Recomendación: **comprar boleto con anticipación** (Tuboleta abre ~15 días antes, es decir ~5 julio 2026). Salida 8:45 a.m. desde CC Gran Estación implica taxi/Uber temprano desde Calle 94 (~$20.000-28.000 COP, 25-35 min).
+   191→- Alternativa de abordaje: estación Usaquén (sale 9:15 a.m.) está más cerca de Calle 94 (15-20 min en taxi/Uber, ~$12.000-18.000 COP).
+   192→
+   193→### Alternativa: Tren de Cercanías Bogotá-Cajicá (Regiotram)
+   194→- El "tren de cercanías" regular Bogotá-Cajicá que operó en 2020-2021 está **suspendido**.
+   195→- El proyecto **Regiotram de Occidente** (tren de cercanías Bogotá-Facatativá, 49 km, 17 estaciones) está en construcción; NO operativo en 2026.
+   196→- **Fuente**: Mintransporte / El Periodico de Chía (2025).
+   197→
+   198→---
+   199→
+   200→## 4. Uber / Cabify / DiDi en Bogotá
+   201→
+   202→### Estatus legal (2025/2026)
+   203→- **Operan legalmente** en Bogotá como "transporte especial" (vehículos de hasta 4 pasajeros sin incluir conductor).
+   204→- La Superintendencia de Industria y Comercio (SIC) formuló en 2025 pliego de cargos contra Uber, DiDi y Cabify por presuntas infracciones al régimen de libre competencia, pero **no han sido prohibidas**.
+   205→- El Ministerio de Transporte exige que estén habilitadas legalmente; las apps han venido regularizando su operación.
+   206→- **Práctica habitual**: en el aeropuerto, los conductores de Uber suelen pedir que el usuario se suba en zonas no supervisadas (no hay parada oficial de Uber dentro del aeropuerto). Para taxis, hay punto oficial dentro del aeropuerto.
+   207→
+   208→### Pico y placa para apps (TRANSPORTE ESPECIAL)
+   209→- **SÍ aplica pico y placa** a Uber/Cabify/DiDi (clasificados como transporte especial): **L-S 5:30 a.m. – 9:00 p.m.**
+   210→- **Domingos y festivos: NO aplica**.
+   211→- Rotación de placas diaria (4 placas restringidas por día, 6 placas permitidas).
+   212→- Decreto 0768 de 2025: rotación de pico y placa a partir del 1 de julio de 2025.
+   213→- **Implicación para el viaje**: domingos y festivos (19 y 20 julio 2026) las apps operan sin restricción.
+   214→
+   215→### Tarifas estimadas para trayectos clave (COP)
+   216→⚠️ **Tarifas referenciales** basadas en blogs, testimonios y rangos típicos. **Cotizar en la app** antes del viaje. Las apps aplican tarifas dinámicas (surge pricing) en horas pico y lluvia.
+   217→
+   218→| Trayecto | Tiempo estimado | Costo estimado (Uber X / Cabify Lite) |
+   219→|----------|------------------|----------------------------------------|
+   220→| Calle 94 → La Candelaria (Museo del Oro) | 35-50 min | $25.000 – $35.000 |
+   221→| Calle 94 → Universidad Nacional | 25-35 min | $18.000 – $25.000 |
+   222→| Calle 94 → Paloquemao | 30-40 min | $22.000 – $30.000 |
+   223→| Calle 94 → Jardín Botánico | 20-30 min | $15.000 – $22.000 |
+   224→| Calle 94 → Monserrate (base teleférico) | 35-45 min | $25.000 – $35.000 |
+   225→| Calle 94 → CC Gran Estación (estación tren) | 25-35 min | $20.000 – $28.000 |
+   226→| Calle 94 → Estación Usaquén (estación tren) | 15-20 min | $12.000 – $18.000 |
+   227→| **Aeropuerto El Dorado → Calle 94** | 25-40 min (según tráfico) | $30.000 – $45.000 |
+   228→
+   229→### Categorías Cabify (Bogotá, vigentes 2026)
+   230→- **Cabify** (estándar)
+   231→- **Cuanto Antes** (llega rápido)
+   232→- **Cabify Extra Comfort**
+   233→- **Cabify Promo** (tarifa económica con espera hasta 15 min)
+   234→- **Cabify Corp** (empresas)
+   235→- **Cabify Mascotas**
+   236→- **Cabify Invita**
+   237→- **Taxi** (taxi amarillo por la app)
+   238→- **Envíos**
+   239→- **Fuente**: https://cabify.com/co/tarifas/bogota
+   240→
+   241→### Recomendaciones de seguridad
+   242→1. **Verifica la placa** del vehículo y el nombre del conductor antes de subir (la app te los muestra).
+   243→2. **Comparte tu viaje** con un contacto (función de la app).
+   244→3. Pide el viaje **desde adentro de un sitio cerrado** (hotel, restaurante, centro comercial), no en la calle.
+   245→4. **Evita pedir Uber dentro del aeropuerto**: las autoridades lo restringen. Mejor pídelo caminando hacia la Av. El Dorado o usa taxi oficial del aeropuerto.
+   246→5. **Cabify suele percibirse como más seguro** que Uber/DiDi en Bogotá (conductores identificados, vehículo monitoreado, botón de seguridad). Cabify cobra tarifas un poco más altas pero con mejor servicio al usuario.
+   247→6. **DiDi** suele tener las tarifas más bajas y mayor disponibilidad de motos (DiDi Moto) — útil en tráfico, pero menos seguro para dos personas.
+   248→7. Si viajas con **mascota**: usar Cabify Mascotas o Uber Pet (si disponible).
+   249→
+   250→### ¿Mejor app?
+   251→- **Para turistas**: **Cabify** (mejor experiencia y seguridad percibida) o **Uber** (más cobertura y disponibilidad).
+   252→- **Para tarifas más bajas**: **DiDi**.
+   253→- **Para taxis seguros**: **Taxis Libres App** (ver sección 5).
+   254→
+   255→---
+   256→
+   257→## 5. Taxis
+   258→
+   259→### Cómo identificar taxis legales
+   260→- **Color amarillo** con placa única (letras y números específicos).
+   261→- **Taxímetro obligatorio** visible en el tablero.
+   262→- **Tarjeta de operación** visible (fotografía del conductor + datos del vehículo).
+   263→- Letrero "TAXI" iluminado en el techo.
+   264→- Placa con la palabra "TAXI" o "T" (servicio público).
+   265→
+   266→### Tarifas (¿tienen taxímetro?)
+   267→- **SÍ**, todos los taxis legales en Bogotá tienen taxímetro obligatorio.
+   268→- La tarifa se calcula por **unidades** (no solo kilometraje): arranca con tarifa mínima, suma unidades por distancia y tiempo.
+   269→- **Recargos oficiales** (vigentes 2025):
+   270→  - **Recargo aeropuerto El Dorado** (ida o vuelta): $5.500 sin factor de calidad / $5.900 con factor de calidad (sobre el taxímetro).
+   271→  - Recargo adicional $7.400 (vigente 2025, según Infobae).
+   272→  - Recargo nocturno (después de 8 p.m. y antes de 5 a.m.).
+   273→  - Recargo por reservación telefónica.
+   274→
+   275→### Apps oficiales
+   276→- **Taxis Libres App** (https://www.taxislibres.com.co): la app 100% colombiana más grande. Permite conocer el valor del viaje previamente, compartir el viaje, monitoreo 24/7. WhatsApp: **310 2111111**.
+   277→- **Yango** se unió con Taxis Libres en febrero 2025 (alianza comercial).
+   278→- **Picap** y **Picap XL**: otra alternativa con motos y autos.
+   279→- **Beat** (operó hasta 2023, actual estado a verificar).
+   280→- **Cabify Taxi**: categoria taxi dentro de Cabify.
+   281→
+   282→### Tarifa aeropuerto → Calle 94 (aproximada)
+   283→- Taxi del aeropuerto (punto oficial en terminal): **~$35.000 – $50.000 COP** (taxímetro + recargo aeropuerto $5.500/5.900 + recargo $7.400).
+   284→- El aeropuerto expide **tiquete con precio exacto** del viaje en taxi (sistema vigente desde 2024).
+   285→- **Fuente**: https://eldorado.aero/servicios/taxis
+   286→
+   287→### Pico y placa taxis
+   288→- **L-S 5:30 a.m. – 9:00 p.m.** (no aplica domingos ni festivos).
+   289→- 4 placas restringidas por día.
+   290→- Multa por incumplir: **$522.900 COP**.
+   291→
+   292→---
+   293→
+   294→## 6. Aeropuerto El Dorado → Calle 94
+   295→
+   296→### Opciones (comparativa)
+   297→
+   298→| Opción | Costo | Tiempo | Ventajas | Desventajas |
+   299→|--------|-------|--------|----------|-------------|
+   300→| **TransMilenio M86/K86** (Bus satélite aeroportuario) | $3.550 COP | 60-90 min (con transbordo) | Más económico, ecológico | No es directo, requiere transbordo en estación intermedia; con maletas es incómodo |
+   301→| **Uber / Cabify** | $30.000 – $45.000 COP | 25-40 min | Cómodo, tarifa previsible | En aeropuerto hay que caminar a zona autorizada (Av. El Dorado o nivel de llegadas); conductores reacios a entrar al aeropuerto por restricciones |
+   302→| **Taxi del aeropuerto (punto oficial)** | $35.000 – $50.000 COP | 25-40 min | Recomendado con maletas; tiquete con precio exacto; seguros y supervisados | Más caro que Uber; posible fila |
+   303→| **Taxi amarillo de la calle** | Variable (taxímetro) | 25-40 min | — | **NO recomendado**: riesgo de sobreprecio al turista; sin tarifa previsible |
+   304→
+   305→### Detalle TransMilenio M86/K86 (dual)
+   306→- **Servicio dual** M86-K86 conecta **Portal El Dorado** ↔ **Aeropuerto El Dorado** ↔ **Hacienda Santa Bárbara** (Cra 7 con Cl 116).
+   307→- **Paradas "Bus satélite aeroportuario"** señalizadas frente a las entradas **1 y 8** del aeropuerto.
+   308→- **Horario**: L-S ampliado; también opera domingos y festivos (verificado: hay documento oficial "Ruta M86 TransMilenio operativa domingos y festivos").
+   309→- **Para llegar a Calle 94**: tomar M86/K86 desde aeropuerto → bajarse en estación intermedia (Cra 7 con Cl 116 / Hacienda Santa Bárbara) → transbordo a troncal B (Autopista Norte) → estación Calle 100 → caminar 600 m a Calle 94.
+   310→- **Costo total**: $3.550 COP (con TuLlave personalizada e integración).
+   311→- **Tiempo total**: 60-90 min con transbordo.
+   312→- **Fuente oficial**: https://www.transmilenio.gov.co/comunicaciones/noticias-de-transmilenio/boletines-informativos/servicios-duales-k86-m86-adicionan-paradas-a-su-recorrido
+   313→
+   314→### Recomendación con maletas
+   315→- **Mejor opción para llegada con maletas**: **Taxi del aeropuerto (punto oficial en el terminal)**. Seguro, tarifa fija (tiquete con precio exacto), sin sorpresas. Costo: $35.000-50.000 COP. Tiempo: 25-40 min.
+   316→- **Alternativa económica sin maletas pesadas**: TransMilenio M86/K86 ($3.550 COP).
+   317→- **Alternativa intermedia**: Uber/Cabify solicitado en zona autorizada del aeropuerto (Av. El Dorado o salida de llegadas). Costo: $30.000-45.000 COP.
+   318→- **EVITAR**: taxis amarillos de la calle sin pedirse por app (riesgo de sobreprecio o安全问题).
+   319→
+   320→### Para la salida (miércoles 22 julio 2026)
+   321→- Mismo análisis. Si el vuelo es temprano (antes de 6 a.m.), **reservar taxi del aeropuerto con anticipación** (los TransMilenio no operan antes de 4 a.m.).
+   322→
+   323→---
+   324→
+   325→## 7. Ciclovía dominical
+   326→
+   327→### Horarios
+   328→- **Domingos y festivos: 7:00 a.m. – 2:00 p.m.** (algunas fuentes mencionan 7:00 a.m. – 1:00 p.m. en ciertas rutas; programación puede variar).
+   329→- También hay **Ciclovía Nocturna** ocasional (ej. diciembre): 6:00 p.m. – 12:00 a.m.
+   330→- **Fuente oficial**: https://www.bogota.gov.co/mi-ciudad/cultura-recreacion-y-deporte/horarios-y-rutas-de-la-ciclovia-bogotana-los-domingos-y-festivos y https://www.idrd.gov.co/ciclovia/mapa-de-la-ciclovia
+   331→
+   332→### Recorridos principales que afectan el norte / Calle 94
+   333→- **Corredores principales** (con cierres viales): Av. Cra 9 (Usaquén → Centro), Av. Boyacá, Calle 116, Av. Suba, Av. NQS, Av. Caracas, Calle 26, Av. Américas, Av. Primero de Mayo, Av. Ciudad de Cali.
+   334→- **Cra 7 (Carrera Séptima)**: históricamente el corredor principal norte-sur. ⚠️ Desde junio 2025 hay **cierre temporal** sobre la Cra 7 por obras del corredor (la Ciclovía se reorganiza en esta zona).
+   335→- **Calle 94 / Chicó**: la Ciclovía **NO pasa directamente** por Calle 94, pero los corredores cercanos (Cra 7, Cra 9, Av. NQS, Calle 100) pueden tener cierres indirectos que afecten movilidad en taxi/Uber.
+   336→- **Mapa oficial actualizado**: https://www.idrd.gov.co/ciclovia/mapa-de-la-ciclovia (nuevo sitio web estrenado en 2025).
+   337→
+   338→### ¿Afecta el domingo 19 de julio 2026?
+   339→- **SÍ, la Ciclovía operará en horario regular** (7 a.m. – 2 p.m.) el domingo 19 de julio 2026.
+   340→- **Impactos esperados**:
+   341→  - Dificultad para moverse en auto/Uber por corredores cerrados, especialmente 7-11 a.m.
+   342→  - TransMilenio **sí opera** en domingo (desde 5 a.m.), pero los buses alimentadores (SITP) que cruzan corredores de Ciclovía pueden tener desvíos.
+   343→  - Recomendación: si sales en auto/Uber el domingo 19, planifica salir antes de 7 a.m. o después de 2 p.m. Caminar o usar TM es preferible.
+   344→- **Aprovechamiento**: la Ciclovía es una excelente actividad gratuita para la pareja el domingo 19 en bicicleta (alquileres disponibles en estaciones de TM "TransMiBici" y privados en Usaquén/Cra 9).
+   345→
+   346→---
+   347→
+   348→## 8. Pico y placa en Bogotá 2025/2026
+   349→
+   350→### Resumen de restricciones (vigentes a 2026)
+   351→| Tipo de vehículo | Horario | Días |
+   352→|------------------|---------|------|
+   353→| **Vehículos particulares** | 6:00 a.m. – 9:00 p.m. | Lunes a Viernes |
+   354→| **Taxis** | 5:30 a.m. – 9:00 p.m. | Lunes a Sábado |
+   355→| **Transporte especial (Uber/Cabify/DiDi)** | 5:30 a.m. – 9:00 p.m. | Lunes a Sábado |
+   356→| **Vehículos de carga > 20 años** | Varias | Varios días |
+   357→
+   358→- **Domingos y festivos: NO aplica pico y placa** a ninguna categoría.
+   359→- **Multa por incumplir**: $522.900 COP.
+   360→- **Rotación vigente** (a partir del 1 de julio de 2025, Decreto 0768 de 2025): 4 placas restringidas por día (6 placas permitidas).
+   361→- **Fuente oficial**: https://www.movilidadbogota.gov.co/pico-y-placa
+   362→
+   363→### ¿Afecta a taxis/Uber?
+   364→- **SÍ, afecta a taxis** y **a Uber/Cabify/DiDi (transporte especial)**, de lunes a sábado, 5:30 a.m. – 9:00 p.m. (rotación de placas).
+   365→- Implicación práctica: en horas pico puede haber **menor disponibilidad** de Uber/taxis (los conductores con placa restringida no circulan), lo que dispara tarifas dinámicas.
+   366→
+   367→### Restricciones para vehículos particulares (importante para "Huevito" el domingo)
+   368→- Lunes a viernes: 6:00 a.m. – 9:00 p.m. (4 placas restringidas por día).
+   369→- **Domingo 19 de julio 2026**: NO aplica pico y placa → "Huevito" puede circular libremente.
+   370→- **Lunes 20 de julio 2026 (feriado)**: NO aplica pico y placa → libre circulación.
+   371→- Martes 21 y miércoles 22 de julio 2026: SÍ aplica pico y placa a particulares (consultar placa de Huevito para esos días específicos; la rotación semanal está en https://www.movilidadbogota.gov.co/pico-y-placa).
+   372→
+   373→### Consulta diaria
+   374→- La Secretaría Distrital de Movilidad publica el calendario actualizado en https://www.movilidadbogota.gov.co/pico-y-placa
+   375→- Apps como Taxis Libres y Waze muestran la restricción del día.
+   376→
+   377→---
+   378→
+   379→## 9. Tabla resumen ejecutiva para el itinerario 15-22 julio 2026
+   380→
+   381→| Día | Actividad clave | Transporte sugerido | Costo estimado (2 personas) |
+   382→|-----|------------------|---------------------|------------------------------|
+   383→| Mié 15 | Llegada aeropuerto → Calle 94 | Taxi oficial aeropuerto | $35.000-50.000 |
+   384→| Jue 16 | Calle 94 → UNAL (día UNAL) | TransMilenio (TuLlave) | $8.000 (2× $3.550 + tarjeta inicial) |
+   385→| Vie 17 | Pupilas dilatadas — día tranquilo | TM o caminar | $8.000 |
+   386→| Sáb 18 | Calle 94 → Monserrate | TM + teleférico (lunes-sábado tarifa) | TM $8.000 + Teleférico $70.000 (2× $35.000) |
+   387→| **Dom 19** | Tren de la Sabana a Zipaquirá | Cabify/Uber a Usaquén + Tren | Cabify $12.000-18.000 + Tren $238.000 (2× $119.000) |
+   388→| **Lun 20** | Calle 94 → Paloquemao (festivo) | TM (opera festivos) | $8.000 |
+   389→| Mar 21 | Calle 94 → JBB | TM + SITP zonal o Cabify | $8.000 o $30.000-44.000 |
+   390→| Mié 22 | Calle 94 → Aeropuerto | Taxi oficial o Uber | $30.000-50.000 |
+   391→
+   392→---
+   393→
+   394→## 10. Datos NO verificados / a confirmar con operadores
+   395→
+   396→- Tarifas exactas Uber/Cabify para los 7 trayectos clave (cotizar en la app el día del viaje).
+   397→- Estado exacto de la estación Museo del Oro al 15 julio 2026 (¿reabre o sigue cerrada por obras?).
+   398→- Programación exacta de la Ciclovía dominical 19 julio 2026 (corredores específicos).
+   399→- Si el servicio M86-K86 al aeropuerto tiene horario extendido en julio 2026 (verificar en buscador de rutas antes del viaje).
+   400→- Tarifa exacta taxi aeropuerto → Calle 94 (varía por taxímetro + recargos; cotizar en taquilla del aeropuerto al llegar).
+   401→- Apertura de venta Tuboleta para tren del 19 julio 2026 (~5 julio 2026).
+   402→- Tarjeta TuLlave personalizada: ¿se puede personalizar con pasaporte extranjero? (oficialmente se requiere cédula colombiana, pero puntos de personalización pueden aceptar pasaporte — a verificar en el punto).
+   403→- Operación del "Tren de Cercanías" Bogotá-Cajicá (Regiotram): NO operativo en 2026 (en construcción).
+   404→
+   405→---
+   406→
+   407→## Fuentes principales consultadas
+   408→
+   409→- **TransMilenio (oficial)**: https://www.transmilenio.gov.co
+   410→- **TuLlave (oficial)**: https://www.tullaveplus.gov.co
+   411→- **Buscador de rutas TransMilenio**: https://buscador-rutas.transmilenio.gov.co
+   412→- **Bogotá.gov.co (Alcaldía)**: https://www.bogota.gov.co
+   413→- **Secretaría Distrital de Movilidad**: https://www.movilidadbogota.gov.co
+   414→- **Turistren (oficial)**: https://turistren.com.co
+   415→- **Tuboleta (venta tren)**: https://tuboleta.com/es/eventos/viaje-en-tren-zipaquira-0
+   416→- **Monserrate (oficial)**: https://monserrate.co/es/horarios-y-tarifas
+   417→- **Cabify tarifas Bogotá**: https://cabify.com/co/tarifas/bogota
+   418→- **Taxis Libres**: https://www.taxislibres.com.co
+   419→- **Aeropuerto El Dorado**: https://eldorado.aero/servicios/taxis
+   420→- **IDRD Ciclovía**: https://www.idrd.gov.co/ciclovia/mapa-de-la-ciclovia
+   421→- **Guía General de Viaje TransMilenio (PDF oficial, corte diciembre 2025)**: https://www.transmilenio.gov.co/files/c263614f-6156-411a-95d7-2af0b734a938/a085d5c2-2128-44c6-965f-9cf66637ef3e/Guia-General-de-viaje-de-TransMilenio-a-corte-de-diciembre-2025.pdf
+   422→

@@ -1,0 +1,23 @@
+{
+  "code": 200,
+  "data": {
+    "description": "",
+    "external": {},
+    "html": "<html><head></head><body>errorMsg: The requested site can only be accessed after submitting an access application and getting it approved.</body></html>",
+    "httpStatus": 403,
+    "httpStatusText": "Forbidden ",
+    "metadata": {},
+    "title": "",
+    "url": "http://cinematecadebogota.gov.co/",
+    "usage": {
+      "tokens": 31
+    },
+    "warning": "Target URL returned error 403: Forbidden "
+  },
+  "meta": {
+    "usage": {
+      "tokens": 31
+    }
+  },
+  "status": 20000
+}

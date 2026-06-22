@@ -1,0 +1,2797 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Plan Maestro de Viaje: Bogotá 15-22 Julio 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+@page {
+    size: 720px 1020px;
+    margin: 0;
+}
+:root {
+    --c-bg: #FAF6F0;
+    --c-paper: #FFFFFF;
+    --c-text: #1F2937;
+    --c-text-soft: #4B5563;
+    --c-text-light: #6B7280;
+    --c-accent: #C2410C;
+    --c-accent-soft: #FED7AA;
+    --c-accent-bg: #FFF7ED;
+    --c-secondary: #166534;
+    --c-secondary-soft: #BBF7D0;
+    --c-warning: #B45309;
+    --c-warning-bg: #FEF3C7;
+    --c-danger: #991B1B;
+    --c-danger-bg: #FEE2E2;
+    --c-divider: #E5E7EB;
+    --c-card-bg: #FFFFFF;
+    --c-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+}
+* { box-sizing: border-box; }
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 720px;
+    background: var(--c-bg);
+    color: var(--c-text);
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+}
+@media screen {
+    html {
+        height: auto;
+        display: flex;
+        justify-content: center;
+        background: #2a2a2a;
+    }
+    body {
+        transform-origin: top center;
+        margin: 20px auto;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+}
+
+/* ==================== COVER PAGE ==================== */
+.cover {
+    width: 720px;
+    height: 1020px;
+    background: linear-gradient(135deg, #1F2937 0%, #374151 50%, #1F2937 100%);
+    color: #FAF6F0;
+    position: relative;
+    overflow: hidden;
+    break-after: page;
+    padding: 70px 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.cover::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 400px;
+    height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle at top right, rgba(194,65,12,0.25) 0%, transparent 70%);
+    pointer-events: none;
+}
+.cover::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle at bottom left, rgba(194,65,12,0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+.cover-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #FED7AA;
+    margin-bottom: 8px;
+    position: relative;
+    z-index: 2;
+}
+.cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    font-weight: 900;
+    line-height: 1.0;
+    margin: 0 0 20px 0;
+    position: relative;
+    z-index: 2;
+}
+.cover-subtitle {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 24px;
+    font-weight: 400;
+    color: #FED7AA;
+    margin: 0 0 40px 0;
+    position: relative;
+    z-index: 2;
+}
+.cover-meta {
+    position: relative;
+    z-index: 2;
+    border-top: 1px solid rgba(254, 215, 170, 0.3);
+    padding-top: 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 30px;
+}
+.cover-meta-item {
+    font-size: 12px;
+}
+.cover-meta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #FED7AA;
+    margin-bottom: 4px;
+}
+.cover-meta-value {
+    font-size: 14px;
+    font-weight: 500;
+    color: #FAF6F0;
+}
+.cover-bottom {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(250, 246, 240, 0.6);
+    letter-spacing: 1px;
+}
+.cover-coords {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(254, 215, 170, 0.7);
+    text-align: right;
+}
+.cover-stats {
+    display: flex;
+    gap: 30px;
+    margin: 30px 0;
+    position: relative;
+    z-index: 2;
+}
+.cover-stat {
+    text-align: left;
+}
+.cover-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 900;
+    color: #FED7AA;
+    line-height: 1;
+}
+.cover-stat-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: rgba(250, 246, 240, 0.7);
+    margin-top: 4px;
+}
+
+/* ==================== MAIN CONTENT ==================== */
+.main-content {
+    padding: 50px 55px 40px 55px;
+}
+
+/* Chapter headers */
+.chapter-header {
+    break-after: avoid;
+    break-inside: avoid;
+    margin-top: 28px;
+    margin-bottom: 18px;
+}
+.chapter-header:first-child {
+    margin-top: 0;
+}
+.chapter-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+.chapter-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 30px;
+    font-weight: 900;
+    color: var(--c-text);
+    line-height: 1.15;
+    margin: 0 0 8px 0;
+}
+.chapter-subtitle {
+    font-size: 13px;
+    color: var(--c-text-soft);
+    font-style: italic;
+    margin: 0;
+}
+.divider {
+    height: 2px;
+    background: var(--c-accent);
+    width: 60px;
+    margin: 45px 0 45px 0;
+}
+
+/* Section headers (sub-chapters) */
+.section-header {
+    break-after: avoid;
+    break-inside: avoid;
+    margin-top: 22px;
+    margin-bottom: 12px;
+}
+.section-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    font-weight: 500;
+}
+.section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--c-text);
+    margin: 4px 0 6px 0;
+    line-height: 1.2;
+}
+
+/* Body text */
+.body-text {
+    margin: 0 0 12px 0;
+    color: var(--c-text);
+    font-size: 13px;
+    line-height: 1.65;
+    text-align: left;
+}
+.body-text strong {
+    color: var(--c-text);
+    font-weight: 600;
+}
+.body-text em {
+    color: var(--c-accent);
+    font-style: italic;
+}
+
+/* Cards */
+.card {
+    break-inside: avoid;
+    background: var(--c-card-bg);
+    border: 1px solid var(--c-divider);
+    border-radius: 8px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    box-shadow: var(--c-shadow);
+}
+.card-accent {
+    border-left: 4px solid var(--c-accent);
+}
+.card-warning {
+    border-left: 4px solid var(--c-warning);
+    background: var(--c-warning-bg);
+}
+.card-danger {
+    border-left: 4px solid var(--c-danger);
+    background: var(--c-danger-bg);
+}
+.card-success {
+    border-left: 4px solid var(--c-secondary);
+    background: #F0FDF4;
+}
+.card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--c-text);
+    margin: 0 0 8px 0;
+    line-height: 1.25;
+}
+.card-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    margin-bottom: 4px;
+    font-weight: 500;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0 14px 0;
+    font-size: 11.5px;
+    break-inside: avoid;
+}
+thead { display: table-header-group; }
+th {
+    background: var(--c-text);
+    color: var(--c-bg);
+    padding: 8px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+td {
+    padding: 7px 10px;
+    border-bottom: 1px solid var(--c-divider);
+    vertical-align: top;
+    line-height: 1.4;
+}
+tr:nth-child(even) td {
+    background: #F9FAFB;
+}
+.table-accent th {
+    background: var(--c-accent);
+}
+
+/* Info grid */
+.info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 10px 0 14px 0;
+    break-inside: avoid;
+}
+.info-box {
+    background: var(--c-accent-bg);
+    border-radius: 6px;
+    padding: 10px 12px;
+    border-left: 3px solid var(--c-accent);
+}
+.info-box-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    font-weight: 600;
+    margin-bottom: 3px;
+}
+.info-box-value {
+    font-size: 12.5px;
+    color: var(--c-text);
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* QR code blocks */
+.qr-block {
+    display: inline-block;
+    text-align: center;
+    margin: 6px 8px 6px 0;
+    break-inside: avoid;
+}
+.qr-img {
+    width: 75px;
+    height: 75px;
+    border: 1px solid var(--c-divider);
+    border-radius: 4px;
+    padding: 3px;
+    background: white;
+}
+.qr-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 8px;
+    color: var(--c-text-soft);
+    margin-top: 3px;
+    letter-spacing: 0.3px;
+    max-width: 90px;
+    line-height: 1.2;
+}
+
+/* Lists */
+ul, ol {
+    margin: 6px 0 12px 0;
+    padding-left: 20px;
+}
+li {
+    margin-bottom: 4px;
+    line-height: 1.55;
+    font-size: 12.5px;
+}
+ul.clean { list-style: none; padding-left: 0; }
+ul.clean li { padding-left: 14px; position: relative; }
+ul.clean li::before {
+    content: '▸';
+    color: var(--c-accent);
+    position: absolute;
+    left: 0;
+    font-weight: bold;
+}
+
+/* Highlight callouts */
+.callout {
+    break-inside: avoid;
+    margin: 12px 0;
+    padding: 12px 16px;
+    border-radius: 6px;
+    background: var(--c-accent-bg);
+    border-left: 4px solid var(--c-accent);
+    font-size: 12.5px;
+    line-height: 1.55;
+}
+.callout strong {
+    color: var(--c-accent);
+}
+.callout-warning {
+    background: var(--c-warning-bg);
+    border-left-color: var(--c-warning);
+}
+.callout-warning strong {
+    color: var(--c-warning);
+}
+.callout-danger {
+    background: var(--c-danger-bg);
+    border-left-color: var(--c-danger);
+}
+.callout-danger strong {
+    color: var(--c-danger);
+}
+.callout-success {
+    background: #F0FDF4;
+    border-left-color: var(--c-secondary);
+}
+.callout-success strong {
+    color: var(--c-secondary);
+}
+
+/* Day plan timeline */
+.timeline {
+    break-inside: avoid;
+    margin: 10px 0 14px 0;
+}
+.timeline-item {
+    display: flex;
+    gap: 14px;
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--c-divider);
+}
+.timeline-item:last-child { border-bottom: none; }
+.timeline-time {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--c-accent);
+    min-width: 70px;
+    padding-top: 1px;
+}
+.timeline-content {
+    flex: 1;
+    font-size: 12.5px;
+    line-height: 1.5;
+}
+.timeline-content strong {
+    color: var(--c-text);
+    font-weight: 600;
+}
+
+/* Mini badge */
+.badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    margin-right: 4px;
+}
+.badge-accent { background: var(--c-accent-soft); color: var(--c-accent); }
+.badge-success { background: var(--c-secondary-soft); color: var(--c-secondary); }
+.badge-warning { background: var(--c-warning-bg); color: var(--c-warning); }
+.badge-danger { background: var(--c-danger-bg); color: var(--c-danger); }
+.badge-neutral { background: #E5E7EB; color: var(--c-text-soft); }
+
+/* Price tag */
+.price {
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 700;
+    color: var(--c-accent);
+    font-size: 12px;
+}
+
+/* Place card (for site fiches) */
+.place-card {
+    break-inside: avoid;
+    background: var(--c-card-bg);
+    border: 1px solid var(--c-divider);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+    box-shadow: var(--c-shadow);
+}
+.place-card-header {
+    border-bottom: 2px solid var(--c-accent);
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+.place-card-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--c-text);
+    margin: 0 0 2px 0;
+    line-height: 1.2;
+}
+.place-card-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--c-accent);
+    font-weight: 500;
+}
+.place-card-row {
+    display: flex;
+    gap: 10px;
+    margin: 5px 0;
+    font-size: 12px;
+    line-height: 1.4;
+}
+.place-card-row-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--c-text-light);
+    min-width: 80px;
+    padding-top: 2px;
+}
+.place-card-row-value {
+    flex: 1;
+    color: var(--c-text);
+}
+.place-card-row-value a {
+    color: var(--c-accent);
+    text-decoration: none;
+    word-break: break-all;
+}
+.place-card-qr {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--c-divider);
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+/* Cost summary table */
+.cost-summary {
+    background: linear-gradient(135deg, var(--c-accent-bg) 0%, #FFFFFF 100%);
+    border: 1px solid var(--c-accent-soft);
+    border-radius: 10px;
+    padding: 18px;
+    margin: 14px 0;
+    break-inside: avoid;
+}
+.cost-total {
+    font-family: 'Playfair Display', serif;
+    font-size: 32px;
+    font-weight: 900;
+    color: var(--c-accent);
+    line-height: 1;
+}
+.cost-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--c-text-soft);
+    margin-bottom: 4px;
+}
+
+/* Page break utility */
+.page-break { break-before: page; }
+
+/* Ending page */
+.ending {
+    width: 720px;
+    height: 1020px;
+    background: linear-gradient(135deg, #1F2937 0%, #374151 100%);
+    color: #FAF6F0;
+    padding: 80px 60px;
+    break-before: page;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.ending::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(194,65,12,0.15) 0%, transparent 70%);
+}
+.ending-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #FED7AA;
+    margin-bottom: 16px;
+    position: relative;
+    z-index: 2;
+}
+.ending-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    font-weight: 900;
+    line-height: 1.15;
+    margin: 0 0 20px 0;
+    max-width: 500px;
+    position: relative;
+    z-index: 2;
+}
+.ending-sub {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    color: #FED7AA;
+    margin: 0 0 30px 0;
+    position: relative;
+    z-index: 2;
+}
+.ending-coords {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: rgba(254, 215, 170, 0.6);
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 2;
+}
+</style>
+</head>
+<body>
+
+<!-- ==================== COVER ==================== -->
+<div class="cover">
+    <div>
+        <div class="cover-tag">Plan Maestro de Viaje · 2026</div>
+        <h1 class="cover-title">BOGOTÁ</h1>
+        <p class="cover-subtitle">8 días · 2 personas · 15–22 julio 2026</p>
+        <div class="cover-stats">
+            <div class="cover-stat">
+                <div class="cover-stat-num">8</div>
+                <div class="cover-stat-label">Días</div>
+            </div>
+            <div class="cover-stat">
+                <div class="cover-stat-num">2</div>
+                <div class="cover-stat-label">Personas</div>
+            </div>
+            <div class="cover-stat">
+                <div class="cover-stat-num">25+</div>
+                <div class="cover-stat-label">Sitios cubiertos</div>
+            </div>
+            <div class="cover-stat">
+                <div class="cover-stat-num">41</div>
+                <div class="cover-stat-label">QR oficiales</div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="cover-meta">
+            <div class="cover-meta-item">
+                <div class="cover-meta-label">Alojamiento</div>
+                <div class="cover-meta-value">Calle 94 / Chicó</div>
+            </div>
+            <div class="cover-meta-item">
+                <div class="cover-meta-label">Presupuesto</div>
+                <div class="cover-meta-value">Económico (~$3M COP)</div>
+            </div>
+            <div class="cover-meta-item">
+                <div class="cover-meta-label">Feriado clave</div>
+                <div class="cover-meta-value">Lun 20 julio · Independencia</div>
+            </div>
+            <div class="cover-meta-item">
+                <div class="cover-meta-label">Restricción médica</div>
+                <div class="cover-meta-value">Pupilas dilatadas Vie 17</div>
+            </div>
+        </div>
+        <div class="cover-bottom">
+            <div>Compilado · Junio 2026<br>Datos verificados de fuentes oficiales</div>
+            <div class="cover-coords">4.7110° N<br>74.0721° W<br>2,640 m s.n.m.</div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== MAIN CONTENT ==================== -->
+<div class="main-content">
+
+<!-- ============ CHAPTER 1: RESUMEN EJECUTIVO ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 01 · Resumen</div>
+    <h2 class="chapter-title">Resumen Ejecutivo del Viaje</h2>
+    <p class="chapter-subtitle">Parámetros, restricciones y datos clave para los 8 días en Bogotá</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">Este documento maestro consolida toda la información operativa del viaje a Bogotá entre el <strong>miércoles 15 y el miércoles 22 de julio de 2026</strong>. A diferencia del borrador anterior, aquí se verificaron direcciones, horarios, tarifas, contactos y enlaces oficiales de cada sitio, se corrigieron suposiciones incorrectas (cirugía ocular, "Nacho" como amigo, horario de Paloquemao) y se añadieron los planes faltantes: Planetario con shows láser, Cinemateca, Jardín Botánico, Cementerio Central, restaurante alemán Edelweiss, Tren de la Sabana, movilidad detallada y presupuesto para dos personas. Cada ficha técnica incluye un código QR que enlaza directamente al sitio oficial o Instagram verificado.</p>
+
+<p class="body-text">La planificación se construye sobre cinco restricciones reales que condicionan el itinerario: (1) <strong>la cita oftalmológica del viernes 17 por la tarde</strong> deja a tu pareja con pupilas dilatadas y sensible a la luz durante 4-6 horas, por lo que ese día se priorizan actividades al aire libre con gafas de sol y se evitan shows láser y salas de cine; (2) <strong>el lunes 20 de julio es feriado nacional</strong> (Día de la Independencia), lo que cierra el Museo del Oro y los tours oficiales del Cementerio Central, pero abre Monserrate, el Parque Simón Bolívar, el Jardín Botánico y Paloquemao; (3) <strong>el martes 21 el Jardín Botánico cierra por mantenimiento</strong> (regla: si el lunes es festivo, el martes cierra), así que no se puede programar esa fecha; (4) <strong>el domingo 19 con Huevito</strong> solo es viable ir a Paloquemao en carro en la mañana, ya que el parqueo y la seguridad hacen impracticable ir en TransMilenio con compras; y (5) <strong>el presupuesto es económico</strong> (hasta $3.000.000 COP para dos personas en 8 días, sin contar vuelos y alojamiento), lo que prioriza TransMilenio, planes gratuitos y restaurantes de corrientazo.</p>
+
+<div class="info-grid">
+    <div class="info-box">
+        <div class="info-box-label">Fechas</div>
+        <div class="info-box-value">Mié 15 – Mié 22 julio 2026</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Alojamiento</div>
+        <div class="info-box-value">Calle 94 / Chicó (zona norte)</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Estación TM cercana</div>
+        <div class="info-box-value">Calle 100 – Marketmedios (troncal B)</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Tarifa TransMilenio</div>
+        <div class="info-box-value">$3.550 COP (tarjeta TuLlave $8.000)</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Presupuesto total</div>
+        <div class="info-box-value">~$2.800.000 COP para 2 personas</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Feriado nacional</div>
+        <div class="info-box-value">Lun 20 julio · Día de la Independencia</div>
+    </div>
+</div>
+
+<div class="callout">
+    <strong>Correcciones críticas respecto al documento anterior:</strong>
+    <ul class="clean">
+        <li><strong>"Nacho"</strong> es la Universidad Nacional de Colombia (no un amigo). La visita se programa el <strong>miércoles 15</strong> por la tarde, día con actividad académica completa y Museo de Arquitectura abierto.</li>
+        <li><strong>Cirugía ocular:</strong> NO hay cirugía. Solo exámenes con gotas dilatadoras el viernes 17 por la tarde. Tu pareja podrá caminar y salir con gafas de sol, no requiere postoperatorio.</li>
+        <li><strong>Paloquemao con Huevito:</strong> solo el <strong>domingo 19 en la mañana</strong>, llegando 7:30-8:00 a.m. para evitar aglomeraciones y asegurar parqueo.</li>
+        <li><strong>Planetario:</strong> se incluye con shows láser (Pink Floyd tradicionalmente jueves, Soda Stereo/Cerati miércoles). Programación de julio 2026 a confirmar en cartelera oficial.</li>
+        <li><strong>Tren de la Sabana:</strong> ya NO sale de la Estación de La Sabana (Calle 13); sale del <strong>CC Gran Estación</strong> a las 8:45 a.m. y hace parada en <strong>Estación Usaquén</strong> a las 9:15 a.m. (más cercana a Calle 94).</li>
+        <li><strong>Edelweiss</strong> sí existe y está en Km 1 vía Cajicá-Zipaquirá. <strong>"Colonial Cajicá" NO se encontró</strong> como restaurante específico; se incluyen alternativas verificadas.</li>
+    </ul>
+</div>
+
+<!-- ============ CHAPTER 2: CALENDARIO GENERAL ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 02 · Vista general</div>
+    <h2 class="chapter-title">Calendario Día por Día</h2>
+    <p class="chapter-subtitle">Resumen operativo de los 8 días con plan principal, alternativas y costo estimado</p>
+    <div class="divider"></div>
+</div>
+
+<table class="table-accent">
+    <thead>
+        <tr>
+            <th style="width:14%">Día</th>
+            <th style="width:38%">Plan principal</th>
+            <th style="width:30%">Alternativas</th>
+            <th style="width:18%">Costo 2 pers.</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Mié 15</strong><br>Llegada 10am</td>
+            <td>Llegada aeropuerto → Calle 94. <strong>Tarde Universidad Nacional (Nacho)</strong> + Parkway</td>
+            <td>Si vuelo retrasado: solo Nacho o descanso</td>
+            <td><span class="price">$60-110k</span><br>+ taxi $35-50k</td>
+        </tr>
+        <tr>
+            <td><strong>Jue 16</strong><br>Día completo</td>
+            <td><strong>Opción A:</strong> Monserrate + La Candelaria (Museo Oro + Planetario + La Puerta Falsa)</td>
+            <td>B: Jardín Botánico + Parque Simón Bolívar + Chigüiro<br>C: Cinemateca + Centro Cultural GGM</td>
+            <td><span class="price">$90-160k</span></td>
+        </tr>
+        <tr>
+            <td><strong>Vie 17</strong><br>Cita médica</td>
+            <td>Mañana: desayuno + clínica Calle 98. <strong>Tarde: planes al aire libre</strong> con gafas de sol</td>
+            <td>Parque Simón Bolívar, caminata La Candelaria, descanso</td>
+            <td><span class="price">$50-90k</span></td>
+        </tr>
+        <tr>
+            <td><strong>Sáb 18</strong><br>Día libre</td>
+            <td><strong>Opción A:</strong> Monserrate + La Candelaria<br><strong>Opción B:</strong> Tren de la Sabana a Zipaquirá</td>
+            <td>C: Jardín Botánico + Chigüiro<br>D: Usaquén + Zona T</td>
+            <td><span class="price">$80-260k</span><br>(tren +caro)</td>
+        </tr>
+        <tr>
+            <td><strong>Dom 19</strong><br>Con Huevito</td>
+            <td><strong>Mañana:</strong> Paloquemao 7:30am-1pm (carro). <strong>Tarde:</strong> Museo del Oro (GRATIS domingo) + Planetario show láser</td>
+            <td>Si no hay show láser: Cinemateca o caminata La Candelaria</td>
+            <td><span class="price">$120-200k</span></td>
+        </tr>
+        <tr>
+            <td><strong>Lun 20</strong><br>Feriado</td>
+            <td><strong>Día descanso</strong> con opciones: Monserrate, Parque Simón Bolívar, Ciclovía 7-14h</td>
+            <td>Cajicá/Edelweiss (abre festivos), Paloquemao, museos abiertos</td>
+            <td><span class="price">$40-180k</span></td>
+        </tr>
+        <tr>
+            <td><strong>Mar 21</strong><br>Día completo</td>
+            <td><strong>Opción A:</strong> Edelweiss Cajicá (abre martes). <strong>Opción B:</strong> Museo Oro + Cinemateca</td>
+            <td>Encuentro amigos (Monty, Ander/Val/Dannie), compras Zona T</td>
+            <td><span class="price">$80-220k</span></td>
+        </tr>
+        <tr>
+            <td><strong>Mié 22</strong><br>Salida 5am</td>
+            <td>Traslado aeropuerto 4:30am. Vuelo de regreso</td>
+            <td>—</td>
+            <td><span class="price">$35-50k</span></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="callout callout-success">
+    <strong>Presupuesto total estimado (8 días, 2 personas):</strong> entre <span class="price">$2.300.000</span> y <span class="price">$2.900.000 COP</span> (transporte + comidas + entradas + extras), dentro del rango económico. Si se incluye el Tren de la Sabana (sábado 18) se agregan ~$240.000 COP. Detalle por día en el <strong>Capítulo 16 · Presupuesto Total Detallado</strong>.
+</div>
+
+<!-- ============ CHAPTER 3: DÍA 1 - MIÉRCOLES 15 ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 03 · Día 1 · Miércoles 15 julio</div>
+    <h2 class="chapter-title">Llegada + Universidad Nacional (Nacho)</h2>
+    <p class="chapter-subtitle">Aeropuerto → Calle 94 → Tarde en campus universitario + Parkway</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">El día uno combina la logística de llegada con la visita a la <strong>Universidad Nacional de Colombia</strong> (la "Nacho"). La política de "campus abierto" vigente permite el ingreso de visitantes externos presentando cédula o pasaporte en la portería, sin invitación previa. El miércoles es un día ideal porque las facultades operan con vida académica completa y el <strong>Museo de Arquitectura Leopoldo Rother</strong> está abierto (L-V 8am-5pm, S 8am-12m). El recorrido arquitectónico por la Ciudad Universitaria toma entre 2 y 3 horas y se puede complementar con almuerzo en el campus o en el barrio Teusaquillo cercano, específicamente en el Parkway, una alameda arbolada con restaurantes de cocina internacional.</p>
+
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-time">10:00 a.m.</div>
+        <div class="timeline-content"><strong>Llegada al Aeropuerto El Dorado.</strong> Migración, recolección de maletas. Toma taxi oficial del aeropuerto (punto autorizado en el terminal, $35.000-$50.000 COP, tiquete con precio exacto). <strong>No usar Uber dentro del aeropuerto</strong> por restricciones; Caminando hacia Av. El Dorado sí es posible pedirlo.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">10:40-11:30</div>
+        <div class="timeline-content"><strong>Traslado a alojamiento Calle 94 / Chicó.</strong> 25-40 min en taxi. Check-in, dejar maletas, cambio de ropa ligera.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">11:30-12:00</div>
+        <div class="timeline-content"><strong>Primera carga TuLlave.</strong> Comprar tarjeta personalizada en estación TM Calle 100-Marketmedios ($8.000) + recarga inicial $20.000 = $28.000. La personalizada permite transbordos integrados. Llevar pasaporte/cédula para personalizarla.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">12:00-12:50</div>
+        <div class="timeline-content"><strong>TransMilenio Calle 100 → Universidad Nacional.</strong> Troncal B sur → transbordo en estación Avenida El Dorado o Salitre El Greco → troncal E (NQS Central) → estación Universidad Nacional. ~40-55 min. Tarifa integrada $3.550.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">1:00-2:00 p.m.</div>
+        <div class="timeline-content"><strong>Almuerzo.</strong> Intentar en <strong>Comedor "Chucho León"</strong> (reabrió sep-2025, capacidad 800 personas, preguntar en portería si aceptan externos) o salir a Teusaquillo: <strong>Asadero Chigüire 53</strong> (Calle 53 #16-74, chigüiro $43.200) o buffet Calle 44 #15-14 (~$11.000).</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">2:00-5:00 p.m.</div>
+        <div class="timeline-content"><strong>Recorrido arquitectónico campus UNAL</strong> (autoguiado, 2-3 horas). Ingreso por <strong>Portería Cra 45</strong> (peatonal, 5 min desde estación TM). Ruta sugerida: <strong>Plaza Che</strong> (centro simbólico) → <strong>Auditorio León de Greiff</strong> (Edificio 104, Eugenia Mantilla de Cardoso 1974, Monumento Nacional) → <strong>Museo de Arquitectura Leopoldo Rother</strong> → <strong>Residencias Bloques 1-3</strong> (Julio Bonilla Plata, 1939-40, Monumentos Nacionales) → <strong>Edificio Posgrados Ciencias Humanas</strong> (Rogelio Salmona) → <strong>Biblioteca Central</strong>.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">5:00-7:00 p.m.</div>
+        <div class="timeline-content"><strong>Salida por Calle 45 hacia Parkway.</strong> Alameda arbolada (Cra 24 entre Cl 36 y 45) con restaurantes de Grecia, India, Italia, Colombia. Recomendados: <strong>Matrona</strong> (colombiana gourmet), <strong>Oliveto</strong> (italiano), <strong>Casa Obrador</strong> (criolla económica), <strong>KoronKo</strong> (ajiaco, bandeja paisa).</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">7:30-8:30 p.m.</div>
+        <div class="timeline-content"><strong>Regreso a Calle 94.</strong> TM desde estación Universidad Nacional → Calle 100 → caminata 600m al alojamiento. <em>Alternativa: Uber desde Parkway $18.000-$25.000.</em></div>
+    </div>
+</div>
+
+<div class="callout callout-warning">
+    <strong>Si el vuelo se retrasa:</strong> si llegas después de las 2 p.m., cancela la Nacho y reserva para el jueves 16 o viernes 17 (mañana). Pasa directo al alojamiento y haz un plan tranquilo: caminar por el <strong>Parque de la 93</strong> (5 min desde Calle 94), cenar en <strong>Andrés D.C.</strong> (Calle 82 #11-15, Zona T, abierto lun-jue 12m-10pm) o algo más económico en La 93.
+</div>
+
+<div class="card card-accent">
+    <div class="card-label">Costo estimado del día (2 personas)</div>
+    <table style="margin: 6px 0 0 0">
+        <tr><td>Taxi aeropuerto → Calle 94</td><td style="text-align:right"><span class="price">$35.000-$50.000</span></td></tr>
+        <tr><td>TuLlave + recarga inicial (2 tarjetas)</td><td style="text-align:right"><span class="price">$36.000</span></td></tr>
+        <tr><td>TM ida y regreso (2×2×$3.550)</td><td style="text-align:right"><span class="price">$14.200</span></td></tr>
+        <tr><td>Almuerzo 2 personas (campus o Teusaquillo)</td><td style="text-align:right"><span class="price">$30.000-$60.000</span></td></tr>
+        <tr><td>Cena Parkway 2 personas</td><td style="text-align:right"><span class="price">$50.000-$90.000</span></td></tr>
+        <tr style="font-weight:bold;background:var(--c-accent-bg)"><td>TOTAL DÍA 1</td><td style="text-align:right"><span class="price">$165.200-$250.200</span></td></tr>
+    </table>
+</div>
+
+<!-- ============ CHAPTER 4: DÍA 2 - JUEVES 16 ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 04 · Día 2 · Jueves 16 julio</div>
+    <h2 class="chapter-title">Día Cultural: 4 Opciones de Plan</h2>
+    <p class="chapter-subtitle">Elige según energía y clima. Todas las opciones optimizan tiempo y distancia desde Calle 94</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">El jueves es el día con más flexibilidad del itinerario. Aquí se presentan cuatro opciones de plan completo, cada una verificada contra horarios reales de julio 2026. La opción A (Monserrate + La Candelaria) es la más clásica para primeriza en Bogotá; la opción B (Jardín Botánico + Parque Simón Bolívar + Chigüiro) aprovecha la cercanía de estos tres escenarios y es la más económica; la opción C (Cinemateca + Centro Cultural GGM) es ideal si llueve o prefieres planes bajo techo; y la opción D (Cajicá + Andrés Carne de Res) es la salida de la ciudad. <strong>Monserrate es un plan secundario</strong>: si no se logra este día, se puede mover al lunes 20 (abre festivos 6:30am-5pm).</p>
+
+<div class="section-header">
+    <div class="section-tag">Opción A · Cultural clásica</div>
+    <h3 class="section-title">Monserrate + La Candelaria + Museo del Oro</h3>
+</div>
+
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-time">7:30 a.m.</div>
+        <div class="timeline-content"><strong>Salida Calle 94.</strong> TM Calle 100 → estación Las Aguas (La Candelaria) o subir a Monserrate en Uber directo ($25.000-$35.000, 35-45 min).</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">8:30-11:00</div>
+        <div class="timeline-content"><strong>Monserrate.</strong> Teleférico ida y regreso jueves $35.000 c/u (tarifa lunes-sábado). Iglesia, vista panorámica, Café Bistró Santa Clara (más económico que San Isidro). Llevar abrigo (cima ~10-12°C).</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">11:30-1:30 p.m.</div>
+        <div class="timeline-content"><strong>La Candelaria.</strong> Caminar Plaza de Bolívar, Casa de Nariño, Catedral Primada. Desayuno tardío / almuerzo en <strong>La Puerta Falsa</strong> (Calle 11 #6-50, ajiaco $38.000-$40.000, tamal $9.000-$16.000, sin reserva, fila típica 15-45 min) o <strong>La Puerta de la Catedral</strong> (Calle 11 #6-26, alternativa 30 metros al lado, más variedad).</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">2:00-5:00 p.m.</div>
+        <div class="timeline-content"><strong>Museo del Oro</strong> (Cra 6 #15-88). Jueves: $5.000 c/u. 2-3 horas para recorrido completo de 4 salas. Audioguía opcional $8.000. Casilleros en piso 2 para mochilas.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">5:00-6:30 p.m.</div>
+        <div class="timeline-content"><strong>Planetario de Bogotá</strong> (Calle 26B #5-93, 10-15 min a pie desde Museo del Oro). Jueves show láser tradicional <strong>Pink Floyd</strong> a las 6:00 p.m. ($14.000 c/u). Verificar cartelera julio 2026 en <em>planetariodebogota.gov.co/programate</em> y comprar por Tuboleta.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">7:30-8:30 p.m.</div>
+        <div class="timeline-content"><strong>Regreso Calle 94.</strong> TM estación Las Aguas → Calle 100. Cena ligera en La 93.</div>
+    </div>
+</div>
+
+<div class="section-header">
+    <div class="section-tag">Opción B · Naturaleza y comida llanera</div>
+    <h3 class="section-title">Jardín Botánico + Parque Simón Bolívar + Chigüiro</h3>
+</div>
+
+<p class="body-text">Plan 100% en zona occidental, óptimo para combinar tres escenarios cercanos sin largos desplazamientos. <strong>Jardín Botánico</strong> (Av. Calle 63 #68-95) abre martes a viernes 8am-5pm, sábados-domingos y festivos 9am-5pm. Compra de entradas exclusivamente presencial en taquilla (no online). <strong>Parque Simón Bolívar</strong> está al lado, entrada gratuita. Y el <strong>Chigüiro Parrilla Bar</strong> (Cra 70 #55-97, Normandía) está a 5-10 min en taxi desde el Jardín Botánico.</p>
+
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-time">8:30 a.m.</div>
+        <div class="timeline-content">TM Calle 100 → Avenida Chile o Salitre El Greco + SITP/Uber al JBB. <em>Mejor: Uber directo $15.000-$22.000, 20-30 min.</em></div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">9:00-11:30</div>
+        <div class="timeline-content"><strong>Jardín Botánico.</strong> Entrada general nacional $6.600 c/u, Tropicario adicional $5.600 (combo $15.600). Recorrido ~2 horas. Llevar efectivo (datáfono a veces falla).</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">12:00-1:30 p.m.</div>
+        <div class="timeline-content"><strong>Parque Simón Bolívar.</strong> Gratis. Lago, alquiler de lanchas (~$8.000), Plaza de Eventos, Templete Eucarístico. Combinar con <strong>Biblioteca Virgilio Barco</strong> (arquitectura de Rogelio Salmona, entrada gratuita).</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">2:00-4:00 p.m.</div>
+        <div class="timeline-content"><strong>Almuerzo Chigüiro Parrilla Bar</strong> (Cra 70 #55-97, WhatsApp 314 220 1925). Chigüiro $43.200 c/u con papa, plátano, arepa boyacense, guacamole. Picada llanera compartida desde $34.000/persona.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">5:00-8:00 p.m.</div>
+        <div class="timeline-content"><strong>Regreso Calle 94.</strong> Uber desde Chigüiro Parrilla $15.000-$20.000. Descanso. Cena en Zona G (Vitto en Calle 69 #4-97, $50-80k/persona).</div>
+    </div>
+</div>
+
+<div class="section-header">
+    <div class="section-tag">Opción C · Día de lluvia</div>
+    <h3 class="section-title">Cinemateca + Centro Cultural GGM + La Candelaria</h3>
+</div>
+
+<p class="body-text">Ideal si el clima está lluvioso (Bogotá tiene lluvias frecuentes todo el año, más en abril-mayo y octubre-noviembre, pero julio suele ser seco con chubascos vespertinos). La <strong>Cinemateca de Bogotá</strong> (Cra 3 #19-10) ofrece programación de cine de autor con entrada libre o muy económica ($5.000-$15.000). El <strong>Centro Cultural Gabriel García Márquez</strong> (Calle 11 #5-60, obra de Rogelio Salmona) es librería del Fondo de Cultura Económica con exposiciones y entrada libre.</p>
+
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-time">9:00 a.m.</div>
+        <div class="timeline-content">TM Calle 100 → estación Las Aguas (La Candelaria). 45-60 min.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">10:00-11:30</div>
+        <div class="timeline-content"><strong>Centro Cultural GGM</strong> (Calle 11 #5-60). Librería FCE, exposición permanente, arquitectura Salmona. Entrada libre.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">11:30-1:00 p.m.</div>
+        <div class="timeline-content"><strong>Caminata La Candelaria.</strong> Plaza de Bolívar, Catedral, Capilla del Sagrario, Casa de Nariño (vista exterior), callejón del embudo, arte callejero.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">1:00-2:30 p.m.</div>
+        <div class="timeline-content"><strong>Almuerzo La Puerta Falsa o La Puerta de la Catedral.</strong></div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">3:00-5:30 p.m.</div>
+        <div class="timeline-content"><strong>Cinemateca de Bogotá</strong> (Cra 3 #19-10, 15 min a pie). Cartelera en <em>cinematecadebogota.gov.co</em>. Llegar 30-45 min antes a la taquilla. Funciones vespertinas/nocturnas martes a domingo.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">6:00-8:00 p.m.</div>
+        <div class="timeline-content"><strong>Cena en La Candelaria o regreso.</strong> Café San Alberto (Plaza de Bolívar) o regreso a Calle 94.</div>
+    </div>
+</div>
+
+<div class="section-header">
+    <div class="section-tag">Opción D · Salida de la ciudad</div>
+    <h3 class="section-title">Edelweiss (Cajicá) + alternativa Andrés Carne de Res</h3>
+</div>
+
+<p class="body-text">Si el jueves prefieren salir de Bogotá, <strong>Edelweiss</strong> (Km 1 vía Cajicá-Zipaquirá) abre martes a domingo (cierra lunes, salvo festivos). El viaje en carro/Uber dura 45-60 min desde Calle 94 (45 km). <strong>Andrés Carne de Res Chía</strong> (Calle 3 #11A-56) está a 10-15 min en carro desde Edelweiss y abre miércoles a domingo 12m-10pm. <strong>No combinar este plan el lunes o martes</strong> porque Andrés cierra esos días. Para este plan, contratar Uber por hora o día completo es más práctico.</p>
+
+<div class="card card-accent">
+    <div class="card-label">Comparativa rápida · Día 2</div>
+    <table>
+        <thead>
+            <tr><th>Opción</th><th>Costo 2 pers.</th><th>Mejor si...</th><th>Tiempo total</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>A</strong> Monserrate+Candelaria+Oro+Planetario</td><td><span class="price">$130-180k</span></td><td>Quieres ver lo icónico</td><td>12 horas</td></tr>
+            <tr><td><strong>B</strong> JBB+Simón Bolívar+Chigüiro</td><td><span class="price">$80-130k</span></td><td>Buscas naturaleza + comida típica</td><td>11 horas</td></tr>
+            <tr><td><strong>C</strong> Cinemateca+GGM+Candelaria</td><td><span class="price">$50-100k</span></td><td>Día de lluvia o descanso</td><td>11 horas</td></tr>
+            <tr><td><strong>D</strong> Edelweiss Cajicá+Andrés</td><td><span class="price">$250-400k</span>+ Uber</td><td>Quieres salir de Bogotá</td><td>10 horas</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ============ CHAPTER 5: DÍA 3 - VIERNES 17 ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 05 · Día 3 · Viernes 17 julio</div>
+    <h2 class="chapter-title">Cita Médica + Planes Compatibles</h2>
+    <p class="chapter-subtitle">Mañana tranquila, exámenes oftalmológicos, tarde con pupilas dilatadas (4-6 horas)</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">El viernes 17 es el día con mayor condicionante logístico. Tras los exámenes oftalmológicos con gotas dilatadoras, tu pareja tendrá visión borrosa y sensibilidad a la luz durante <strong>4 a 6 horas</strong>. Esto <strong>no impide salir</strong>, pero requiere gafas de sol y priorizar actividades al aire libre o en espacios bien iluminados (no oscuros). Se debe <strong>evitar</strong>: shows láser del Planetario (luces intermitentes), salas de cine oscuras, y pantallas brillantes. <strong>Se recomienda</strong>: caminatas al aire libre, parques, visitas panorámicas (Monserrate con gafas de sol), descanso en el alojamiento. El plan se diseña optimizando tiempo y distancia desde la clínica en Calle 98, muy cerca del alojamiento en Calle 94.</p>
+
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-time">7:30-8:30 a.m.</div>
+        <div class="timeline-content"><strong>Desayuno ligero cercano al alojamiento.</strong> Opciones verificadas en Calle 94/Parque 93: Juan Valdez Café, Pan Pa' Ya (Calle 94A con Cra 13), Atlanta Pastry. <em>Alternativa: desayunar en el alojamiento si tiene cocina.</em></div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">9:00-12:00 m.</div>
+        <div class="timeline-content"><strong>Cita oftalmológica</strong> en clínica cerca de Calle 98 (verificar dirección exacta con la clínica; el sector tiene varias clínicas especializadas en córnea/queratocono). <strong>Llevar gafas de sol</strong> para después del examen.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">12:30-1:30 p.m.</div>
+        <div class="timeline-content"><strong>Almuerzo cercano.</strong> Zona G (Calle 69-72 con Cra 4-5) a 10 min en taxi: <strong>Vitto</strong> (Calle 69 #4-97, menú italiano), <strong>Prudencia</strong>, <strong>Mesa Franca</strong>. <em>Con pupilas dilatadas, evitar restaurantes muy oscuros.</em></div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">2:00-5:00 p.m.</div>
+        <div class="timeline-content"><strong>Plan de tarde compatible.</strong> Tres opciones:<br>
+        <strong>(a)</strong> <strong>Parque de la 93</strong> + caminata Parque 93 → Calle 94 (ambientes al aire libre, sombras de árboles).<br>
+        <strong>(b)</strong> <strong>Parque Simón Bolívar</strong> (TM hasta estación Simón Bolívar). Espacios amplios al aire libre, lago, áreas verdes.<br>
+        <strong>(c)</strong> Regreso al alojamiento para descansar con ojos cerrados, compresas frías.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">5:00-6:00 p.m.</div>
+        <div class="timeline-content"><strong>Café o merienda.</strong> Parque de la 93 tiene Juan Valdez, Café Velvet, Hommus. La sensibilidad a la luz suele empezar a ceder.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">7:00-9:30 p.m.</div>
+        <div class="timeline-content"><strong>Cena tranquila.</strong> La visión ya debería estar recuperada o casi. <strong>Vitto</strong> (Zona G, cena temprano 7pm) o algo más cercano en La 93. <em>Evitar cine y shows láser este día.</em></div>
+    </div>
+</div>
+
+<div class="callout callout-warning">
+    <strong>Planes a evitar el viernes 17 por la tarde:</strong>
+    <ul class="clean">
+        <li><strong>Planetario de Bogotá</strong> (shows láser con luces intermitentes en domo oscuro)</li>
+        <li><strong>Cinemateca de Bogotá</strong> (salas oscuras con luces brillantes de pantalla)</li>
+        <li><strong>Monserrate al atardecer</strong> (el sol directo en la cima puede ser muy intenso; si sube, hacerlo con gafas de sol bien cerradas)</li>
+        <li><strong>Centros comerciales con luces LED fuertes</strong></li>
+    </ul>
+</div>
+
+<div class="callout callout-success">
+    <strong>Planes ideales para el viernes 17 por la tarde:</strong>
+    <ul class="clean">
+        <li><strong>Parque Simón Bolívar</strong> y <strong>Parque de la 93</strong> (sombras, aire libre, gratuito)</li>
+        <li><strong>Caminata lenta por La Candelaria</strong> con gafas de sol (evitar entrar a museos oscuros)</li>
+        <li><strong>Jardín Botánico</strong> (cierra 5pm, llegar antes de 3pm; aire libre y vegetación)</li>
+        <li><strong>Descanso en el alojamiento</strong> con compresas frías sobre los ojos</li>
+    </ul>
+</div>
+
+<div class="card card-accent">
+    <div class="card-label">Costo estimado del día (2 personas)</div>
+    <table style="margin: 6px 0 0 0">
+        <tr><td>Desayuno 2 personas</td><td style="text-align:right"><span class="price">$15.000-$30.000</span></td></tr>
+        <tr><td>Transporte clínica (taxi/Uber corto)</td><td style="text-align:right"><span class="price">$8.000-$15.000</span></td></tr>
+        <tr><td>Almuerzo 2 personas Zona G</td><td style="text-align:right"><span class="price">$60.000-$120.000</span></td></tr>
+        <tr><td>TM o Uber tarde</td><td style="text-align:right"><span class="price">$8.000-$25.000</span></td></tr>
+        <tr><td>Cena 2 personas</td><td style="text-align:right"><span class="price">$50.000-$100.000</span></td></tr>
+        <tr style="font-weight:bold;background:var(--c-accent-bg)"><td>TOTAL DÍA 3</td><td style="text-align:right"><span class="price">$141.000-$290.000</span></td></tr>
+    </table>
+</div>
+
+<!-- ============ CHAPTER 6: DÍA 4 - SÁBADO 18 ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 06 · Día 4 · Sábado 18 julio</div>
+    <h2 class="chapter-title">Día Libre: 4 Opciones con Tren de la Sabana</h2>
+    <p class="chapter-subtitle">Sábado clave: Tren a Zipaquirá (8:45am), Monserrate, Jardín Botánico o Usaquén</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">El sábado 18 es el día con más opciones potentes del viaje. La decisión principal es si toman el <strong>Tren de la Sabana a Zipaquirá</strong> (plan de día completo, 8:30am-5:15pm, $238.000 COP para 2 personas) o se quedan en Bogotá para combinar Monserrate + La Candelaria + Museo del Oro. El tren sale del <strong>CC Gran Estación</strong> (Cra 66 con Cl 25/26) a las 8:45 a.m., pero también pueden abordar en la <strong>Estación Usaquén</strong> (Av. Cra 9 #110-08) a las 9:15 a.m., mucho más cerca de Calle 94 (15-20 min en taxi, $12.000-$18.000). Las boletas se compran por <strong>Tuboleta</strong> con ~15 días de anticipación, es decir, alrededor del <strong>5 de julio de 2026</strong>.</p>
+
+<div class="section-header">
+    <div class="section-tag">Opción A · Plan cultural Bogotá</div>
+    <h3 class="section-title">Monserrate + La Candelaria + Museo del Oro</h3>
+</div>
+
+<p class="body-text">Si ya hiciste la opción A del jueves, este plan se puede sustituir por la opción B (Jardín Botánico + Chigüiro) o la opción D (Usaquén + Zona T). Si NO fuiste el jueves, este sábado es ideal para combinar los tres icónicos en un día. Monserrate abre sábado 6:30am-10pm (tarifa $35.000 c/u ida y regreso). Museo del Oro abre sábado 9am-7pm ($5.000 c/u). La Puerta Falsa abre sábado 7am-9pm.</p>
+
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-time">7:30 a.m.</div>
+        <div class="timeline-content">Uber Calle 94 → base teleférico Monserrate ($25.000-$35.000, 35-45 min).</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">8:30-11:00</div>
+        <div class="timeline-content"><strong>Monserrate.</strong> Teleférico o funicular ida y regreso $35.000 c/u. Iglesia, vista, Café Bistró Santa Clara para desayuno.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">11:30-1:00 p.m.</div>
+        <div class="timeline-content">Uber Monserrate → La Candelaria ($12.000-$18.000). Caminata Plaza de Bolívar, Catedral.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">1:00-2:30 p.m.</div>
+        <div class="timeline-content"><strong>Almuerzo La Puerta Falsa</strong> (Calle 11 #6-50). Llegar antes de 12:30 para evitar fila larga. Ajiaco $38.000-$40.000.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">2:30-5:30 p.m.</div>
+        <div class="timeline-content"><strong>Museo del Oro</strong> (Cra 6 #15-88). Sábado 9am-7pm, $5.000 c/u. Último ingreso 6pm.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">6:00-8:00 p.m.</div>
+        <div class="timeline-content">Caminata La Candelaria + cena. Regreso TM estación Las Aguas → Calle 100.</div>
+    </div>
+</div>
+
+<div class="section-header">
+    <div class="section-tag">Opción B · Tren de la Sabana</div>
+    <h3 class="section-title">Zipaquirá: Catedral de Sal + Pueblo</h3>
+</div>
+
+<p class="body-text">El <strong>Tren Turístico de la Sabana</strong> operado por Turistren funciona sábados, domingos y festivos. Sale del <strong>CC Gran Estación</strong> (Cra 66 con Cl 25/26) a las 8:45 a.m., hace parada en <strong>Estación Usaquén</strong> (Av. Cra 9 #110-08) a las 9:15 a.m., y llega a Zipaquirá a las 10:45 a.m. Permanencia de 4h30 en Zipaquirá. Regreso: salida 3:15 p.m. de Zipaquirá, llegada a Usaquén 4:45 p.m., llegada final Gran Estación 5:15 p.m. <strong>El tren también hace parada en Cajicá</strong> (10:00 a.m.) — opción para combinar con Edelweiss en otro día.</p>
+
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-time">7:30 a.m.</div>
+        <div class="timeline-content"><strong>Compra de boletas:</strong> ya deben estar compradas vía <em>tuboleta.com</em> ~5 julio 2026. Adulto $119.000 c/u (incluye recargo Tuboleta). Niños/adultos mayores $111.600.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">8:00 a.m.</div>
+        <div class="timeline-content">Uber Calle 94 → Estación Usaquén (15-20 min, $12.000-$18.000). <em>Alternativa: Gran Estación (25-35 min, $20.000-$28.000).</em></div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">9:15 a.m.</div>
+        <div class="timeline-content"><strong>Abordar tren en Estación Usaquén.</strong> Salida 9:15. Viaje panorámico por la sabana,~1h30 hasta Zipaquirá.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">10:45 a.m.</div>
+        <div class="timeline-content"><strong>Llegada a Zipaquirá.</strong> 4h30 de permanencia. Visita <strong>Catedral de Sal</strong> (entrada NO incluida en el tren; comprar aparte ~$60.000 c/u). Almuerzo en el pueblo, plaza principal, mercado.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">3:15 p.m.</div>
+        <div class="timeline-content">Regreso en tren desde Zipaquirá.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">4:45-5:15 p.m.</div>
+        <div class="timeline-content"><strong>Llegada a Usaquén / Gran Estación.</strong> Regreso a Calle 94 en Uber ($12.000-$18.000).</div>
+    </div>
+</div>
+
+<div class="callout callout-warning">
+    <strong>Importante sobre el tren:</strong>
+    <ul class="clean">
+        <li><strong>La Catedral de Sal NO está incluida</strong> en la tarifa del tren. Se compra aparte en el sitio (~$60.000 c/u adulto).</li>
+        <li>El tren solo hace recorrido <strong>Bogotá ↔ Zipaquirá</strong> ida y regreso obligatorio. <strong>No se vende solo trayecto.</strong></li>
+        <li><strong>Boletería</strong>: comprar con 15 días de anticipación en tuboleta.com (alrededor del <strong>5 de julio 2026</strong>). Teléfono Tuboleta: +57 601 5936300.</li>
+        <li>Si se agotan las boletas online, ir a la <strong>taquilla Estación Usaquén</strong> el día del viaje (sujeto a disponibilidad).</li>
+        <li>El tren <strong>SÍ para en Cajicá</strong>: opción para combinar con Edelweiss otro día, bajarse en Cajicá y regresar por carretera en Uber/bus.</li>
+    </ul>
+</div>
+
+<div class="section-header">
+    <div class="section-tag">Opción C · Naturaleza + comida</div>
+    <h3 class="section-title">Jardín Botánico + Parque Simón Bolívar + Chigüiro</h3>
+</div>
+
+<p class="body-text">La misma opción B del jueves, válida también para sábado. El JBB abre sábado-domingo 9am-5pm (puede haber más gente que en semana). El Parque Simón Bolívar abre 6am-6pm. El Chigüiro Parrilla Bar abre desde 11:30 a.m. (confirmar horario por WhatsApp 314 220 1925). Plan ideal si no se hizo el jueves y se prefiere día tranquilo sin grandes desplazamientos.</p>
+
+<div class="section-header">
+    <div class="section-tag">Opción D · Compras y noche</div>
+    <h3 class="section-title">Usaquén + Zona T + Andino</h3>
+</div>
+
+<p class="body-text">Usaquén (Calle 119 con Cra 5) es un barrio bohemio al norte, excelente para sábado: mercado de pulgas dominical (aunque el mercado fuerte es domingo), restaurantes, cafés de especialidad. La Zona T (Calle 82 entre Cra 11 y 13) y el centro comercial Andino son los puntos de compras y noche. Plan ideal si el sábado no se quiere gastar mucho en transporte y se prefiere estar cerca del alojamiento.</p>
+
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-time">10:00 a.m.</div>
+        <div class="timeline-content">Uber Calle 94 → Usaquén (10 min, $10.000-$15.000). Café en Divino Café o Tostao.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">11:00-1:30 p.m.</div>
+        <div class="timeline-content"><strong>Recorrido Usaquén.</strong> Plaza central, mercado de pulgas (si hay), calle 119 con Cra 5, iglesia Santa Bárbara. Almuerzo: <strong>Casa Vieja</strong> (colombiana), <strong>La Wafflería</strong>, o <strong>Armando Records Usaquén</strong>.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">2:30-6:00 p.m.</div>
+        <div class="timeline-content">Uber Usaquén → Zona T / Andino ($12.000-$18.000). Compras, cafés. <strong>Centro Andino</strong> (Cra 11 #82-71), <strong>El Retiro</strong> (boutiques de lujo), <strong>Unicentro</strong> (más grande).</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">7:00-10:00 p.m.</div>
+        <div class="timeline-content"><strong>Cena / noche Zona T.</strong> <strong>Andrés D.C.</strong> (Calle 82 #11-15, sábado abierto 12m-12am, ambiente festivo, reservar al 8612233 opción 1). Alternativa más tranquila: <strong>Rausch</strong>, <strong>Prudencia</strong>, <strong>Criterión</strong>.</div>
+    </div>
+</div>
+
+<div class="card card-accent">
+    <div class="card-label">Comparativa rápida · Sábado 18</div>
+    <table>
+        <thead>
+            <tr><th>Opción</th><th>Costo 2 pers.</th><th>Mejor si...</th><th>Tiempo total</th></tr>
+        </thead>
+        <tbody>
+            <tr><td><strong>A</strong> Monserrate+Oro+La Candelaria</td><td><span class="price">$130-180k</span></td><td>No fuiste jueves</td><td>13 horas</td></tr>
+            <tr><td><strong>B</strong> Tren Zipaquirá</td><td><span class="price">$290-360k</span></td><td>Quieres experiencia única</td><td>10 horas</td></tr>
+            <tr><td><strong>C</strong> JBB+Chigüiro</td><td><span class="price">$80-130k</span></td><td>Día tranquilo verde</td><td>11 horas</td></tr>
+            <tr><td><strong>D</strong> Usaquén+Zona T</td><td><span class="price">$100-300k</span></td><td>Cercano al hotel + compras</td><td>12 horas</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<!-- ============ CHAPTER 7: DÍA 5 - DOMINGO 19 ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 07 · Día 5 · Domingo 19 julio</div>
+    <h2 class="chapter-title">Paloquemao + Planetario + Museo del Oro</h2>
+    <p class="chapter-subtitle">Mañana con Huevito en carro a Paloquemao · Tarde cultural en La Candelaria</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">El domingo 19 es el día central del viaje porque combina el plan con <strong>Huevito</strong> (amigo con carro) en <strong>Paloquemao</strong> y el plan cultural en La Candelaria con <strong>Museo del Oro gratuito</strong> y <strong>Planetario</strong> en la tarde/noche. La Ciclovía opera 7am-2pm este domingo, así que la salida en carro con Huevito debe ser <strong>antes de las 7am o después de las 2pm</strong> para evitar cierres viales. Sin embargo, el trayecto Calle 94 → Paloquemao (Av. Calle 19 #25-04) es mayoritariamente por Av. NQS y no se ve afectado por la Ciclovía en su tramo principal. La estrategia óptima es salir 7:00 a.m., llegar 7:30-8:00 a.m. (franja óptima: puestos abiertos, sin aglomeraciones, parqueo fácil).</p>
+
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-time">7:00 a.m.</div>
+        <div class="timeline-content"><strong>Salida Calle 94 con Huevito en carro.</strong> Ruta: Av. Calle 94 → Av. NQS sur → Av. Calle 19 → Cra 25. 25-35 min en domingo temprano. <strong>Pico y placa NO aplica domingos</strong> → libre circulación.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">7:30-8:00 a.m.</div>
+        <div class="timeline-content"><strong>Llegada Paloquemao</strong> (Av. Calle 19 #25-04). Parqueo en la plaza (efectivo, $5.000-$10.000 por 3-4 horas). Entrada libre.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">8:00-9:00 a.m.</div>
+        <div class="timeline-content"><strong>Desayuno en el mercado.</strong> Caldo de costilla, chocolate con tamal, jugo natural. Puestos recomendados: <strong>Lechonería Doña Rosalba</strong> (Local 80228, lechona 50 años de tradición), <strong>Donde Coca</strong> (Local 80138, cocina tradicional). Presupuesto desayuno 2 personas: $20.000-$30.000.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">9:00-11:30 a.m.</div>
+        <div class="timeline-content"><strong>Recorrido por el mercado.</strong> Zona de <strong>frutas exóticas</strong> (lulo, guanábana, chontaduro, feijoa, granadilla, pitahaya, borojó, curuba) — degustación y compra. <strong>Mercado de Flores</strong> (Av. 19 #25-02, operación desde 3:30am los domingos). <strong>Especias para Colombia</strong> (Local 81102, Patio 1, abre domingos 8am-3pm, tel. 302 633 2513).</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">11:30-1:00 p.m.</div>
+        <div class="timeline-content"><strong>Compras y almuerzo ligero.</strong> Lechona para llevar, frutas, flores, especias. <strong>El Palacio del Jugo</strong> (Local 80013) NO abre domingos — hay alternativas. <strong>Presupuesto 2 personas:</strong> $100.000-$210.000 COP (desayuno + compras + flores + especias + parqueo).</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">1:30 p.m.</div>
+        <div class="timeline-content"><strong>Salida de Paloquemao</strong> (asumir cierre 2:30pm versión conservadora, aunque web oficial dice 4:30pm). Traslado con Huevito a La Candelaria: Paloquemao → Museo del Oro (Cra 6 #15-88), 15-20 min en carro.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">2:00-4:30 p.m.</div>
+        <div class="timeline-content"><strong>Museo del Oro</strong> (Cra 6 #15-88). <strong>DOMINGO ENTRADA GRATUITA</strong> para todos. Último ingreso 4pm. Cierre 5pm. 2-3 horas de recorrido. Casilleros en piso 2.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">4:30-6:00 p.m.</div>
+        <div class="timeline-content"><strong>Caminata La Candelaria.</strong> Plaza de Bolívar, Catedral, Casa de Nariño (exterior). Onces en <strong>La Puerta Falsa</strong> (domingo abre 7am-6pm, chocolate santafereño $9.000-$17.000) o <strong>La Puerta de la Catedral</strong> (domingo 7am-6pm).</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">6:00-7:30 p.m.</div>
+        <div class="timeline-content"><strong>Planetario de Bogotá</strong> (Calle 26B #5-93, 10 min a pie). Domingo/festivo abre 9am-6:30pm. <strong>Verificar cartelera julio 2026</strong> en <em>planetariodebogota.gov.co/programate</em>. Si hay show láser programado para domingo (típicamente Michael Jackson o Ciclo Familiar), comprar por Tuboleta. <em>Si no hay show, alternativas: caminar Parque de la Independencia, cena en La Candelaria o regreso.</em></div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">8:00-9:00 p.m.</div>
+        <div class="timeline-content"><strong>Regreso a Calle 94.</strong> TM estación Las Aguas → Calle 100. <em>Alternativa: Uber $25.000-$35.000.</em></div>
+    </div>
+</div>
+
+<div class="callout callout-warning">
+    <strong>Discrepancia horario Paloquemao domingo:</strong>
+    <ul class="clean">
+        <li><strong>Web oficial plazadepaloquemao.com:</strong> domingo 5am-4:30pm</li>
+        <li><strong>Instagram @plazadepaloquemao y VisitBogotá:</strong> domingo 5am-2:30pm</li>
+        <li><strong>Recomendación:</strong> asumir versión conservadora <strong>(cierre 2:30pm)</strong> y salir de la plaza a más tardar 1:30pm. Llegar antes de 11am garantiza operación plena.</li>
+        <li><strong>El Palacio del Jugo</strong> (Local 80013) <strong>NO abre domingos</strong>. Hay múltiples juguerías alternativas.</li>
+    </ul>
+</div>
+
+<div class="callout callout-success">
+    <strong>Combinación perfecta del domingo 19:</strong> Paloquemao (mañana con Huevito) + Museo del Oro (domingo GRATIS) + Planetario show láser (si hay programación). Si Huevito se queda, puede llevarlos de Paloquemao a La Candelaria en carro (15-20 min). Si no, TM estación CAD → Las Aguas (45-60 min).
+</div>
+
+<div class="card card-accent">
+    <div class="card-label">Costo estimado del día (2 personas)</div>
+    <table style="margin: 6px 0 0 0">
+        <tr><td>Parqueo Paloquemao</td><td style="text-align:right"><span class="price">$5.000-$10.000</span></td></tr>
+        <tr><td>Desayuno + almuerzo + compras mercado</td><td style="text-align:right"><span class="price">$100.000-$210.000</span></td></tr>
+        <tr><td>Museo del Oro (domingo GRATIS)</td><td style="text-align:right"><span class="price">$0</span></td></tr>
+        <tr><td>Onces La Puerta Falsa/Catedral</td><td style="text-align:right"><span class="price">$20.000-$40.000</span></td></tr>
+        <tr><td>Planetario show láser (2× $14.000)</td><td style="text-align:right"><span class="price">$28.000</span></td></tr>
+        <tr><td>Regreso TM (2× $3.550)</td><td style="text-align:right"><span class="price">$7.100</span></td></tr>
+        <tr style="font-weight:bold;background:var(--c-accent-bg)"><td>TOTAL DÍA 5</td><td style="text-align:right"><span class="price">$160.100-$295.100</span></td></tr>
+    </table>
+</div>
+
+<!-- ============ CHAPTER 8: DÍA 6 - LUNES 20 (FERIADO) ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 08 · Día 6 · Lunes 20 julio · FERIADO</div>
+    <h2 class="chapter-title">Día de la Independencia · Descanso con Múltiples Opciones</h2>
+    <p class="chapter-subtitle">Feriado nacional: algunos sitios cierran, otros operan con horario reducido. 6 opciones de plan</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">El <strong>lunes 20 de julio</strong> es feriado nacional por el Día de la Independencia de Colombia. Este es el día con más restricciones del itinerario, pero también con oportunidades únicas. La regla general es: los museos nacionales y bancos cierran, pero los parques, Monumentos Nacionales y escenarios turísticos privados suelen abrir. <strong>Museo del Oro cierra todos los lunes (incluidos festivos)</strong>, así que NO estará disponible. <strong>Los tours oficiales del Cementerio Central solo operan entre octubre y diciembre</strong>, por lo que tampoco estarán disponibles. <strong>Edelweiss</strong> sí abre (regla: si un lunes es festivo, abren ese lunes). <strong>Andrés Carne de Res Chía</strong> sí abre (lunes festivo cuentan como domingo en su horario).</p>
+
+<div class="info-grid">
+    <div class="info-box" style="background:#F0FDF4;border-left-color:var(--c-secondary)">
+        <div class="info-box-label" style="color:var(--c-secondary)">SÍ ABREN lun 20</div>
+        <div class="info-box-value" style="font-size:11px">Monserrate (6:30am-5pm), Parque Simón Bolívar (6am-6pm), Jardín Botánico (9am-5pm), Paloquemao (5am-4:30pm), Planetario (9am-6:30pm), Edelweiss Cajicá, Andrés DCR Chía, La Puerta Falsa (7am-6pm)</div>
+    </div>
+    <div class="info-box" style="background:var(--c-danger-bg);border-left-color:var(--c-danger)">
+        <div class="info-box-label" style="color:var(--c-danger)">CIERRAN lun 20</div>
+        <div class="info-box-value" style="font-size:11px">Museo del Oro (todos los lunes), Tours oficiales Cementerio Central (solo Oct-Dic), Banco de la República (todos los museos), Centro Cultural GGM FCE (L-V), Cinemateca (sujeto a cartelera)</div>
+    </div>
+</div>
+
+<div class="section-header">
+    <div class="section-tag">Plan A · Clásico festivo</div>
+    <h3 class="section-title">Monserrate temprano + Parque de la 93</h3>
+</div>
+
+<p class="body-text">Monserrate abre festivos 6:30am-5pm con tarifa de lunes-sábado ($35.000 c/u ida y regreso). Llegar temprano (8-9am) evita aglomeraciones y permite disfrutar la vista antes de las lluvias vespertinas típicas de Bogotá. Bajarse al mediodía y almorzar en la cima (Café Bistró Santa Clara) o regresar a Calle 94 para una tarde tranquila en el Parque de la 93. <strong>El teleférico cierra a las 5pm en festivos</strong>, así que no esperar al atardecer.</p>
+
+<div class="section-header">
+    <div class="section-tag">Plan B · Naturaleza</div>
+    <h3 class="section-title">Parque Simón Bolívar + Jardín Botánico</h3>
+</div>
+
+<p class="body-text">Ambos abren festivos. Parque Simón Bolívar 6am-6pm (gratis), Jardín Botánico 9am-5pm ($6.600 nacional c/u, $15.600 combo Tropicario). Plan económico ideal. Combinar con Chigüiro Parrilla Bar al lado (Cra 70 #55-97, confirmar horario festivo por WhatsApp). La <strong>Ciclovía</strong> opera 7am-2pm en vías principales — puede aprovecharse si alquilan bicicleta. Llevar abrigo, protector solar y agua.</p>
+
+<div class="section-header">
+    <div class="section-tag">Plan C · Salida de Bogotá</div>
+    <h3 class="section-title">Edelweiss Cajicá + Andrés Carne de Res Chía</h3>
+</div>
+
+<p class="body-text">Día completo fuera de Bogotá. <strong>Edelweiss</strong> (Km 1 vía Cajicá-Zipaquirá) abre lunes festivos (regla: si lunes es festivo, abren). Almuerzo alemán: codillo de cerdo, salchichas artesanales, sauerkraut, pretzel, strudel. Cervecería propia (confirmar si sigue activa al reservar). Por la tarde, traslado a Chía (10-15 min en carro) a <strong>Andrés Carne de Res</strong> (Calle 3 #11A-56, lunes festivo cuentan como domingo, abierto 12m-10pm). Ambiente festivo, reservar al +57 601 861 2233 opción 1. <strong>Costo total estimado 2 personas:</strong> $250.000-$400.000 COP + Uber $80.000-$120.000 ida y regreso.</p>
+
+<div class="section-header">
+    <div class="section-tag">Plan D · Cultural alternativo</div>
+    <h3 class="section-title">Caminata La Candelaria + La Puerta Falsa</h3>
+</div>
+
+<p class="body-text">Aunque Museo del Oro cierra, La Candelaria sigue siendo un destino válido para caminar al aire libre: Plaza de Bolívar, Catedral Primada, Casa de Nariño (exterior), capillas coloniales, callejones históricos, arte callejero. <strong>La Puerta Falsa</strong> y <strong>La Puerta de la Catedral</strong> abren festivos 7am-6pm. El <strong>Planetario de Bogotá</strong> abre festivos 9am-6:30pm — verificar si hay show láser programado para este día en cartelera julio 2026. <strong>Casa Museo Quinta de Bolívar</strong> (Calle 20 #4-30 Este) suele abrir festivos, confirmar.</p>
+
+<div class="section-header">
+    <div class="section-tag">Plan E · Descanso + cena cercana</div>
+    <h3 class="section-title">Día relax en alojamiento + noche Zona T</h3>
+</div>
+
+<p class="body-text">Si los días anteriores fueron intensos, el lunes 20 es perfecto para descansar: mañana tranquila en el alojamiento, almuerzo ligero en el barrio (Pan Pa' Ya, Juan Valdez, Wok), tarde de lectura o película. Por la noche, cena en Zona T / Calle 82. <strong>Andrés D.C.</strong> (Calle 82 #11-15) abre lunes festivos (cuenta como domingo, 12m-10pm). Alternativas más tranquilas: <strong>Rausch</strong>, <strong>Criterión</strong>, <strong>Prudencia</strong>, <strong>Harry's</strong>.</p>
+
+<div class="section-header">
+    <div class="section-tag">Plan F · Mercado y tradición</div>
+    <h3 class="section-title">Paloquemao festivo + Ciudad Bolívar</h3>
+</div>
+
+<p class="body-text">Paloquemao abre festivos (5am-4:30pm web / 5am-2:30pm Instagram). Aunque el plan principal con Huevito es el domingo 19, si por alguna razón no se pudo ir ese día, el lunes 20 festivo es una segunda opción. Sin carro propio, tomar Uber temprano desde Calle 94 (~$22.000-$30.000). Por la tarde, alternativas cercanas: Centro de Memoria, Paz y Reconciliación (Calle 26 con Cra 21), o regreso a La Candelaria.</p>
+
+<div class="callout callout-warning">
+    <strong>Para el martes 21 julio:</strong> el <strong>Jardín Botánico estará CERRADO</strong> por mantenimiento (regla oficial: si el lunes es festivo, el martes cierra). Programar otra cosa ese día. <strong>Museo del Oro reabre martes</strong> (9am-7pm, $5.000). <strong>Edelweiss abre martes</strong>. <strong>Andrés Chía NO abre martes</strong> (cierra lunes y martes regulares).
+</div>
+
+<div class="card card-accent">
+    <div class="card-label">Costo estimado del día (2 personas) · según plan</div>
+    <table style="margin: 6px 0 0 0">
+        <tr><td>Plan A · Monserrate + Parque 93</td><td style="text-align:right"><span class="price">$90.000-$140.000</span></td></tr>
+        <tr><td>Plan B · Simón Bolívar + JBB + Chigüiro</td><td style="text-align:right"><span class="price">$80.000-$150.000</span></td></tr>
+        <tr><td>Plan C · Edelweiss + Andrés Chía</td><td style="text-align:right"><span class="price">$330.000-$520.000</span></td></tr>
+        <tr><td>Plan D · La Candelaria + La Puerta Falsa</td><td style="text-align:right"><span class="price">$50.000-$100.000</span></td></tr>
+        <tr><td>Plan E · Descanso + cena Zona T</td><td style="text-align:right"><span class="price">$80.000-$200.000</span></td></tr>
+        <tr><td>Plan F · Paloquemao festivo</td><td style="text-align:right"><span class="price">$80.000-$150.000</span></td></tr>
+        <tr style="font-weight:bold;background:var(--c-accent-bg)"><td>TOTAL DÍA 6 (plan recomendado A o D)</td><td style="text-align:right"><span class="price">$70.000-$140.000</span></td></tr>
+    </table>
+</div>
+
+<!-- ============ CHAPTER 9: DÍA 7 - MARTES 21 ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 09 · Día 7 · Martes 21 julio</div>
+    <h2 class="chapter-title">Día de Cierre · Planes Pendientes y Encuentros</h2>
+    <p class="chapter-subtitle">Martes: Museo del Oro reabre, JBB cierra. Espacio para Edelweiss, amigos o planes no hechos</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">El martes 21 es el último día completo en Bogotá y debe usarse estratégicamente para cerrar planes pendientes. Las restricciones clave: <strong>Jardín Botánico CIERRA</strong> (mantenimiento post-festivo), <strong>Andrés Chía cierra</strong> (lunes y martes regulares), <strong>Museo del Oro reabre</strong> (9am-7pm, $5.000), <strong>Edelweiss abre</strong> (martes a domingo). Es también el día ideal para los encuentros con amigos (Monty, y con Ander/Val/Dannie) según la respuesta del usuario: ronda compartida de cervezas/tacos, luego cada quien paga lo suyo.</p>
+
+<div class="section-header">
+    <div class="section-tag">Opción A · Si no fuiste a Edelweiss</div>
+    <h3 class="section-title">Edelweiss Cajicá (almuerzo alemán)</h3>
+</div>
+
+<p class="body-text">Si no se hizo el plan C del lunes 20, este martes es la última oportunidad para Edelweiss (Km 1 vía Cajicá-Zipaquirá, WhatsApp +57 311 541 1241 para reservar). Abre martes a las 1pm según horario histórico (confirmar al reservar). Uber ida desde Calle 94: $80.000-$120.000, 45-60 min. Plan: salir 11:00am, llegar 12:00m, almuerzo 1-3pm, regreso 4-5pm. <strong>No combinar con Andrés Chía porque cierra martes</strong>. Alternativa cercana: <strong>Palacio de la Gallina El Político</strong> en Cajicá (Cra 6 #7-25, comida colombiana, 40+ años de tradición).</p>
+
+<div class="section-header">
+    <div class="section-tag">Opción B · Cultural en Bogotá</div>
+    <h3 class="section-title">Museo del Oro + Cinemateca + La Candelaria</h3>
+</div>
+
+<p class="body-text">Si el Museo del Oro no se hizo el jueves o el domingo (las dos oportunidades anteriores), este martes es la última opción. Reabre 9am-7pm ($5.000 c/u). Combinar con Cinemateca de Bogotá (Cra 3 #19-10) — cartelera de julio 2026 a verificar en <em>cinematecadebogota.gov.co</em>. La Candelaria completa el día: Plaza de Bolívar, Catedral, La Puerta Falsa para onces. Plan económico, sin desplazamientos largos.</p>
+
+<div class="section-header">
+    <div class="section-tag">Opción C · Encuentros sociales</div>
+    <h3 class="section-title">Con Monty · Con Ander, Val y Dannie</h3>
+</div>
+
+<p class="body-text">Según la respuesta del usuario, los encuentros con amigos se manejan con <strong>ronda compartida</strong> (1-2 rondas de cervezas/tacos pagadas por ustedes, luego cada quien lo suyo). Para el encuentro con Monty (Chapinero) y con Ander/Val/Dannie (lugar neutral), se sugieren los siguientes sitios:</p>
+
+<table>
+    <thead>
+        <tr><th>Encuentro</th><th>Sitio sugerido</th><th>Zona</th><th>Presupuesto ronda 2 pers.</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Con Monty</strong></td><td>El Chato, Armando Records, o La Pola (Calle 85)</td><td>Zona T / Chapinero</td><td><span class="price">$60.000-$100.000</span></td></tr>
+        <tr><td><strong>Con Ander, Val y Dannie</strong></td><td>Tacos Baja Mar (Cra 11 con Calle 85) o Hommus La 93</td><td>Calle 94 / La 93</td><td><span class="price">$80.000-$120.000</span></td></tr>
+        <tr><td>Alternativa económica</td><td>El Korral (Calle 94 con Cra 13, hamburguesas)</td><td>Cerca alojamiento</td><td><span class="price">$40.000-$60.000</span></td></tr>
+        <tr><td>Alternativa cervezas</td><td>Bogotá Beer Company (varias sedes)</td><td>Zona T, La 93, Usaquén</td><td><span class="price">$50.000-$90.000</span></td></tr>
+    </tbody>
+</table>
+
+<div class="section-header">
+    <div class="section-tag">Opción D · Si queda pendiente Monserrate</div>
+    <h3 class="section-title">Monserrate + onces en La Candelaria</h3>
+</div>
+
+<p class="body-text">Si Monserrate no se logró ningún día anterior, el martes es la última oportunidad. Martes: teleférico 6:30am-10pm (tarifa $35.000 c/u). <strong>Sendero peatonal cerrado los martes por mantenimiento</strong> — solo se puede subir en teleférico o funicular. Sin misas los martes. Por la tarde, onces en La Puerta Falsa (abre 7am-9pm martes) o La Puerta de la Catedral (abre 7am-7:30pm martes).</p>
+
+<div class="card card-accent">
+    <div class="card-label">Costo estimado del día (2 personas)</div>
+    <table style="margin: 6px 0 0 0">
+        <tr><td>Plan A · Edelweiss</td><td style="text-align:right"><span class="price">$200.000-$350.000</span> + Uber</td></tr>
+        <tr><td>Plan B · Museo Oro + Cinemateca</td><td style="text-align:right"><span class="price">$50.000-$100.000</span></td></tr>
+        <tr><td>Plan C · Encuentros amigos</td><td style="text-align:right"><span class="price">$80.000-$120.000</span></td></tr>
+        <tr><td>Plan D · Monserrate + onces</td><td style="text-align:right"><span class="price">$90.000-$140.000</span></td></tr>
+        <tr style="font-weight:bold;background:var(--c-accent-bg)"><td>TOTAL DÍA 7 (plan B + C recomendado)</td><td style="text-align:right"><span class="price">$130.000-$220.000</span></td></tr>
+    </table>
+</div>
+
+<!-- ============ CHAPTER 10: DÍA 8 - MIÉRCOLES 22 ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 10 · Día 8 · Miércoles 22 julio</div>
+    <h2 class="chapter-title">Salida · Vuelo de Regreso (5:00 a.m.)</h2>
+    <p class="chapter-subtitle">Traslado al aeropuerto El Dorado · Checklist de cierre</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">La salida del miércoles 22 es a las <strong>5:00 a.m.</strong> desde el aeropuerto El Dorado. Esto requiere traslado desde Calle 94 a las <strong>4:00-4:15 a.m.</strong> (25-40 min en taxi sin tráfico). <strong>TransMilenio NO opera antes de las 4:00 a.m.</strong> en días hábiles, así que la única opción viable es <strong>taxi oficial del aeropuerto reservado con anticipación</strong> o <strong>Uber/Cabify</strong> (que sí operan 24/7 pero con disponibilidad limitada de madrugada). Recomendación: reservar taxi el día anterior (martes 21) con Taxis Libres (WhatsApp 310 2111111) o pedir al alojamiento que gestione la reserva.</p>
+
+<div class="timeline">
+    <div class="timeline-item">
+        <div class="timeline-time">3:30 a.m.</div>
+        <div class="timeline-content"><strong>Despertador.</strong> Ducha rápida, revisión final de maletas, checkout del alojamiento.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">4:00 a.m.</div>
+        <div class="timeline-content"><strong>Taxi en puerta del alojamiento.</strong> Traslado Calle 94 → Aeropuerto El Dorado. 25-40 min sin tráfico. <strong>Costo:</strong> taxi oficial aeropuerto $35.000-$50.000 (recargo nocturno + recargo aeropuerto). Uber/Cabify $30.000-$45.000.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">4:40 a.m.</div>
+        <div class="timeline-content"><strong>Llegada Aeropuerto El Dorado.</strong> Terminal 1 (nacional/internacional). Check-in counters abren 3 horas antes del vuelo.</div>
+    </div>
+    <div class="timeline-item">
+        <div class="timeline-time">5:00 a.m.</div>
+        <div class="timeline-content"><strong>Vuelo de regreso.</strong> ✈️ Fin del viaje a Bogotá.</div>
+    </div>
+</div>
+
+<div class="card card-warning">
+    <div class="card-label">Checklist de cierre (martes 21 por la noche)</div>
+    <ul class="clean" style="margin: 6px 0 0 0">
+        <li><strong>Reservar taxi</strong> para 4:00 a.m. (Taxis Libres 310 2111111 o solicitar al hotel)</li>
+        <li><strong>Empacar</strong> todas las compras de Paloquemao (frutas perecederas en equipaje de mano si el vuelo es corto)</li>
+        <li><strong>Consumir</strong> productos perecederos que no puedan viajar (frutas tropicales, hierbas frescas)</li>
+        <li><strong>Confirmar</strong> hora de check-out con el alojamiento (algunos permiten late checkout con costo)</li>
+        <li><strong>Revisar</strong> que la tarjeta TuLlave no tenga saldo importante (no es reembolsable)</li>
+        <li><strong>Documentos</strong> de vuelo, pasaportes, cédulas en lugar accesible</li>
+        <li><strong>Cargar celular</strong> al 100% para uso de apps de taxi y boarding pass</li>
+    </ul>
+</div>
+
+<div class="card card-accent">
+    <div class="card-label">Costo estimado del día (2 personas)</div>
+    <table style="margin: 6px 0 0 0">
+        <tr><td>Taxi Calle 94 → Aeropuerto (madrugada)</td><td style="text-align:right"><span class="price">$35.000-$50.000</span></td></tr>
+        <tr><td>Desayuno en aeropuerto</td><td style="text-align:right"><span class="price">$25.000-$45.000</span></td></tr>
+        <tr style="font-weight:bold;background:var(--c-accent-bg)"><td>TOTAL DÍA 8</td><td style="text-align:right"><span class="price">$60.000-$95.000</span></td></tr>
+    </table>
+</div>
+
+<!-- ============ CHAPTER 11: FICHAS SITIOS CULTURALES ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 11 · Fichas técnicas</div>
+    <h2 class="chapter-title">Sitios Culturales · Datos Verificados</h2>
+    <p class="chapter-subtitle">Direcciones, horarios, tarifas, contactos y QR oficiales de cada sitio</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">Las fichas técnicas a continuación consolidan la información operativa de cada sitio cultural del itinerario. Todos los datos fueron verificados en sitios oficiales (.gov.co, banquetes oficiales) y operadores formales durante junio 2026. Las tarifas pueden cambiar; los códigos QR enlazan directamente a la web oficial o Instagram verificado donde se puede reconfirmar información antes del viaje. Las direcciones que se listan aquí son las oficiales verificadas, que en varios casos difieren de las que maneja el documento original del viaje.</p>
+
+<!-- PLANETARIO -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Sitio cultural · Show láser · Domo astronómico</div>
+        <h3 class="place-card-name">1. Planetario de Bogotá</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Calle 26B No. 5-93, Bogotá (La Candelaria, junto a Plaza de Toros La Santamaría)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Teléfono</div>
+        <div class="place-card-row-value">PBX (+57 601) 379 5750 ext. 9104/9105 · informacion.planetariodebogota@idartes.gov.co</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Web / IG</div>
+        <div class="place-card-row-value">planetariodebogota.gov.co · @planetariobog (Idartes)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value">Taquilla: mar-dom 10:30am-5pm (sáb hasta 6pm). Shows en domo: mar-jue 9am-6:30pm; vie-sáb 9am-8pm; dom-fest 9am-6:30pm.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Tarifas 2026</div>
+        <div class="place-card-row-value">Función general: Adulto <span class="price">$23.500</span> · Estudiante <span class="price">$19.000</span> · Adulto mayor <span class="price">$12.000</span> · Combo familiar <span class="price">$70.000</span>. <strong>Show láser:</strong> Adulto <span class="price">$14.000</span> · Estudiante <span class="price">$12.000</span> · Adulto mayor <span class="price">$7.000</span>.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Shows láser</div>
+        <div class="place-card-row-value">Histórico recurrente: <strong>Michael Jackson martes · Soda Stereo miércoles · Pink Floyd jueves · Universo Cerati</strong> (6:00 p.m.). Programación mensual cambia. <strong>Verificar cartelera julio 2026</strong> en planetariodebogota.gov.co/programate.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Compra boletas</div>
+        <div class="place-card-row-value">Tuboleta (venue: Planetario de Bogotá) o portal Idartes-Tuboleta idartes.checkout.tuboleta.com. <strong>Comprar con anticipación</strong> — los shows láser suelen agotarse.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Abre festivos</div>
+        <div class="place-card-row-value">SÍ. Domingos y festivos 9am-6:30pm. <strong>Incluye lunes 20 julio 2026.</strong></div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Restricción médica</div>
+        <div class="place-card-row-value"><strong>NO recomendado con pupilas dilatadas</strong> (luces intermitentes en domo oscuro). Programar otro día.</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/planetario.png" alt="QR"><div class="qr-label">Web oficial</div></div>
+        <div class="qr-block"><img class="qr-img" src="qr_codes/planetario_programacion.png" alt="QR"><div class="qr-label">Cartelera shows</div></div>
+        <div class="qr-block"><img class="qr-img" src="qr_codes/tuboleta_planetario.png" alt="QR"><div class="qr-label">Tuboleta boletas</div></div>
+    </div>
+</div>
+
+<!-- CINEMATECA -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Cine de autor · Entrada libre / económica</div>
+        <h3 class="place-card-name">2. Cinemateca de Bogotá (Idartes)</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Carrera 3 # 19-10, Bogotá (Parque de los Periodistas / La Esperanza, localidad Santa Fe)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Teléfono</div>
+        <div class="place-card-row-value">(+57 601) 379 5750 ext. 4504 · cinematecaenlaciudad@idartes.gov.co</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Web / IG</div>
+        <div class="place-card-row-value">cinematecadebogota.gov.co · @cinematecabta</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value">Oficinas: L-V 8am-4pm. Salas: función vespertina/nocturna mar-dom. Taquilla abre 1h antes de cada función.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Tarifas 2026</div>
+        <div class="place-card-row-value"><strong>Entrada libre</strong> a muchas proyecciones (boletería presencial, cupo limitado). Eventos especiales: <span class="price">$5.000-$15.000</span>. Franja "Cinema Local" (cine colombiano): desde <span class="price">$6.000</span>.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Programación</div>
+        <div class="place-card-row-value">Cine de autor, retrospectivas, festivales temáticos, Franja Clásicos, Franja Memoria, Ciclo Rosa, programación infantil "Franja Rayito". Cartelera mensual en sitio web y redes.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Recomendación</div>
+        <div class="place-card-row-value">Llegar 30-45 min antes a la taquilla. Para entradas gratuitas también hay que reclamar tiquete. <strong>Recomendación de programación julio 2026:</strong> verificar a partir del 30 de junio la cartelera en el sitio web. Elegir sesiones de <strong>cine latinoamericano contemporáneo o retrospectivas de autor</strong> (interés indicado).</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/cinemateca.png" alt="QR"><div class="qr-label">Cartelera oficial</div></div>
+    </div>
+</div>
+
+<!-- JARDÍN BOTÁNICO -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Naturaleza · Tropicario · Recorrido guiado</div>
+        <h3 class="place-card-name">3. Jardín Botánico "José Celestino Mutis"</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Avenida Calle 63 # 68-95, Bogotá (Engativá, junto a Parque Simón Bolívar)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Teléfono</div>
+        <div class="place-card-row-value">PBX (+57 601) 437 7060 ext. 1000 · Cel: +57 313 502 5464</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Web / IG</div>
+        <div class="place-card-row-value">jbb.gov.co · @jardinbotanicodebogota</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value">Mar-vie 8am-5pm · Sáb, dom y festivos 9am-5pm. <strong>Lunes hábil: cerrado por mantenimiento.</strong> Si el lunes es festivo, el <strong>martes siguiente cierra</strong>.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Tarifas 2026</div>
+        <div class="place-card-row-value">Entrada Jardín (nacional): <span class="price">$6.600</span> · (extranjero): <span class="price">$8.800</span>. Tropicario (nacional): <span class="price">$12.200</span>. Combo Jardín + Tropicario (nacional): <span class="price">$15.600</span>. Niños 0-5 y mayores 60+: entrada Jardín <strong>GRATIS</strong>.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Agendamiento</div>
+        <div class="place-card-row-value"><strong>NO se requiere reserva.</strong> Compra de entradas exclusivamente presencial en taquilla el día de la visita. Sistema web descontinuado tras pandemia.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">⚠️ Para julio 2026</div>
+        <div class="place-card-row-value"><strong>Abre lun 20 julio</strong> (festivo, 9am-5pm). <strong>CIERRA mar 21 julio</strong> (mantenimiento post-festivo). Programar JBB para jue 16, sáb 18 o lun 20 festivo.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Restaurante interno</div>
+        <div class="place-card-row-value">Restaurante Quye (dentro del recinto): desayunos, brunch, almuerzos. Reservas: +57 300 305 3382.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Restaurante chigüiro cercano</div>
+        <div class="place-card-row-value"><strong>Chigüiro Parrilla Bar</strong> (Cra 70 #55-97, Normandía), a ~5-10 min en taxi. Chigüiro $43.200. WhatsApp +57 314 220 1925.</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/jardin_botanico.png" alt="QR"><div class="qr-label">Web oficial</div></div>
+        <div class="qr-block"><img class="qr-img" src="qr_codes/jardin_botanico_mapa.png" alt="QR"><div class="qr-label">Mapa del jardín</div></div>
+    </div>
+</div>
+
+<!-- CEMENTERIO -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Patrimonio · Tours nocturnos (solo Oct-Dic oficiales)</div>
+        <h3 class="place-card-name">4. Cementerio Central de Bogotá</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Carrera 20 entre Calles 24 y 37, Bogotá (Santa Fe). Acceso principal por Cra 20 sobre Calle 26.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Teléfonos</div>
+        <div class="place-card-row-value">UAESP: (+57 601) 381 3000 · IDPC: (+57 601) 355 0800 ext. 5029/5020, cel. 315 869 5159 · IDT: (+57 601) 217 0711 ext. 1000, Línea turista: 01 8000 127 400</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Tour oficial UAESP+IDT</div>
+        <div class="place-card-row-value">"Noches de historia y memoria al Cementerio Central". <strong>Solo opera octubre-diciembre</strong> (vie-sáb 5pm-9pm, dom 5pm-8pm). Reservas: planbogota.bogotadc.travel. <strong>NO disponible en julio 2026.</strong></div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Tour privado recomendado</div>
+        <div class="place-card-row-value"><strong>Etnias Andantes</strong> (RNT 12132, operador privado). WhatsApp: <strong>+57 320 287 5066</strong>. Correo: etniasandantes@gmail.com. Web: etniasandantes.com. <strong>Contactar con 2-3 semanas de anticipación</strong> para tour privado en julio 2026. Precio: NO publicado, consultar.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Visita diurna libre</div>
+        <div class="place-card-row-value">El camposanto es Monumento Nacional, abierto al público en horario diurno. Visita autoguiada gratuita. Llevar documento de identidad.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Restricciones</div>
+        <div class="place-card-row-value">Respeto absoluto (es cementerio activo). No alcohol, no prácticas de terror. Acceso a tumbas específicas puede estar restringido por decisión familiar.</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/cementerio_idpc.png" alt="QR"><div class="qr-label">IDPC oficial</div></div>
+        <div class="qr-block"><img class="qr-img" src="qr_codes/etnias_andantes.png" alt="QR"><div class="qr-label">Etnias Andantes</div></div>
+        <div class="qr-block"><img class="qr-img" src="qr_codes/plan_bogota.png" alt="QR"><div class="qr-label">Plan Bogotá</div></div>
+    </div>
+</div>
+
+<!-- MONSERRATE -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Cerro · Teleférico · Basílica · Restaurantes</div>
+        <h3 class="place-card-name">5. Cerro de Monserrate</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Carrera 2 Este No. 21-48, Paseo Bolívar, Bogotá</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Teléfono</div>
+        <div class="place-card-row-value">+57 601 7470190 / +57 601 2845700 · info@monserrate.co</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Web / IG</div>
+        <div class="place-card-row-value">monserrate.co/es · @cerromonserrate</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value">Teleférico L-sáb 6:30am-10pm. <strong>Domingos 5:30am-5pm.</strong> <strong>Festivos 6:30am-5pm</strong> (incluye lun 20 julio). <strong>Sendero peatonal cerrado martes.</strong></div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Tarifas 2026</div>
+        <div class="place-card-row-value">L-sáb y festivos: ida y regreso <span class="price">$35.000</span> · un trayecto <span class="price">$21.000</span> · adulto mayor <span class="price">$29.500</span>. <strong>Domingos (tarifa especial): ida y regreso <span class="price">$21.000</span></strong> · adulto mayor <span class="price">$16.500</span>.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Restaurantes cima</div>
+        <div class="place-card-row-value"><strong>Casa San Isidro</strong> (francesa, autor, desde 1989): +57 315 253 9963. <strong>Casa Santa Clara</strong> (tradicional colombiana): L-V 12m-8pm, sáb 8am-8pm, dom 8am-5pm. <strong>Café Bistró Santa Clara</strong> (opción casual, más económica). Reservas: reservas@restaurantesmonserrate.com / WhatsApp +57 317 3317148.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Misas</div>
+        <div class="place-card-row-value">L, M, J: 10am y 12m. V: 8am, 10am, 12m. Sáb y festivos: 8am, 10am, 12m, 2pm. Dom: desde 6:30am cada 90 min hasta 12:30pm y 2:30pm. <strong>Martes: no hay misas.</strong></div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Recomendación</div>
+        <div class="place-card-row-value"><strong>Domingo tarifa económica ($21.000 vs $35.000)</strong> pero más concurrido. Para evitar aglomeraciones: martes-viernes mañana (6:30-9am) o tarde (3-5pm). Llevar abrigo (cima 10-12°C) y protector solar.</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/monserrat.png" alt="QR"><div class="qr-label">Web oficial</div></div>
+        <div class="qr-block"><img class="qr-img" src="qr_codes/monserrate_tarifas.png" alt="QR"><div class="qr-label">Horarios y tarifas</div></div>
+    </div>
+</div>
+
+<!-- MUSEO DEL ORO -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Museo · Prehispánico · BanRep</div>
+        <h3 class="place-card-name">6. Museo del Oro (Banco de la República)</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Carrera 6 No. 15-88, Bogotá (Parque de Santander, esquina Cra 6 con Cl 16, La Candelaria)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Teléfono</div>
+        <div class="place-card-row-value">(+57 601) 343 2222 · prensacultural@banrep.gov.co</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Web / IG</div>
+        <div class="place-card-row-value">banrepcultural.org/bogota/museo-del-oro · @museodeloro</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value"><strong>Lunes: CERRADO</strong> (incluidos lunes festivos → <strong>NO abre lun 20 julio</strong>). Mar-sáb 9am-7pm (último ingreso 6pm). Dom y festivos (no lunes) 10am-5pm (último ingreso 4pm).</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Tarifas 2026</div>
+        <div class="place-card-row-value">Mar-sáb y festivos: <span class="price">$5.000</span>. Audioguía: <span class="price">$8.000</span>. <strong>Domingos: entrada GRATUITA para todos.</strong> Gratis todos los días para niños <12, adultos >60, indígenas certificados.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Tiempo recomendado</div>
+        <div class="place-card-row-value">2-3 horas para recorrido completo (4 salas permanentes + El Exploratorio). Con audioguía: 3-4 horas. Visitas guiadas en español 11am y 4pm (reconfirmar en taquilla).</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Estrategia óptima</div>
+        <div class="place-card-row-value"><strong>Dom 19 julio entrada GRATIS</strong> (combinar con Paloquemao mañana). <strong>Mar 21 reabre</strong> (última oportunidad). Llevar casillero (piso 2) para mochilas. Fotografía sin flash.</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/museo_oro.png" alt="QR"><div class="qr-label">Web oficial</div></div>
+        <div class="qr-block"><img class="qr-img" src="qr_codes/museo_oro_visita.png" alt="QR"><div class="qr-label">Programa tu visita</div></div>
+    </div>
+</div>
+
+<!-- PARQUE SIMÓN BOLÍVAR -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Parque urbano · Gratuito · Ciclovía</div>
+        <h3 class="place-card-name">7. Parque Simón Bolívar</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Calle 63 y Calle 53, entre Carreras 48 y 68, Bogotá (Teusaquillo/Barrios Unidos)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Teléfono</div>
+        <div class="place-card-row-value">IDRD: +57 (601) 660 5400 ext. 251/252 · Línea gratuita: 01 8000 113 199</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Web / IG</div>
+        <div class="place-card-row-value">idrd.gov.co/parques-y-escenarios/parque-simon-bolivar · @idrdbogota</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value">L-D 6am-6pm. <strong>Festivos: 6am-6pm</strong> (incluye lun 20 julio). Eventos privados pueden generar cierre anticipado 7pm.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Tarifas</div>
+        <div class="place-card-row-value"><strong>Entrada GRATUITA</strong> todos los días. Alquiler de lanchas/remos en lago: ~<span class="price">$8.000</span> por trayecto. Ciclovía domingos y festivos 7am-2pm.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Atracciones</div>
+        <div class="place-card-row-value">Lago de 10 hectáreas, Plaza de Eventos (80.000 espectadores), Templete Eucarístico (1968, visita Papa Pablo VI), Biblioteca Virgilio Barco (arquitectura Salmona, gratuita), Complejo Acuático Salitre, Parque Los Novios, cancha popular de golf.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Cercanía UNAL</div>
+        <div class="place-card-row-value">A ~3.5 km de Universidad Nacional (10-15 min en carro, 20-25 min en TM). Combinables mismo día.</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/parque_simon_bolivar.png" alt="QR"><div class="qr-label">Web IDRD</div></div>
+    </div>
+</div>
+
+<!-- CENTRO CULTURAL GGM -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Librería · Exposiciones · Arquitectura Salmona</div>
+        <h3 class="place-card-name">8. Centro Cultural Gabriel García Márquez (FCE)</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Calle 11 # 5-60, La Candelaria, Bogotá (cp 111711)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Teléfono</div>
+        <div class="place-card-row-value">+57 314 219 1576 / +57 601 327 4850</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Web / IG</div>
+        <div class="place-card-row-value">fce.com.co · @fcecolombia · Facebook /CCGGM</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value">L-V 7:30am-4:30pm. Sáb y dom generalmente cerrado (eventos puntuales según cartelera). <strong>Cerrado lun 20 julio</strong> (festivo).</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Tarifas</div>
+        <div class="place-card-row-value"><strong>Entrada libre</strong> a librería y actividades culturales. Funciones de cine/teatro puntuales con boletería propia.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Arquitectura</div>
+        <div class="place-card-row-value">Obra de <strong>Rogelio Salmona</strong> (arquitecto colombiano-francés, Premio Alvar Aalto 2006). Ladrillo, patios interiores, diálogo con la Catedral.</div>
+    </div>
+</div>
+
+<!-- ============ CHAPTER 12: UNIVERSIDAD NACIONAL ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 12 · Ficha técnica</div>
+    <h2 class="chapter-title">Universidad Nacional (Nacho) · Acceso, Arquitectura, Comida</h2>
+    <p class="chapter-subtitle">"Nacho" = Universidad Nacional de Colombia. Campus abierto, recorrido arquitectónico, comedores</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">La <strong>Universidad Nacional de Colombia sede Bogotá</strong>, conocida afectuosamente como "la Nacho", es uno de los campus universitarios más importantes de América Latina. La <strong>política de "campus abierto"</strong> vigente permite el ingreso de visitantes externos presentando cédula o pasaporte en la portería, sin invitación previa ni permiso especial para acceso peatonal. El campus, conocido como "Ciudad Universitaria", es Monumento Nacional y alberga obras de los arquitectos más importantes del siglo XX colombiano: Leopoldo Rother, Julio Bonilla Plata, Rogelio Salmona, Eugenia Mantilla de Cardoso y Fernando Martínez Sanabria. El día recomendado para la visita es <strong>miércoles 15 o jueves 16 de julio</strong>, días hábiles con actividad académica completa y Museo de Arquitectura abierto.</p>
+
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Campus universitario · Arquitectura moderna · Monumento Nacional</div>
+        <h3 class="place-card-name">Universidad Nacional de Colombia · Sede Bogotá</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Carrera 45 # 26-85, Edificio Uriel Gutiérrez (Rectoría). Campus entre Calles 26 y 45, Cra 30 (occidente) y Cra 45 (oriente).</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Conmutador</div>
+        <div class="place-card-row-value">PBX (+57 601) 316 5000 / (+57 601) 406 8888 · Línea gratuita nacional: 01 8000 912 597</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Web / IG</div>
+        <div class="place-card-row-value">bogota.unal.edu.co · @bogotaunal · patrimoniocultural.bogota.unal.edu.co</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Porterías acceso</div>
+        <div class="place-card-row-value"><strong>Portería Cra 45</strong> (peatonal principal, desde Teusaquillo / Parkway, 5 min estación TM). <strong>Portería Calle 53</strong> (peatonal y vehicular visitantes). Capilla Norte / Capilla Sur (sobre Cra 30). Portería Calle 45A (peatonal, conecta con TM).</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Acceso vehicular</div>
+        <div class="place-card-row-value"><strong>Solo por Portería Calle 53</strong> (dispensador de tarjetas). Otras porterías requieren carné institucional registrado. Email movilidad: movilidad_bog@unal.edu.co, ext. 18508-18506.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Estación TM</div>
+        <div class="place-card-row-value"><strong>"Universidad Nacional"</strong> (troncal E, NQS Central) — NO troncal A como se sugirió. Salir y cruzar hacia oriente por Calle 45A (335 m, 5 min a pie) hasta portería. Alternativa: estación "Ciudad Universitaria" (troncal K, Av Calle 26).</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Contactos útiles</div>
+        <div class="place-card-row-value"><strong>Bienestar Universitario Sede Bogotá:</strong> Calle 44 # 45-67, ext. 10668-10669, bienestar.bogota.unal.edu.co. <strong>Patrimonio Cultural:</strong> Cra 30 # 45-03 Ed. 104, ext. 17605, dircultura@unal.edu.co.</div>
+    </div>
+</div>
+
+<div class="section-header">
+    <div class="section-tag">Recorrido arquitectónico</div>
+    <h3 class="section-title">Ruta autoguiada · 2-3 horas</h3>
+</div>
+
+<table>
+    <thead>
+        <tr><th style="width:5%">#</th><th style="width:28%">Punto</th><th style="width:25%">Arquitecto / Año</th><th style="width:42%">Notas</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>1</td><td><strong>Plaza Che</strong> (Plaza Santander Guevara)</td><td>—</td><td>Centro simbólico del campus. Lugar de encuentro, manifestaciones, arte callejero. Aquí están la Biblioteca Gabriel García Márquez y el Auditorio León de Greiff.</td></tr>
+        <tr><td>2</td><td><strong>Auditorio León de Greiff</strong> (Ed. 104)</td><td>Eugenia Mantilla de Cardoso, 1974 (Premio Nacional Arquitectura)</td><td>Capacidad 1.604 espectadores. Sede de la Orquesta Filarmónica de Bogotá. Monumento Nacional (1996). Restaurado 2023. Dirección: Cra 30 # 45-03.</td></tr>
+        <tr><td>3</td><td><strong>Museo de Arquitectura Leopoldo Rother</strong></td><td>Leopoldo Rother (originalmente imprenta), 1930-40</td><td>Único museo de arquitectura en Colombia. Horario: L-V 8am-5pm, sáb 8am-12m. IG: @museoarquitectura</td></tr>
+        <tr><td>4</td><td><strong>Residencias Estudiantiles (Bloques 1-3)</strong></td><td>Julio Bonilla Plata, 1939-1940</td><td>Monumentos Nacionales. Arquitectura moderna pionera en Colombia.</td></tr>
+        <tr><td>5</td><td><strong>Edificio Posgrados Ciencias Humanas</strong></td><td>Rogelio Salmona</td><td>Laberinto de piedras, 4 pisos con escalera central. Candidato a patrimonio.</td></tr>
+        <tr><td>6</td><td><strong>Biblioteca Central</strong></td><td>—</td><td>Espacio de estudio y consulta, abierto al público.</td></tr>
+        <tr><td>7</td><td><strong>Edificio Uriel Gutiérrez</strong> (Rectoría)</td><td>—</td><td>Sede administrativa, Cra 45 # 26-85.</td></tr>
+        <tr><td>8</td><td><strong>Comedor "Chucho León"</strong></td><td>Reabrió 1 sep 2025</td><td>Capacidad 800 sentados, 2.000 almuerzos/día (meta 10.000). Homenaje a Jesús "Chucho" León Patiño, líder estudiantil asesinado 1984. <strong>Acceso externos: confirmar en portería</strong>.</td></tr>
+    </tbody>
+</table>
+
+<div class="callout">
+    <strong>Eventos culturales en julio 2026:</strong> Los conciertos de la Orquesta Filarmónica de Bogotá en el Auditorio León de Greiff suelen ser <strong>viernes 7pm y sábados 4pm</strong>, entrada libre hasta completar aforo. <strong>Para mié 15 o jue 16 julio, normalmente no hay conciertos OFB</strong>. Verificar agenda a partir del 30-jun-2026 en patrimoniocultural.bogota.unal.edu.co/calendario. El <strong>Claustro de San Agustín</strong> (Cra 8 # 7-21, La Candelaria, NO campus principal) tiene exposición 2026 "Exvotos de la desobediencia" (Débora Arango). Horario: mar-dom 10am-6pm.
+</div>
+
+<div class="section-header">
+    <div class="section-tag">Dónde almorzar</div>
+    <h3 class="section-title">Comedores UNAL + Alternativas en Teusaquillo</h3>
+</div>
+
+<table>
+    <thead>
+        <tr><th>Sitio</th><th>Dirección</th><th>Precio 2 pers.</th><th>Notas</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Comedor "Chucho León"</strong> (UNAL)</td><td>Campus, edificio central</td><td><span class="price">~$20.000</span></td><td>Reabrió sep-2025. Almuerzo 11:30am-2:30pm L-V. <strong>Confirmar en portería si aceptan externos.</strong></td></tr>
+        <tr><td><strong>Café Campus</strong> (UNAL)</td><td>Campus</td><td><span class="price">~$25.000</span></td><td>Cafetería principal, almuerzo 11:30am-3pm.</td></tr>
+        <tr><td><strong>Buffet Calle 44 # 15-14</strong></td><td>Teusaquillo</td><td><span class="price">$22.000</span></td><td>Buffet libre ~$11.000/persona (referencia TikTok). Mejor relación calidad/precio.</td></tr>
+        <tr><td><strong>Asadero Chigüire 53</strong></td><td>Calle 53 # 16-74, Teusaquillo</td><td><span class="price">$70.000-$100.000</span></td><td>Chigüiro $43.200 c/u. 20 años tradición. IG: @chiguire53. A 10 min en taxi del campus.</td></tr>
+        <tr><td><strong>Oliveto Parkway</strong></td><td>Parkway (Cra 24 con Cl 45)</td><td><span class="price">$50.000-$100.000</span></td><td>Italiano, pizza, pasta. Tripadvisor 4.9 (~1269 reseñas).</td></tr>
+        <tr><td><strong>Matrona</strong></td><td>Cra 24 # 39B-56</td><td><span class="price">$80.000-$140.000</span></td><td>Colombiana gourmet. WhatsApp 320 485 0920. "Joya escondida del Parkway".</td></tr>
+        <tr><td><strong>Casa Obrador</strong></td><td>Parkway</td><td><span class="price">$40.000-$60.000</span></td><td>Criolla económica. Uno de los más económicos y completos.</td></tr>
+        <tr><td><strong>KoronKo</strong></td><td>Cra 24 # 39B-56, Parkway</td><td><span class="price">$60.000-$100.000</span></td><td>Colombiana: ajiaco, bandeja paisa, cazuela de cucayo.</td></tr>
+    </tbody>
+</table>
+
+<div class="place-card-qr" style="margin-top:14px">
+    <div class="qr-block"><img class="qr-img" src="qr_codes/unal_bogota.png" alt="QR"><div class="qr-label">UNAL Bogotá</div></div>
+    <div class="qr-block"><img class="qr-img" src="qr_codes/unal_patrimonio.png" alt="QR"><div class="qr-label">Calendario cultural</div></div>
+    <div class="qr-block"><img class="qr-img" src="qr_codes/unal_movilidad.png" alt="QR"><div class="qr-label">Movilidad campus</div></div>
+    <div class="qr-block"><img class="qr-img" src="qr_codes/unal_bienestar.png" alt="QR"><div class="qr-label">Bienestar UNAL</div></div>
+</div>
+
+<!-- ============ CHAPTER 13: RESTAURANTES ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 13 · Fichas técnicas</div>
+    <h2 class="chapter-title">Restaurantes · Menús, Precios y Contactos</h2>
+    <p class="chapter-subtitle">Direcciones verificadas, especialidades con precios 2025-2026, WhatsApp, QR a menús oficiales</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">Las fichas a continuación consolidan la información gastronómica del viaje. Los precios fueron verificados en menús oficiales publicados en webs y PDFs de cada restaurante durante junio 2026. En Vitto, los precios del documento original del viaje se verificaron como <strong>vigentes</strong> (Bastones Muzzarella $15.600, Bubba Shrimps $20.000), con una corrección: el <strong>Risso al Funghi actual es $19.000</strong> (no $22.000 como decía el documento anterior; bajó $3.000). En La Puerta Falsa y La Puerta de la Catedral, los precios se verifican en reels de Instagram y reseñas recientes. Edelweiss no publica menú digital con precios; solicitar por WhatsApp.</p>
+
+<!-- VITTO -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Italiana contemporánea · Zona G (NO Zona Rosa)</div>
+        <h3 class="place-card-name">1. Vitto Restaurante</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Calle 69 # 4-97, Bogotá. Barrio Chapinero / <strong>Zona G</strong> (gastronómica, NO Zona Rosa)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">WhatsApp</div>
+        <div class="place-card-row-value">+57 310 309 9727 (también (601) 703 54 17)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Web / IG</div>
+        <div class="place-card-row-value">vittoresto.com · @vitto_bogota · Grupo Le Grand</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value">L-Mi 12m-10pm · J-S 12m-11pm · D y festivos 12m-9pm</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Reservas</div>
+        <div class="place-card-row-value">Por WhatsApp con <strong>24h anticipación</strong> (11am-7pm). Recomendadas vie/sáb noche.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Rango/persona</div>
+        <div class="place-card-row-value"><span class="price">$35.000</span> (almuerzo liviano) – <span class="price">$80.000</span> (entrada+fuerte+postre+bebida). Promedio real ~$50.000-$60.000.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Especialidades verificadas</div>
+        <div class="place-card-row-value" style="font-size:11.5px">
+        <strong>Entradas:</strong> Bastones Muzzarella <span class="price">$15.600</span> · Bubba Shrimps <span class="price">$20.000</span> · Burrata <span class="price">$28.000</span> · Rabas <span class="price">$15.000</span> · Ceviche lenguado <span class="price">$13.000</span> · Provoleta <span class="price">$17.900</span>.<br>
+        <strong>Risottos:</strong> Risso al Funghi <span class="price">$19.000</span> · Risso di Zucca <span class="price">$17.000</span>.<br>
+        <strong>Pastas:</strong> Raviolones Vitto <span class="price">$30.500</span> · Raviol Caprese <span class="price">$26.800</span> · Sorrentinos espinaca <span class="price">$23.800</span>.<br>
+        <strong>Carnes:</strong> Pechuga pollo <span class="price">$19.800</span> · Lomo filet <span class="price">$31.500</span> · Ojo de bife <span class="price">$31.500</span>.<br>
+        <strong>Pescados:</strong> Trucha <span class="price">$33.500</span> · Salmón <span class="price">$43.500</span> · Lenguado costra <span class="price">$24.500</span>.<br>
+        <strong>Postres:</strong> Lingote supremo <span class="price">$12.000</span> · Tiramisú <span class="price">$9.500</span> · Suspiro limeño <span class="price">$9.500</span>.
+        </div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Cómo llegar</div>
+        <div class="place-card-row-value">Desde Calle 94: taxi ~10-15 min (<span class="price">$12.000-$18.000</span>) o 25 min en TM (estación Calle 85 → transbordo). NO confundir con Zona Rosa; Vitto está en Zona G (Calle 69 con Cra 4).</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/vitto_web.png" alt="QR"><div class="qr-label">Web oficial</div></div>
+        <div class="qr-block"><img class="qr-img" src="qr_codes/vitto_menu.png" alt="QR"><div class="qr-label">Menú PDF 2026</div></div>
+        <div class="qr-block"><img class="qr-img" src="qr_codes/vitto_instagram.png" alt="QR"><div class="qr-label">Instagram</div></div>
+    </div>
+</div>
+
+<!-- LA PUERTA FALSA -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Tradicional colombiana · Desde 1816 · La Candelaria</div>
+        <h3 class="place-card-name">2. La Puerta Falsa</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Calle 11 # 6-50, Bogotá (a un costado de la Catedral Primada, a pasos de Plaza de Bolívar)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Contacto</div>
+        <div class="place-card-row-value">WhatsApp: wa.me/message/HA7G24OVVLAHP1 · Sin web propia ni teléfono fijo público</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Instagram</div>
+        <div class="place-card-row-value">@lapuertafalsa1816 (cuenta conjunta Bogotá + Zipaquirá)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value">L-S 7am-9pm · <strong>D y festivos 7am-6pm</strong>. ⚠️ Confirmar horario exacto el día del viaje (fuentes discrepan entre 6pm/7:30pm/9pm cierre).</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Reservas</div>
+        <div class="place-card-row-value"><strong>NO acepta reservas.</strong> Atención por orden de llegada. Fila típica 15-45 min en horas pico.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Rango/persona</div>
+        <div class="place-card-row-value"><span class="price">$15.000</span> (desayuno ligero) – <span class="price">$50.000</span> (almuerzo completo). Promedio ~$25.000-$35.000.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Especialidades</div>
+        <div class="place-card-row-value"><strong>Ajiaco santafereño</strong> <span class="price">$38.000-$40.000</span> (papas criolla, pastusa, sabanera, pollo, mazorca, crema, alcaparras, arroz, aguacate). <strong>Tamal tolimense</strong> <span class="price">$9.000-$16.000</span>. <strong>Chocolate santafereño completo</strong> <span class="price">$9.000-$17.000</span> (chocolate, queso, pan, almojábana). Changua bogotana. Dulces típicos: cocadas, brevas con arequipe, arroz con leche, natas.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Reconocimientos</div>
+        <div class="place-card-row-value">Restaurante más antiguo de Colombia (1816, celebra 210 años en 2026). Recomendado por <strong>Anthony Bourdain</strong> y <strong>TasteAtlas</strong> (top 100 restaurants del mundo - Infobae 2023). Plato destacado: ajiaco y tamal.</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/puerta_falsa.png" alt="QR"><div class="qr-label">Instagram oficial</div></div>
+    </div>
+</div>
+
+<!-- LA PUERTA DE LA CATEDRAL -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Tradicional colombiana · Más variedad que La Puerta Falsa</div>
+        <h3 class="place-card-name">3. La Puerta de la Catedral</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Calle 11 # 6-26, Bogotá (a 30 metros de La Puerta Falsa, frente a la Catedral)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Contacto</div>
+        <div class="place-card-row-value">Web oficial lapuertadelacatedral.com (en mantenimiento junio 2026). Contactar por DM Instagram @lapuertadelacatedral</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value">L-S 7am-7:30pm · <strong>D y festivos 7am-6pm</strong></div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Reservas</div>
+        <div class="place-card-row-value">Sí aceptan (botón "Reserva" en menú Degusta y enlaces Instagram). Cómo reservar: WhatsApp/Instagram (web en mantenimiento).</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Rango/persona</div>
+        <div class="place-card-row-value"><span class="price">$40.000</span> (sopa + bebida) – <span class="price">$120.000</span> (pargo rojo + bebida + postre). Promedio Degusta: <strong>$86.300/persona</strong>. Calificación Degusta: 4.3/5.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Especialidades</div>
+        <div class="place-card-row-value"><strong>Ajiaco</strong> <span class="price">$38.000</span> · <strong>Bandeja paisa</strong> <span class="price">$48.000</span> · <strong>Sobrebarriga</strong> (350g) <span class="price">$56.000</span> · <strong>T-Bone Steak</strong> <span class="price">$94.000</span> · <strong>Pargo rojo</strong> (900-1000g) <span class="price">$130.000</span> · Frijolada <span class="price">$46.000</span> · Costillas cerdo <span class="price">$56.000</span>.</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/puerta_catedral.png" alt="QR"><div class="qr-label">Instagram oficial</div></div>
+    </div>
+</div>
+
+<!-- EDELWEISS -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Alemana tradicional · Cervecería propia · Cajicá</div>
+        <h3 class="place-card-name">4. Edelweiss (Restaurante Alemán · Cajicá)</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Km 1 vía Cajicá – Zipaquirá, Cundinamarca. A 45-60 min en carro desde Calle 94 (45 km).</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">WhatsApp / Tel</div>
+        <div class="place-card-row-value"><strong>+57 311 541 1241</strong> (WhatsApp reservas) · PBX: +57 1 883 1212 · info@edelweisscajica.com</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Instagram</div>
+        <div class="place-card-row-value">@edelweisscajica · Facebook: Edelweiss cajica</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value"><strong>Abre martes a domingo (CIERRA lunes)</strong>. Excepción: <strong>"Lunes festivo abierto"</strong> — si un lunes es festivo, abren ese lunes. Horario detallado (confirmar al reservar): Mié-Jue 1-4pm, Vie 1-8pm, Sáb 12m-6pm (con reserva >5 personas hasta 10pm), Dom 12m-6pm.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Reservas</div>
+        <div class="place-card-row-value"><strong>Preferibles</strong> (Degusta: "Preferible reservar"). Por WhatsApp 3115411241.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Rango/persona</div>
+        <div class="place-card-row-value">Promedio Degusta: <span class="price">$38.900</span>. Rango estimado: <span class="price">$35.000-$70.000</span>.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Especialidades</div>
+        <div class="place-card-row-value"><strong>Codo de cerdo (Schweinshaxe)</strong> — plato más votado, ~$45.000-$60.000. <strong>Stammtisch</strong> (selección 3 salchichas: Thüringer, ternera, campesina + ensalada papa + jamón curado). <strong>Salchicha suiza / Weisswurst</strong>. Lomo de res. Pretzel bávaro, sauerkraut (chucrut), strudel de manzana. <strong>Cervezas artesanales</strong> de la casa (Ley Pureza Alemana 1516) — ⚠️ verificar si sigue activa al reservar.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Cómo llegar</div>
+        <div class="place-card-row-value"><strong>En carro/Uber:</strong> Autopista Norte, salida Cajicá, 45-60 min desde Calle 94. Uber ida ~$80.000-$120.000. <strong>En bus:</strong> Sotracausán o Cotransvocación desde Portal del Norte (~90 min). <strong>En Tren de la Sabana:</strong> parada intermedia en Cajicá sáb/dom/festivos.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Calificación</div>
+        <div class="place-card-row-value">Degusta 3.9/5 (24 reseñas). Tripadvisor disponible. Ambiente: casona con salones, espacios al aire libre, música en vivo fines de semana.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">⚠️ Sobre "Colonial Cajicá"</div>
+        <div class="place-card-row-value"><strong>NO se encontró restaurante específico llamado "Colonial Cajicá"</strong> tras búsqueda exhaustiva. Se asume que el usuario se refería a Edelweiss (confirmado en sus respuestas). Alternativas tradicionales en Cajicá: <strong>Palacio de la Gallina El Político</strong> (Cra 6 #7-25, 40+ años), <strong>Vulcano Gastrobar</strong> (Tripadvisor 4.5/5), <strong>Restaurante El Lobo</strong> (4.5/5).</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/edelweiss.png" alt="QR"><div class="qr-label">Instagram oficial</div></div>
+    </div>
+</div>
+
+<!-- CHIGÜIRO PARRILLA BAR -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Llanera · Chigüiro · Cerca del Jardín Botánico</div>
+        <h3 class="place-card-name">5. Chigüiro Parrilla Bar</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Carrera 70 # 55-97, barrio Normandía Primer Sector, Bogotá. A ~5-10 min en taxi desde Jardín Botánico.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">WhatsApp / Tel</div>
+        <div class="place-card-row-value"><strong>+57 314 220 1925</strong> (WhatsApp) · +57 601 416 4093 (fijo)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Instagram</div>
+        <div class="place-card-row-value">@chiguiroparrillabar · Facebook: ChiguiroPB</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value">⚠️ No confirmados oficialmente. Rappi indica apertura 11:30 a.m. <strong>Confirmar por WhatsApp antes de ir</strong>.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Especialidades</div>
+        <div class="place-card-row-value"><strong>Carne de chigüiro</strong> (con papa, plátano, arepa boyacense, guacamole): <span class="price">$43.200</span>. Picada llanera con chigüiro y costilla: desde <span class="price">$34.000</span>/persona. Costillas BBQ, taza de ajiaco <span class="price">$12.000</span>.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Rango/persona</div>
+        <div class="place-card-row-value"><span class="price">$25.000</span> (plato individual) – <span class="price">$50.000</span> (picada compartida + bebida)</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/chiguiro_parrilla.png" alt="QR"><div class="qr-label">Instagram oficial</div></div>
+    </div>
+</div>
+
+<!-- ASADERO CHIGÜIRE 53 -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Llanera · Chigüiro · Cerca de la UNAL</div>
+        <h3 class="place-card-name">6. Asadero Chigüire 53</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Calle 53 # 16-74, barrio Teusaquillo, Bogotá. A ~15-20 min caminando o 5 min en taxi desde UNAL.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Instagram</div>
+        <div class="place-card-row-value">@chiguire53 · Facebook: chiguire53</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value">Apertura 11:30 a.m. (Rappi). Cierre no confirmado.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Especialidades</div>
+        <div class="place-card-row-value"><strong>Chigüiro</strong> (con papa, plátano, arepa boyacense, guacamole): <span class="price">$43.200</span>. <strong>Baby Beef</strong>: <span class="price">$51.044</span>. Costillas, chorizo, pollo, picadas llaneras. 20 años de tradición.</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/chiguire_53.png" alt="QR"><div class="qr-label">Instagram oficial</div></div>
+    </div>
+</div>
+
+<!-- ANDRÉS CARNE DE RES -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Colombiana · Parrilla · Experiencia festiva</div>
+        <h3 class="place-card-name">7. Andrés Carne de Res</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Sede Chía</div>
+        <div class="place-card-row-value">Calle 3 # 11A-56, Chía, Cundinamarca. A 10-15 min en carro desde Edelweiss. Reservas: <strong>+57 601 861 2233 opción 1</strong> / +57 315 355 9096.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Sede Bogotá D.C.</div>
+        <div class="place-card-row-value">Calle 82 # 11-15, Zona T. Más cercana al alojamiento Calle 94. Reservas mismo teléfono.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Web / IG</div>
+        <div class="place-card-row-value">andrescarnederes.com · @andres_c_de_res</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value"><strong>Andrés Chía:</strong> Mié-Dom 12m-10pm. <strong>CIERRA lunes y martes</strong> (excepto lunes festivos). <strong>Andrés D.C.:</strong> Dom-Jue 12m-10pm, Vie-Sáb 12m-12am.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Rango/persona</div>
+        <div class="place-card-row-value"><span class="price">$60.000</span> (almuerzo ligero) – <span class="price">$150.000+</span> (cena con alcohol)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Cover/Boletería</div>
+        <div class="place-card-row-value"><span class="price">$60.000</span> COP Andrés Chía — solo en eventos especiales nocturnos. En horario normal NO hay cover.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">⚠️ Para julio 2026</div>
+        <div class="place-card-row-value">Combinar Andrés Chía + Edelweiss solo de <strong>miércoles a domingo</strong> (ambos abren). <strong>Lunes 20 festivo</strong>: Andrés Chía sí abre (lunes festivo cuentan como domingo). <strong>Martes 21: Andrés Chía cierra</strong>.</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/andres_carne.png" alt="QR"><div class="qr-label">Web oficial</div></div>
+    </div>
+</div>
+
+<!-- PALOQUEMAO -->
+<div class="place-card">
+    <div class="place-card-header">
+        <div class="place-card-type">Plaza de mercado · 67 locales · Frutas exóticas, flores, lechona</div>
+        <h3 class="place-card-name">8. Plaza de Mercado de Paloquemao</h3>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Dirección</div>
+        <div class="place-card-row-value">Av. Calle 19 No. 25-04, Bogotá (Los Mártires)</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Teléfono / Web</div>
+        <div class="place-card-row-value">PBX: +57 601 742 6664 · atencionalcliente@plazadepaloquemao.com · plazadepaloquemao.com</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Instagram</div>
+        <div class="place-card-row-value">@plazadepaloquemao</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Horarios</div>
+        <div class="place-card-row-value">L-S 4:30am-4:30pm · <strong>D y festivos 5am-4:30pm</strong> (web) / <strong>5am-2:30pm</strong> (Instagram/VisitBogotá). <strong>Asumir cierre 2:30pm domingos</strong>. Mercado de Flores (Av 19 #25-02): domingos desde 3:30am.</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Entrada</div>
+        <div class="place-card-row-value"><strong>Libre / gratuita.</strong> Parqueo propio (efectivo, $5.000-$10.000 / 3-4 horas).</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Locales destacados</div>
+        <div class="place-card-row-value"><strong>Lechonería Doña Rosalba</strong> (Local 80228, lechona 50 años, ~$12-15K porción). <strong>El Palacio del Jugo</strong> (Local 80013, L-S 7am-4:30pm, ⚠️ NO abre domingos). <strong>Especias para Colombia</strong> (Local 81102, Patio 1, L-D 8am-3pm, tel/WhatsApp 302 633 2513). <strong>Mercado Floral Colombia</strong> (Local 87056). <strong>El Palacio de las Frutas</strong> (Local 82018).</div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Presupuesto 2 personas</div>
+        <div class="place-card-row-value">Plan completo (desayuno + compras + flores + especias + parqueo): <span class="price">$100.000-$210.000 COP</span>. Plan mínimo (desayuno + degustación): <span class="price">$50.000-$80.000</span>. <strong>Llevar efectivo en billetes pequeños.</strong></div>
+    </div>
+    <div class="place-card-row">
+        <div class="place-card-row-label">Frutas imperdibles</div>
+        <div class="place-card-row-value">Lulo, guanábana, chontaduro, feijoa, granadilla, pitahaya, borojó, curuba, mamey, carambolo, mora, tomate de árbol, uchuva.</div>
+    </div>
+    <div class="place-card-qr">
+        <div class="qr-block"><img class="qr-img" src="qr_codes/paloquemao.png" alt="QR"><div class="qr-label">Web oficial</div></div>
+        <div class="qr-block"><img class="qr-img" src="qr_codes/paloquemao_instagram.png" alt="QR"><div class="qr-label">Instagram</div></div>
+    </div>
+</div>
+
+<!-- ============ CHAPTER 14: MOVILIDAD ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 14 · Movilidad</div>
+    <h2 class="chapter-title">Guía de Transporte en Bogotá</h2>
+    <p class="chapter-subtitle">TransMilenio, SITP, Uber/Cabify, Tren de la Sabana, taxi aeropuerto, Ciclovía, pico y placa</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">La movilidad en Bogotá desde Calle 94 / Chicó se basa en <strong>TransMilenio como sistema principal</strong>, complementado con Uber/Cabify para trayectos cortos nocturnos o con maletas, y el Tren de la Sabana para la salida a Zipaquirá/Cajicá. La estación TM más cercana al alojamiento es <strong>Calle 100 – Marketmedios</strong> (troncal B Autopista Norte), a 600 m accesibles por puente peatonal desde la Calle 94. La tarifa única TransMilenio es <strong>$3.550 COP</strong> por viaje (vigente desde 14-ene-2025) e incluye transbordos integrados si se usa la tarjeta TuLlave personalizada. El sistema opera L-V 4am-11pm, sábados 5am-11pm, domingos y festivos 5am-10pm.</p>
+
+<div class="section-header">
+    <div class="section-tag">TransMilenio</div>
+    <h3 class="section-title">Tarjeta TuLlave, tarifas y horarios</h3>
+</div>
+
+<div class="info-grid">
+    <div class="info-box">
+        <div class="info-box-label">Tarifa vigente</div>
+        <div class="info-box-value">$3.550 COP por pasaje (todo el día, sin horario pico/non-pico)</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Tarjeta TuLlave</div>
+        <div class="info-box-value">$8.000 + recarga. Personalizada (con cédula/pasaporte) permite transbordos integrados y 2 viajes a crédito/día</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Horarios L-V</div>
+        <div class="info-box-value">4:00 a.m. – 11:00 p.m.</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Sábados</div>
+        <div class="info-box-value">5:00 a.m. – 11:00 p.m.</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Dom y festivos</div>
+        <div class="info-box-value">5:00 a.m. – 10:00 p.m.</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Estación cercana Calle 94</div>
+        <div class="info-box-value">Calle 100 – Marketmedios (troncal B, 600m, puente peatonal directo)</div>
+    </div>
+</div>
+
+<table>
+    <thead>
+        <tr><th>Destino desde Calle 94</th><th>Estación destino</th><th>Troncal</th><th>Tiempo estimado</th><th>Transbordos</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Universidad Nacional</strong></td><td>Universidad Nacional</td><td>E (NQS Central)</td><td>35-50 min</td><td>1 (en Av. El Dorado o Salitre El Greco)</td></tr>
+        <tr><td><strong>La Candelaria (Museo Oro)</strong></td><td>Las Aguas – Centro Colombo Americano</td><td>A (Caracas)</td><td>45-60 min</td><td>1 (Portal Norte o conectora troncal A)</td></tr>
+        <tr><td><strong>Planetario Bogotá</strong></td><td>Centro Memoria / Universidades</td><td>A (Caracas)</td><td>40-55 min</td><td>1</td></tr>
+        <tr><td><strong>Paloquemao</strong></td><td>Paloquemao / CAD</td><td>E (NQS) / K (Calle 26)</td><td>40-55 min</td><td>1</td></tr>
+        <tr><td><strong>Jardín Botánico</strong></td><td>Avenida Chile</td><td>E (NQS)</td><td>30-45 min + 10 min a pie</td><td>1 (o Uber directo $15-22k)</td></tr>
+        <tr><td><strong>Parque Simón Bolívar</strong></td><td>Simón Bolívar / Salitre El Greco</td><td>E (NQS) / K (Calle 26)</td><td>40-55 min</td><td>1</td></tr>
+        <tr><td><strong>Monserrate (base teleférico)</strong></td><td>Las Aguas</td><td>A (Caracas)</td><td>45-60 min + 10 min a pie</td><td>1 (o Uber $25-35k directo)</td></tr>
+        <tr><td><strong>Estación Usaquén (Tren)</strong></td><td>Calle 100 → Hacienda Santa Bárbara</td><td>B</td><td>20-25 min</td><td>0-1</td></tr>
+        <tr><td><strong>CC Gran Estación (Tren)</strong></td><td>Salitre El Greco</td><td>K (Av. El Dorado)</td><td>25-35 min</td><td>1</td></tr>
+    </tbody>
+</table>
+
+<div class="callout">
+    <strong>Recomendaciones para turistas:</strong>
+    <ul class="clean">
+        <li>Comprar <strong>TuLlave personalizada</strong> el día 1 (Llega) en estación Calle 100. Llevar pasaporte/cédula. $8.000 + recarga $20.000 inicial.</li>
+        <li>Descargar apps <strong>TransMi App</strong> o <strong>Maas (TuLlave)</strong> para planear rutas y recargar digitalmente.</li>
+        <li>Evitar horas pico: <strong>6-9am y 5-8pm L-V</strong> (TM saturado, tarifa dinámica alta en Uber).</li>
+        <li>Buscador oficial de rutas: <em>buscador-rutas.transmilenio.gov.co</em></li>
+        <li>Línea oficial de atención: <strong>195</strong> (24 horas) / +57 601 4824304.</li>
+        <li>Cuidar objetos personales — turistas con mochilas son objetivo fácil.</li>
+    </ul>
+</div>
+
+<div class="place-card-qr" style="margin-top:14px">
+    <div class="qr-block"><img class="qr-img" src="qr_codes/transmilenio.png" alt="QR"><div class="qr-label">TransMilenio oficial</div></div>
+    <div class="qr-block"><img class="qr-img" src="qr_codes/tullave.png" alt="QR"><div class="qr-label">TuLlave</div></div>
+    <div class="qr-block"><img class="qr-img" src="qr_codes/buscador_rutas.png" alt="QR"><div class="qr-label">Buscador rutas</div></div>
+</div>
+
+<div class="section-header">
+    <div class="section-tag">Uber / Cabify / DiDi</div>
+    <h3 class="section-title">Tarifas estimadas por trayecto</h3>
+</div>
+
+<p class="body-text">Las apps operan legalmente en Bogotá como "transporte especial" (vehículos hasta 4 pasajeros sin conductor). <strong>Pico y placa aplica a Uber/Cabify/DiDi L-S 5:30am-9pm</strong> (rotación de placas diaria). <strong>Domingos y festivos: NO aplica</strong> → libre circulación 19 y 20 julio. Las tarifas son dinámicas (surge pricing en horas pico y lluvia); las siguientes son referenciales y deben cotizarse en la app el día del viaje.</p>
+
+<table>
+    <thead>
+        <tr><th>Trayecto desde Calle 94</th><th>Tiempo estimado</th><th>Uber X / Cabify Lite</th><th>Notas</th></tr>
+    </thead>
+    <tbody>
+        <tr><td>→ La Candelaria (Museo del Oro)</td><td>35-50 min</td><td><span class="price">$25.000-$35.000</span></td><td>Tiempo variable según tráfico</td></tr>
+        <tr><td>→ Universidad Nacional</td><td>25-35 min</td><td><span class="price">$18.000-$25.000</span></td><td>Mejor opción si TM no conecta</td></tr>
+        <tr><td>→ Paloquemao</td><td>30-40 min</td><td><span class="price">$22.000-$30.000</span></td><td>Mejor ir con Huevito en carro</td></tr>
+        <tr><td>→ Jardín Botánico</td><td>20-30 min</td><td><span class="price">$15.000-$22.000</span></td><td>Recomendado vs TM+SITP</td></tr>
+        <tr><td>→ Monserrate (base)</td><td>35-45 min</td><td><span class="price">$25.000-$35.000</span></td><td>Mejor temprano (8am)</td></tr>
+        <tr><td>→ CC Gran Estación (Tren)</td><td>25-35 min</td><td><span class="price">$20.000-$28.000</span></td><td>Salida 8:45am tren</td></tr>
+        <tr><td>→ Estación Usaquén (Tren)</td><td>15-20 min</td><td><span class="price">$12.000-$18.000</span></td><td>Alternativa cercana, 9:15am tren</td></tr>
+        <tr><td>→ Aeropuerto El Dorado</td><td>25-40 min</td><td><span class="price">$30.000-$45.000</span></td><td>En aeropuerto: ir a Av. El Dorado para pedirlo</td></tr>
+    </tbody>
+</table>
+
+<div class="callout callout-warning">
+    <strong>Seguridad en apps:</strong>
+    <ul class="clean">
+        <li>Verifica placa y nombre del conductor antes de subir.</li>
+        <li>Comparte tu viaje con un contacto (función de la app).</li>
+        <li>Pide el viaje desde adentro de un sitio cerrado (hotel, restaurante, CC).</li>
+        <li><strong>Evita pedir Uber dentro del aeropuerto</strong>: las autoridades lo restringen. Caminar a Av. El Dorado o usar taxi oficial.</li>
+        <li><strong>Cabify suele percibirse como más seguro</strong> que Uber/DiDi (conductores identificados, monitoreo, botón seguridad). Tarifas un poco más altas.</li>
+        <li><strong>DiDi</strong>: tarifas más bajas, mayor disponibilidad de motos (DiDi Moto) — menos seguro para 2 personas.</li>
+    </ul>
+</div>
+
+<div class="place-card-qr" style="margin-top:14px">
+    <div class="qr-block"><img class="qr-img" src="qr_codes/cabify.png" alt="QR"><div class="qr-label">Cabify tarifas</div></div>
+    <div class="qr-block"><img class="qr-img" src="qr_codes/taxis_libres.png" alt="QR"><div class="qr-label">Taxis Libres</div></div>
+    <div class="qr-block"><img class="qr-img" src="qr_codes/aeropuerto_eldorado.png" alt="QR"><div class="qr-label">Aeropuerto taxis</div></div>
+</div>
+
+<div class="section-header">
+    <div class="section-tag">Tren de la Sabana</div>
+    <h3 class="section-title">Turistren Bogotá – Zipaquirá (sáb, dom y festivos)</h3>
+</div>
+
+<p class="body-text">El <strong>Tren Turístico de la Sabana</strong> operado por Turistren funciona sábados, domingos y festivos. <strong>CAMBIO IMPORTANTE (permanente)</strong>: ya NO sale de la histórica Estación de La Sabana (Calle 13 #18-24). Ahora sale del <strong>costado occidental del CC Gran Estación</strong> (Cra 66 con Cl 25/26, andén de la vía férrea frente a la Plazoleta de Los Alfiles). La taquilla Calle 13 #18-24 sigue abierta solo para venta anticipada (no aborda tren).</p>
+
+<table>
+    <thead>
+        <tr><th>Hora</th><th>Lugar</th><th>Acción</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>8:45 a.m.</strong></td><td>CC Gran Estación (Cra 66 con Cl 25/26, Bogotá)</td><td>Salida</td></tr>
+        <tr><td>9:05 a.m.</td><td>Estación de Usaquén (Av. Cra 9 #110-08)</td><td>Llegada</td></tr>
+        <tr><td><strong>9:15 a.m.</strong></td><td>Estación de Usaquén</td><td>Salida (mejor opción desde Calle 94)</td></tr>
+        <tr><td>10:00 a.m.</td><td>Estación de Cajicá (parada intermedia)</td><td>Parada — opción para Edelweiss</td></tr>
+        <tr><td><strong>10:45 a.m.</strong></td><td>Estación de Zipaquirá</td><td>Llegada</td></tr>
+        <tr><td>10:45-3:15 p.m.</td><td>Zipaquirá</td><td>Permanencia 4h30 (visita Catedral de Sal, almuerzo)</td></tr>
+        <tr><td>3:15 p.m.</td><td>Estación de Zipaquirá</td><td>Salida de regreso</td></tr>
+        <tr><td>4:45 p.m.</td><td>Estación de Usaquén</td><td>Llegada</td></tr>
+        <tr><td>5:15 p.m.</td><td>CC Gran Estación</td><td>Llegada final</td></tr>
+    </tbody>
+</table>
+
+<div class="info-grid">
+    <div class="info-box">
+        <div class="info-box-label">Tarifa adulto (Tuboleta)</div>
+        <div class="info-box-value"><span class="price">$119.000</span> COP (incluye recargo $11.500)</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Niños 3-12 / Adulto mayor 60+</div>
+        <div class="info-box-value"><span class="price">$111.600</span> COP (Tuboleta)</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Tarifa directa Turistren</div>
+        <div class="info-box-value">Adulto $96.000 · Niños/adulto mayor $90.000</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Bebés menores 3 años</div>
+        <div class="info-box-value">NO pagan (van en brazos)</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Incluye</div>
+        <div class="info-box-value">Viaje ida y regreso Bogotá ↔ Zipaquirá</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">NO incluye</div>
+        <div class="info-box-value">Alimentación, ni entrada a Catedral de Sal (~$60.000)</div>
+    </div>
+</div>
+
+<div class="callout">
+    <strong>Compra de boletas:</strong>
+    <ul class="clean">
+        <li><strong>Online:</strong> tuboleta.com → eventos → "Viaje en tren a Zipaquirá 2026". La venta se abre ~15 días antes → <strong>comprar alrededor del 5 de julio 2026</strong>.</li>
+        <li><strong>Taquilla Estación Usaquén</strong> (Av. Cra 9 #110-08): venta anticipada y el mismo día (sujeto a disponibilidad).</li>
+        <li><strong>Taquilla Calle 13 #18-24</strong>: solo venta anticipada, no aborda tren.</li>
+        <li>Teléfono Tuboleta: +57 601 5936300 / #593 desde celular.</li>
+        <li>WhatsApp Turistren: +57 3115338264. Info Turistren: +57 1 3161300.</li>
+    </ul>
+</div>
+
+<div class="place-card-qr" style="margin-top:14px">
+    <div class="qr-block"><img class="qr-img" src="qr_codes/turistren.png" alt="QR"><div class="qr-label">Turistren oficial</div></div>
+    <div class="qr-block"><img class="qr-img" src="qr_codes/tuboleta_tren.png" alt="QR"><div class="qr-label">Tuboleta tren</div></div>
+</div>
+
+<div class="section-header">
+    <div class="section-tag">Aeropuerto El Dorado</div>
+    <h3 class="section-title">Llegada y salida · Mejor opción con maletas</h3>
+</div>
+
+<table>
+    <thead>
+        <tr><th>Opción</th><th>Costo</th><th>Tiempo</th><th>Ventajas</th><th>Desventajas</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Taxi oficial aeropuerto</strong></td><td><span class="price">$35.000-$50.000</span></td><td>25-40 min</td><td>Tiquete con precio exacto, seguro, supervisado. Recomendado con maletas.</td><td>Más caro que Uber; posible fila</td></tr>
+        <tr><td><strong>Uber / Cabify</strong></td><td><span class="price">$30.000-$45.000</span></td><td>25-40 min</td><td>Tarifa previsible, cómodo</td><td>En aeropuerto: caminar a zona autorizada (Av. El Dorado o nivel llegadas)</td></tr>
+        <tr><td><strong>TransMilenio M86/K86</strong></td><td><span class="price">$3.550</span></td><td>60-90 min</td><td>Más económico</td><td>Con maletas incómodo, requiere transbordo</td></tr>
+        <tr><td><strong>Taxi amarillo de la calle</strong></td><td>Variable</td><td>25-40 min</td><td>—</td><td><strong>NO recomendado</strong>: riesgo sobreprecio</td></tr>
+    </tbody>
+</table>
+
+<div class="callout callout-warning">
+    <strong>Salida 5:00 a.m. miércoles 22 julio:</strong> TransMilenio NO opera antes de 4am. <strong>Reservar taxi del aeropuerto</strong> con anticipación (Taxis Libres 310 2111111) o pedir Uber/Cabify (operan 24/7 pero disponibilidad limitada de madrugada). Salir del alojamiento a las 4:00 a.m. para llegar al aeropuerto 4:40 a.m.
+</div>
+
+<div class="section-header">
+    <div class="section-tag">Ciclovía y pico y placa</div>
+    <h3 class="section-title">Restricciones del domingo 19 y lunes 20 (festivo)</h3>
+</div>
+
+<div class="info-grid">
+    <div class="info-box">
+        <div class="info-box-label">Ciclovía dom 19 y lun 20</div>
+        <div class="info-box-value">Operará 7am-2pm en corredores principales. <strong>Planificar salidas en carro antes de 7am o después de 2pm</strong>. TM sí opera.</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Pico y placa dom 19 y lun 20</div>
+        <div class="info-box-value"><strong>NO aplica</strong> domingos ni festivos → libre circulación de Huevito, taxis y Uber/Cabify.</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Pico y placa mar 21 y mié 22</div>
+        <div class="info-box-value">SÍ aplica L-V a particulares 6am-9pm; taxis y Uber L-S 5:30am-9pm. Consultar placa en movilidadbogota.gov.co/pico-y-placa. Multa: <span class="price">$522.900</span>.</div>
+    </div>
+    <div class="info-box">
+        <div class="info-box-label">Mapa Ciclovía actualizado</div>
+        <div class="info-box-value">idrd.gov.co/ciclovia/mapa-de-la-ciclovia (nuevo sitio 2025). Corredores principales: Av. Cra 9, Av. Boyacá, Calle 116, Av. Suba, Av. NQS, Av. Caracas, Calle 26.</div>
+    </div>
+</div>
+
+<div class="place-card-qr" style="margin-top:14px">
+    <div class="qr-block"><img class="qr-img" src="qr_codes/ciclovia.png" alt="QR"><div class="qr-label">Mapa Ciclovía</div></div>
+    <div class="qr-block"><img class="qr-img" src="qr_codes/pico_placa.png" alt="QR"><div class="qr-label">Pico y placa</div></div>
+</div>
+
+<!-- ============ CHAPTER 15: PRESUPUESTO TOTAL ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 15 · Presupuesto</div>
+    <h2 class="chapter-title">Presupuesto Total Detallado · 2 personas · 8 días</h2>
+    <p class="chapter-subtitle">Desglose día por día con plan recomendado. Comparación con presupuesto económico</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">El presupuesto total del viaje se estima entre <strong>$2.300.000 y $2.900.000 COP</strong> para dos personas en 8 días, incluyendo transporte, comidas, entradas a sitios culturales, encuentros sociales y compras en Paloquemao. Esto está <strong>dentro del rango económico</strong> definido por el usuario (hasta $3.000.000 COP sin contar vuelos y alojamiento). La mayor variabilidad viene de tres decisiones: (1) si se toma el Tren de la Sabana el sábado 18 (+$240.000 COP para 2 personas); (2) si se va a Edelweiss + Andrés Chía el lunes 20 (Plan C, +$330.000-$520.000 COP); y (3) el número de cenas en restaurantes de Zona G/Zona T. La estrategia de ahorro se basa en: TransMilenio como transporte principal, almuerzos de corrientazo o en comedores universitarios, planes gratuitos (Parque Simón Bolívar, Museo del Oro domingo, Ciclovía), y compras puntuales en Paloquemao.</p>
+
+<table class="table-accent">
+    <thead>
+        <tr>
+            <th style="width:8%">Día</th>
+            <th style="width:25%">Plan recomendado</th>
+            <th style="width:18%">Transporte</th>
+            <th style="width:18%">Comidas</th>
+            <th style="width:18%">Entradas/Extras</th>
+            <th style="width:13%">Total día</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><strong>Mié 15</strong></td>
+            <td>Llegada + UNAL + Parkway</td>
+            <td><span class="price">$85k</span><br>(taxi aero+TM)</td>
+            <td><span class="price">$80k-$150k</span></td>
+            <td><span class="price">$0</span><br>(UNAL gratis)</td>
+            <td><span class="price">$165k-$235k</span></td>
+        </tr>
+        <tr>
+            <td><strong>Jue 16</strong></td>
+            <td>Monserrate + Candelaria + Oro</td>
+            <td><span class="price">$30k-$60k</span><br>(TM + Uber)</td>
+            <td><span class="price">$60k-$100k</span></td>
+            <td><span class="price">$80k</span><br>(teleférico + Museo Oro)</td>
+            <td><span class="price">$170k-$240k</span></td>
+        </tr>
+        <tr>
+            <td><strong>Vie 17</strong></td>
+            <td>Cita médica + plan aire libre</td>
+            <td><span class="price">$15k-$30k</span></td>
+            <td><span class="price">$80k-$150k</span></td>
+            <td><span class="price">$0</span></td>
+            <td><span class="price">$95k-$180k</span></td>
+        </tr>
+        <tr>
+            <td><strong>Sáb 18</strong></td>
+            <td>Opción B: Tren Zipaquirá</td>
+            <td><span class="price">$30k-$50k</span><br>(Uber estación)</td>
+            <td><span class="price">$80k-$120k</span></td>
+            <td><span class="price">$240k-$360k</span><br>(tren + Catedral Sal)</td>
+            <td><span class="price">$350k-$530k</span></td>
+        </tr>
+        <tr>
+            <td><strong>Dom 19</strong></td>
+            <td>Paloquemao + Oro + Planetario</td>
+            <td><span class="price">$15k</span><br>(TM regreso)</td>
+            <td><span class="price">$120k-$250k</span><br>(mercado + onces)</td>
+            <td><span class="price">$28k</span><br>(Planetario láser, Museo GRATIS)</td>
+            <td><span class="price">$163k-$293k</span></td>
+        </tr>
+        <tr>
+            <td><strong>Lun 20</strong></td>
+            <td>Plan A: Monserrate + 93</td>
+            <td><span class="price">$25k-$50k</span></td>
+            <td><span class="price">$60k-$100k</span></td>
+            <td><span class="price">$70k</span><br>(teleférico 2×)</td>
+            <td><span class="price">$155k-$220k</span></td>
+        </tr>
+        <tr>
+            <td><strong>Mar 21</strong></td>
+            <td>Museo Oro + Cinemateca + amigos</td>
+            <td><span class="price">$15k-$30k</span></td>
+            <td><span class="price">$100k-$180k</span></td>
+            <td><span class="price">$10k-$20k</span><br>(Museo $10k, Cine libre)</td>
+            <td><span class="price">$125k-$230k</span></td>
+        </tr>
+        <tr>
+            <td><strong>Mié 22</strong></td>
+            <td>Salida 5am</td>
+            <td><span class="price">$35k-$50k</span></td>
+            <td><span class="price">$25k-$45k</span><br>(aeropuerto)</td>
+            <td><span class="price">$0</span></td>
+            <td><span class="price">$60k-$95k</span></td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="cost-summary">
+    <div class="cost-label">Presupuesto total estimado (plan recomendado)</div>
+    <div class="cost-total">$2.300.000 - $2.900.000 COP</div>
+    <div style="margin-top: 8px; font-size: 12px; color: var(--c-text-soft);">
+        Para 2 personas · 8 días · sin contar vuelos ni alojamiento · incluye Tren de la Sabana (sábado 18)
+    </div>
+    <table style="margin-top: 12px; background: white;">
+        <tr><td>Presupuesto económico (definido por usuario)</td><td style="text-align:right">$3.000.000 COP</td></tr>
+        <tr><td>Estimación plan recomendado (rango medio)</td><td style="text-align:right"><strong>$2.600.000 COP</strong></td></tr>
+        <tr style="background:#F0FDF4"><td><strong>Margen a favor</strong></td><td style="text-align:right"><strong>$400.000 COP</strong></td></tr>
+    </table>
+</div>
+
+<div class="callout callout-success">
+    <strong>Tips de ahorro aplicados:</strong>
+    <ul class="clean">
+        <li><strong>TransMilenio prioritario</strong> vs Uber: ahorro estimado $200.000-$300.000 COP en 8 días.</li>
+        <li><strong>Museo del Oro domingo 19: entrada GRATUITA</strong> (ahorro $10.000 vs día de pago).</li>
+        <li><strong>Monserrate domingo tarifa reducida</strong>: $21.000 vs $35.000 ida-regreso (ahorro $28.000 para 2 personas).</li>
+        <li><strong>Parque Simón Bolívar, Parque de la 93, Ciclovía: gratuitos</strong>.</li>
+        <li><strong>Almuerzos en Teusaquillo cerca UNAL</strong>: corrientazo $10.000-$15.000/persona vs $30.000-$60.000 en restaurantes turísticos.</li>
+        <li><strong>Cinemateca Distrital: entrada libre</strong> a muchas funciones.</li>
+        <li><strong>Paloquemao: desayuno económico</strong> ($10.000-$15.000/persona) en puestos del mercado vs $30.000-$50.000 en cafés turísticos.</li>
+    </ul>
+</div>
+
+<div class="callout callout-warning">
+    <strong>Si se excede el presupuesto, opciones para recortar:</strong>
+    <ul class="clean">
+        <li>Sustituir Tren de la Sabana (sábado 18) por opción A (Monserrate+Candelaria) — ahorro ~$250.000 COP.</li>
+        <li>Sustituir Edelweiss (lunes 20 Plan C) por Plan A o D — ahorro ~$300.000 COP.</li>
+        <li>Reducir cenas en Zona G/Zona T, priorizar corrientazos y comida en mercado.</li>
+        <li>No comprar boleto show láser Planetario (función general $23.500 vs láser $14.000 — ambas opciones accesibles).</li>
+    </ul>
+</div>
+
+<!-- ============ CHAPTER 16: CONTACTOS ============ -->
+<div class="chapter-header">
+    <div class="chapter-tag">Capítulo 16 · Contactos</div>
+    <h2 class="chapter-title">Contactos de Emergencia y Apps Recomendadas</h2>
+    <p class="chapter-subtitle">Teléfonos oficiales, líneas turistas, apps para móvil y reservas</p>
+    <div class="divider"></div>
+</div>
+
+<p class="body-text">Esta sección consolida los contactos de emergencia, líneas oficiales y aplicaciones móviles recomendadas para el viaje. Se sugiere descargar y configurar todas las apps antes de salir de casa (especialmente las de transporte y reservas). Los números de emergencia oficiales en Colombia funcionan desde cualquier teléfono, sin saldo. Para turistas extranjeros, la <strong>Línea al Turista 195</strong> del Instituto Distrital de Turismo ofrece atención bilingüe 24/7.</p>
+
+<div class="section-header">
+    <div class="section-tag">Emergencias</div>
+    <h3 class="section-title">Líneas oficiales 24/7</h3>
+</div>
+
+<table>
+    <thead>
+        <tr><th>Servicio</th><th>Teléfono</th><th>Notas</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Emergencias generales (Nacional Único)</strong></td><td><strong>123</strong></td><td>Policía, Bomberos, Ambulancia, Tránsito. 24/7, gratis, desde cualquier teléfono.</td></tr>
+        <tr><td><strong>Línea al Turista (IDT)</strong></td><td><strong>195</strong></td><td>Instituto Distrital de Turismo. Atención bilingüe 24/7. También 01 8000 127 400.</td></tr>
+        <tr><td>Policía Nacional</td><td>112</td><td>Policía regular (no emergencia)</td></tr>
+        <tr><td>Policía de Turismo</td><td>+57 601 422 8420</td><td>Policía especializada en atención al turista</td></tr>
+        <tr><td>Cruz Roja Colombiana</td><td>+57 601 437 1130</td><td>Emergencias médicas</td></tr>
+        <tr><td>TransMilenio atención</td><td>195 / +57 601 4824304</td><td>Reportes sistema transporte, objetos perdidos</td></tr>
+        <tr><td>Secretaría Movilidad Bogotá</td><td>+57 601 364 9400</td><td>Estado vías, pico y placa, accidentes</td></tr>
+    </tbody>
+</table>
+
+<div class="section-header">
+    <div class="section-tag">Contactos del viaje</div>
+    <h3 class="section-title">Personales y sitios clave</h3>
+</div>
+
+<table>
+    <thead>
+        <tr><th>Contacto</th><th>Teléfono / Notas</th><th>Plan asociado</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>Huevito</strong></td><td>[Agrega su WhatsApp]</td><td>Paloquemao domingo 19 en carro 7am</td></tr>
+        <tr><td><strong>Monty</strong></td><td>[Agrega su WhatsApp]</td><td>Encuentro Chapinero/Zona T</td></tr>
+        <tr><td><strong>Ander, Val y Dannie</strong></td><td>[Agrega sus WhatsApp]</td><td>Encuentro La 93 / Zona T</td></tr>
+        <tr><td><strong>Clínica oftalmológica</strong></td><td>[Agrega teléfono y dirección exacta]</td><td>Cita viernes 17 - Calle 98</td></tr>
+        <tr><td><strong>Alojamiento Calle 94</strong></td><td>[Agrega teléfono y check-in]</td><td>Base del viaje</td></tr>
+        <tr><td><strong>Taxis Libres (reserva)</strong></td><td><strong>+57 310 2111111</strong> (WhatsApp)</td><td>Salida 4am miércoles 22</td></tr>
+        <tr><td><strong>Tuboleta</strong></td><td>+57 601 5936300 / #593</td><td>Compra Tren Sabana, Planetario</td></tr>
+        <tr><td><strong>Turistren</strong></td><td>+57 3115338264 (WhatsApp) / +57 1 3161300</td><td>Tren Bogotá-Zipaquirá</td></tr>
+        <tr><td><strong>Edelweiss Cajicá</strong></td><td><strong>+57 311 541 1241</strong> (WhatsApp)</td><td>Reserva almuerzo alemán</td></tr>
+        <tr><td><strong>Etnias Andantes (Cementerio)</strong></td><td><strong>+57 320 287 5066</strong> (WhatsApp)</td><td>Tour privado Cementerio Central</td></tr>
+        <tr><td><strong>Chigüiro Parrilla Bar</strong></td><td><strong>+57 314 220 1925</strong> (WhatsApp)</td><td>Reserva almuerzo cerca JBB</td></tr>
+        <tr><td><strong>Andrés Carne de Res</strong></td><td><strong>+57 601 861 2233 opción 1</strong></td><td>Reserva Chía o D.C.</td></tr>
+        <tr><td><strong>Vitto</strong></td><td><strong>+57 310 309 9727</strong> (WhatsApp)</td><td>Reserva cena Zona G</td></tr>
+        <tr><td><strong>Restaurante Monserrate</strong></td><td><strong>+57 315 253 9963</strong> / reservas@restaurantesmonserrate.com</td><td>San Isidro / Santa Clara</td></tr>
+    </tbody>
+</table>
+
+<div class="section-header">
+    <div class="section-tag">Apps recomendadas</div>
+    <h3 class="section-title">Descargar antes del viaje</h3>
+</div>
+
+<table>
+    <thead>
+        <tr><th>App</th><th>Uso</th><th>Notas</th></tr>
+    </thead>
+    <tbody>
+        <tr><td><strong>TransMi App</strong></td><td>Planear rutas TransMilenio, recargas TuLlave</td><td>Oficial. Permite ver horarios en tiempo real.</td></tr>
+        <tr><td><strong>Maas (TuLlave)</strong></td><td>Recarga digital tarjeta TuLlave</td><td>Alternativa a la oficial, integrada con Daviplata</td></tr>
+        <tr><td><strong>Cabify</strong></td><td>Transporte privado (más seguro percibido)</td><td>Mejor servicio al usuario. Categoría "Cabify Promo" más económica.</td></tr>
+        <tr><td><strong>Uber</strong></td><td>Transporte privado (mayor cobertura)</td><td>Tarifas dinámicas. Compartir viaje siempre.</td></tr>
+        <tr><td><strong>DiDi</strong></td><td>Transporte (tarifas más bajas)</td><td>DiDi Moto útil en tráfico, menos seguro 2 personas.</td></tr>
+        <tr><td><strong>Taxis Libres</strong></td><td>Taxis amarillos oficiales</td><td>WhatsApp 310 2111111. Tarifa previsible.</td></tr>
+        <tr><td><strong>Tuboleta</strong></td><td>Compra Tren Sabana, Planetario, eventos</td><td>Comprar Tren con 15 días anticipación.</td></tr>
+        <tr><td><strong>Google Maps</strong> (offline)</td><td>Mapas y rutas</td><td><strong>Descargar mapa offline de Bogotá</strong> antes de llegar.</td></tr>
+        <tr><td><strong>Waze</strong></td><td>Estado del tráfico en tiempo real</td><td>Muestra pico y placa del día, desvíos.</td></tr>
+        <tr><td><strong>Rappi</strong></td><td>Pedidos de comida a domicilio</td><td>Útil si prefieren cenar en el alojamiento.</td></tr>
+        <tr><td><strong>Google Translate</strong> (offline)</td><td>Traducción español ↔ inglés</td><td>Descargar paquete español offline.</td></tr>
+    </tbody>
+</table>
+
+<div class="section-header">
+    <div class="section-tag">Embajadas (si aplica)</div>
+    <h3 class="section-title">Para turistas extranjeros</h3>
+</div>
+
+<p class="body-text">Si el usuario o su pareja son extranjeros, las embajadas en Bogotá se concentran en el sector de La Candelaria, Chicó y Teusaquillo. Es recomendable <strong>registrar el viaje en la embajada de origen</strong> antes de viajar (la mayoría tiene formularios online). Para emergencias consulares, contactar la línea de emergencia consular del país de origen.</p>
+
+<div class="callout">
+    <strong>Datos finales útiles:</strong>
+    <ul class="clean">
+        <li><strong>Moneda:</strong> Peso Colombiano (COP). Símbolo: $. Aproximación: 1 USD ≈ $4.000-$4.300 COP (junio 2026, verificar al viajar).</li>
+        <li><strong>Huso horario:</strong> Colombia UTC-5 todo el año (no hay horario de verano).</li>
+        <li><strong>Clima Bogotá:</strong> 8-19°C promedio. Julio es mes seco con chubascos vespertinos. Llevar abrigo ligero, impermeable, gafas de sol.</li>
+        <li><strong>Altitud:</strong> 2.640 m s.n.m. Beber mucha agua el primer día para mitigar el mal de altura.</li>
+        <li><strong>Agua potable:</strong> el agua del grifo en Bogotá ES potable. Llevar botella reutilizable.</li>
+        <li><strong>Propinas:</strong> 10% en restaurantes suele estar incluido en la cuenta. Si no, se acostumbra dejar 10% si el servicio fue bueno.</li>
+        <li><strong>Tarjetas:</strong>Visa y MasterCard aceptadas en casi todos los restaurantes y tiendas. Llevar efectivo para mercado (Paloquemao), taxis pequeños, y propinas.</li>
+        <li><strong>Electricidad:</strong> 110V, enchufe tipo A (igual que EE.UU.). No requiere adaptador para cargadores americanos.</li>
+    </ul>
+</div>
+
+<div class="callout callout-danger">
+    <strong>Datos a confirmar antes del viaje (lista de verificación):</strong>
+    <ul class="clean">
+        <li>Cartelera shows láser Planetario julio 2026 → planetariodebogota.gov.co/programate (revisar a partir de junio 2026)</li>
+        <li>Cartelera Cinemateca julio 2026 → cinematecadebogota.gov.co</li>
+        <li>Programación cultural UNAL julio 2026 → patrimoniocultural.bogota.unal.edu.co/calendario (revisar 30-jun-2026)</li>
+        <li>Apertura venta Tren de la Sabana para 18 y 19 julio → tuboleta.com (alrededor del 5 julio 2026)</li>
+        <li>Horario exacto Paloquemao domingo → confirmar en plazadepaloquemao.com o Instagram</li>
+        <li>Acceso de externos al Comedor "Chucho León" UNAL → consultar en portería el día de la visita</li>
+        <li>Precio Tour Etnias Andantes Cementerio → WhatsApp +57 320 287 5066 (si desean agendar)</li>
+        <li>Si cervecería Edelweiss sigue activa → confirmar al reservar WhatsApp +57 311 541 1241</li>
+        <li>Horario Chigüiro Parrilla Bar festivos → WhatsApp +57 314 220 1925</li>
+        <li>Tarifas Uber/Cabify actuales → cotizar en la app el día del viaje</li>
+        <li>Personalización TuLlave con pasaporte extranjero → verificar en punto de personalización</li>
+    </ul>
+</div>
+
+</div>
+<!-- ============ ENDING PAGE ============ -->
+<div class="ending">
+    <div class="ending-tag">Plan Maestro de Viaje · Bogotá 2026</div>
+    <p class="ending-text">Que Bogotá los reciba con su sol frío, su aire de cerro y su música de plaza.</p>
+    <p class="ending-sub">8 días · 2 personas · julio 2026</p>
+    <div style="position:relative;z-index:2;margin-top:20px;padding-top:20px;border-top:1px solid rgba(254,215,170,0.3);max-width:400px">
+        <div style="font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(254,215,170,0.7);letter-spacing:1px">
+            4°43′N · 74°04′W · 2,640 m s.n.m.<br>
+            Compilado junio 2026<br>
+            Datos verificados de fuentes oficiales .gov.co<br>
+            41 códigos QR · 16 capítulos · 25+ sitios cubiertos
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

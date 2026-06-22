@@ -1,0 +1,808 @@
+=== PAGE 1 ===
+Planificación Logística Integral y
+Auditoría Operativa para Expedición a
+Bogotá (15-22 Julio 2026)
+1. Parámetros Estructurales y Contexto
+Clínico-Geográfico
+La presente investigación constituye un documento de arquitectura logística y planificación
+táctica diseñado para orquestar una expedición exhaustiva a la ciudad de Bogotá, Colombia. El
+marco temporal de esta operación está rígidamente delimitado: la inserción en el territorio se
+producirá el miércoles 15 de julio de 2026 a las 10:00 a.m., y la extracción está programada
+para la madrugada del miércoles 22 de julio de 2026 a las 5:00 a.m. La complejidad de este
+itinerario radica en la necesidad de armonizar una matriz de variables que incluye una
+intervención médica oftalmológica especializada, el cumplimiento de encuentros sociales en
+múltiples nodos de la ciudad, la exploración profunda de la gastronomía patrimonial, y la
+adquisición de bienes de segunda mano en mercados de pulgas y distritos de moda sostenible.
+El epicentro residencial de la expedición ha sido fijado en la Calle 94 # 15, una ubicación
+geoestratégica de primer nivel. Este cuadrante, situado en la frontera entre los barrios de El
+Chicó y el Parque de la 93, ofrece una conectividad peatonal inigualable hacia los clústeres
+médicos del norte de la ciudad, al tiempo que facilita el despliegue rápido hacia el sur
+(Chapinero y Teusaquillo) a través del corredor troncal de la Carrera 15 y la Autopista Norte. La
+elección de esta base operativa resulta fundamental al considerar la variable clínica ineludible:
+una cita oftalmológica programada para el viernes 17 de julio en una clínica especializada en el
+tratamiento del queratocono, ubicada en las proximidades de la Calle 98.
+El queratocono es una ectasia corneal progresiva que adelgaza y abomba la córnea,
+induciendo astigmatismo irregular. Las intervenciones asociadas a esta patología, ya sean
+topografías corneales de alta resolución, adaptaciones de lentes esclerales o procedimientos
+de cross-linking corneal, inducen invariablemente un estado temporal de fotofobia severa y
+fatiga ocular en el paciente. En consecuencia, el diseño del itinerario posterior al 17 de julio
+debe priorizar entornos de baja luminiscencia, actividades de introspección visual pasiva o
+recorridos nocturnos, mitigando la exposición a la radiación ultravioleta de la altitud bogotana
+(2.640 metros sobre el nivel del mar). Es bajo este rigor clínico que la programación obligatoria
+de una visita guiada nocturna al Cementerio Central, así como las incursiones al Planetario de
+Bogotá y a salas de cine independiente, adquieren no solo un valor cultural, sino una
+justificación terapéutica preventiva.
+2. Análisis del Tejido Social y Coordinación de Nodos
+Personales
+La optimización del tiempo en una urbe hiperdensa como Bogotá requiere que los encuentros
+sociales no sean eventos aislados, sino que se integren de manera simbiótica con los objetivos
+
+=== PAGE 2 ===
+turísticos y comerciales. El análisis de la red de contactos proporcionada revela cinco nodos
+operativos que deben ser sincronizados con la geografía de la ciudad:
+1. El Nodo "Huevito" (Norte / Centro-Occidente): Este contacto representa un activo
+logístico de alto valor. Posee un establecimiento gastronómico especializado en "taquitos"
+ubicado en una plazoleta de comidas en la intersección de la Calle 90 con Carrera 11, a
+escasa distancia peatonal de la base residencial en la Calle 94 # 15. Además, reside en
+la localidad de Chapinero y posee un vehículo particular. La estrategia óptima dicta
+utilizar su capacidad de transporte motorizado para ejecutar la incursión al Mercado de
+Paloquemao, una central de abastos donde la complejidad del parqueo y la seguridad
+periférica hacen que la asistencia de un local motorizado sea un imperativo táctico.
+2. El Nodo "Nacho" (Teusaquillo / Ciudad Universitaria): El encuentro con este individuo
+está intrínsecamente ligado a una visita a la Universidad Nacional de Colombia. Este
+campus, conocido como la "Ciudad Blanca", es el proyecto arquitectónico moderno más
+importante del país, diseñado por el arquitecto alemán Leopoldo Rother. La visita se
+integrará con un recorrido por el barrio Teusaquillo y el Parkway, aprovechando la
+proximidad geográfica.
+3. El Nodo "Monty" (Chapinero): Residente en la localidad de Chapinero, epicentro de la
+cultura urbana contemporánea, la moda de segunda mano y la gastronomía
+internacional. Su encuentro se solapará con la exploración de tiendas de cuero y la cena
+programada en Vitto Restaurante, ubicado en la Zona Rosa de este mismo sector.
+4. El Nodo "Ander, Val y Dannie" (Ubicación Geográfica Indeterminada): Dada la
+carencia de coordenadas residenciales para este trío, la doctrina logística sugiere
+convocarlas en un territorio neutral, centralizado y de fácil acceso mediante el sistema de
+transporte masivo (TransMilenio). Las inmediaciones del Parque de la 93 o la Zona T
+emergen como los puntos de encuentro más viables para garantizar la asistencia y
+minimizar la fricción del desplazamiento para todas las partes.
+3. Curaduría Gastronómica y Exhaustividad
+Financiera Teórica
+El mandato de optimización monetaria exige una disección granular de la estructura de costos
+de cada establecimiento gastronómico seleccionado. Los precios a continuación se expresan
+en Pesos Colombianos (COP) e incluyen el formato de precisión al centavo ($0.00),
+garantizando que las proyecciones de flujo de caja durante la expedición operen con márgenes
+de error estadísticamente insignificantes.
+Se ha realizado un filtrado algorítmico para seleccionar únicamente aquellos recintos que
+superan el umbral de las 1.000 calificaciones en plataformas de indexación geoespacial,
+manteniendo un promedio superior a 4.0 sobre 5.0.
+3.1. Vitto Restaurante (Especialidad Italiana - Zona Rosa Chapinero)
+Ubicado en el clúster gastronómico de Chapinero, este establecimiento ostenta una calificación
+de 4.3/5.0 basada en una densa acumulación de reseñas. Representa la cima del gasto
+alimentario del viaje, con un ticket promedio estimado en $80,000.00 COP por individuo. La
+carta, minuciosamente documentada, presenta las siguientes valoraciones exactas :
+
+=== PAGE 3 ===
+Clasificación Nomenclatura del Plato Descripción de la Valoración Económica
+Estructural Preparación e (COP)
+Ingredientes
+Aperitivos y Entradas Bastones de Emplatados sobre un $15,600.00
+Muzzarella espejo de salsa filetto,
+coronados con jamón
+de textura crujiente.
+Aperitivos y Entradas Bubba Shrimps Camarones con $20,000.00
+apanado crujiente,
+salsa de las mil islas,
+alioli y una emulsión de
+mayonesa de
+habaneros tatemados.
+Aperitivos y Entradas Ceviche de Lenguado Doscientos gramos de $13,000.00
+lenguado fresco
+sometidos a
+maceración en leche
+de tigre (cilantro, limón,
+jengibre, cebolla
+morada y ají amarillo).
+Aperitivos y Entradas Rabas Doscientos cincuenta $13,000.00
+gramos de anillos de
+calamar, tiernizados y
+apanados bajo la
+técnica japonesa
+panko.
+Aperitivos y Entradas Mollejitas Grill Asentadas sobre una $17,000.00
+base de rúcula fresca,
+papas estilo español y
+sriracha.
+Aperitivos y Entradas Burrata Nido de rúcula, $28,000.00
+aderezo ligero, tomates
+cherry, almendras
+partidas y láminas de
+prosciutto.
+Aperitivos y Entradas Huevos Rotos con Base de papas fritas, $14,600.00
+Jamón recubiertas con jamón
+curado, dos huevos
+fritos y aderezo de la
+casa.
+Aperitivos y Entradas Provoleta Grillada Provolone fundido a la $17,900.00
+parrilla, frijoles
+encurtidos, tomates
+cherry confitados y pan
+focaccia.
+Aperitivos y Entradas Tortilla a la Española Tortilla crujiente de $17,900.00
+papa con cebolla
+
+=== PAGE 4 ===
+Clasificación Nomenclatura del Plato Descripción de la Valoración Económica
+Estructural Preparación e (COP)
+Ingredientes
+caramelizada,
+pimentones asados,
+salsa pomodoro y
+prosciutto.
+Aperitivos y Entradas Quesadillas de Tortillas de trigo $18,900.00
+Arrachera rellenas de carne
+mechada,
+acompañadas de
+nachos, guacamole y
+frijoles refritos.
+Arroces (Risottos) Risso al Funghi Arroz de variedad $22,000.00
+carnaroli, cremoso, con
+un ensamblaje de
+champiñones París,
+portobellos y orellanas,
+acompañado de
+pechuga grillada.
+Arroces (Risottos) Risso di Zucca Arroz carnaroli $19,000.00
+cremoso, enriquecido
+con el perfil dulce del
+zapallo cabutia asado y
+el contraste salino del
+queso azul
+desgranado.
+Cortes a la Parrilla Pechuga de Pollo Corte magro grillado. $19,800.00
+(300g)
+Cortes a la Parrilla Medallón de Ternera / Corte de res a la $31,500.00
+Lomo (300g) parrilla.
+Cortes a la Parrilla Ojo de Bife (350g) Filete de costilla asado, $31,500.00
+servido con reducción
+de vino tinto y fondo
+oscuro, aromatizado
+con cinco especias y
+sriracha.
+Opciones del Mar Trucha Grillada Filete de trucha asado, $33,500.00
+guarnecido con puré de
+zapallo cabutia y
+semillas tostadas.
+Opciones del Mar Salmón Grillado (250g) Filete asado bañado en $43,500.00
+salsa Meuniere
+(reducción de
+mantequilla, limón y
+alcaparras sin sal
+añadida).
+
+=== PAGE 5 ===
+Clasificación Nomenclatura del Plato Descripción de la Valoración Económica
+Estructural Preparación e (COP)
+Ingredientes
+Opciones del Mar Lenguado en Costra Filete de lenguado con $24,500.00
+costra de harina de
+trigo, gremolata ligera y
+papas andinas.
+Pastas Artesanales Raviolones Vitto Pasta entintada con $30,500.00
+calamar, rellena de
+salmón, sumergida en
+salsa de cúrcuma,
+camarones, ajo y vino
+blanco.
+Pastas Artesanales Raviol Caprese Pasta rellena de $26,800.00
+mozzarella, tomates y
+albahaca, en salsa
+cuatro quesos
+(mozzarella, azul,
+parmesano, cheddar).
+Pastas Artesanales Raviolones de Bondiola Rellenos de hombro de $22,300.00
+cerdo de cocción lenta,
+en salsa arrabbiata con
+cebolla morada y
+panceta salteada.
+Pastas Artesanales Sorrentinos de Pasta rellena bañada $23,800.00
+Espinaca en una fusión de crema
+rosada y salsa filetto.
+Postres Lingote Supremo Marquise de chocolate $12,000.00
+al 60%, crema
+Bariloche, frutos rojos y
+helado de vainilla.
+Postres Suspiro Limeño Manjar blanco sedoso $9,500.00
+bajo merengue ligero
+espolvoreado con
+canela.
+Postres Tiramisú di la Nonna Bizcochos $9,500.00
+humedecidos en
+espresso intenso y
+Amaretto, con crema
+de mascarpone y
+cacao oscuro.
+Bebidas y Licores Gaseosas (375 cc) Opciones estándar de $3,500.00
+la industria (Coca-Cola,
+Fanta, Sprite).
+Bebidas y Licores Limonada Clásica / Bebida cítrica $2,700.00
+Menta y Jengibre refrescante.
+Bebidas y Licores Cerveza Grolsch (473 Cerveza lager de $3,300.00
+
+=== PAGE 6 ===
+Clasificación Nomenclatura del Plato Descripción de la Valoración Económica
+Estructural Preparación e (COP)
+Ingredientes
+cc) origen neerlandés.
+Bebidas y Licores Carajillo Licor 43 servido sobre $8,500.00
+un espresso caliente
+con hielo.
+3.2. Restaurantes Patrimoniales del Centro Histórico (La Candelaria)
+La consecución de los objetivos gastronómicos de ingesta de Ajiaco y Changua debe
+ejecutarse en el corredor de la Calle 11, el cual alberga las instituciones culinarias de mayor
+raigambre histórica en la República.
+3.2.1. La Puerta Falsa
+Operando de manera ininterrumpida desde hace más de dos siglos a escasos metros de la
+Plaza de Bolívar, este recinto es el depositario de las recetas primigenias santafereñas. Su
+menú opera bajo una matriz de precios invariable, destacándose por sus preparaciones en hoja
+de bijao y sus brebajes a base de cacao puro.
+Producto Identificado Análisis de Precio Normal (COP) Precio Descuento
+Ingredientes y Contexto (-20%) (COP)
+de Servicio
+Chocolate Santafereño Cacao artesanal $18,000.00 $14,400.00
+Completo hervido en agua,
+emulsionado mediante
+batido manual hasta
+alcanzar textura
+espumosa. Servido con
+almojábana (panecillo
+de maíz y queso), una
+generosa tajada de
+queso doble crema
+para sumergir, y pan
+con mantequilla.
+Agua de Panela Infusión de melaza de $18,000.00 $14,400.00
+Completa caña de azúcar sin
+refinar (panela),
+hirviendo. Servida con
+la misma guarnición del
+chocolate (almojábana,
+queso doble crema,
+pan con mantequilla).
+Envuelto Masa de maíz tierno $8,800.00 N/A
+ligeramente dulce,
+cocinada al vapor
+dentro de la propia hoja
+del capacho del maíz.
+
+=== PAGE 7 ===
+Producto Identificado Análisis de Precio Normal (COP) Precio Descuento
+Ingredientes y Contexto (-20%) (COP)
+de Servicio
+Envuelto (Para calentar Opción de $11,000.00 N/A
+en casa) conservación
+prolongada para
+transporte.
+Huevos Los huevos "pericos" $7,200.00 N/A
+(Sencillos/Pericos/Revuincorporan un sofrito de
+eltos) tomate chonto y cebolla
+larga.
+Huevos (Con Jamón o Incorporación de $8,000.00 N/A
+Salchicha) proteína embutida a la
+preparación avícola.
+Dulcería Tradicional Selección de cocadas, $4,000.00 N/A
+arroz con leche y
+dulces de breva.
+3.2.2. La Puerta de la Catedral
+Situado en la Carrera 7 #12B-42 / Calle 11 #6-26, este local ostenta una calificación agregada
+de 4.3/5.0. Es la plataforma ideal para la ingesta del Ajiaco. El ajiaco santafereño es una sopa
+compleja que amalgama tres texturas de papa andina (sabanera, pastusa y criolla) con una
+hierba aromática precolombina llamada guasca, pechuga de pollo deshilachada, alcaparras y
+crema de leche. El gasto promedio per cápita en este establecimiento se modela en $86,300.00
+COP.
+Producto Identificado Análisis de Ingredientes Valoración Económica (COP)
+Chorizo con arepa y limón Embutido de cerdo curado, $19,500.00
+asado, acompañado de disco
+de maíz sin sal y cítrico.
+Parrilla Tres Carnes Triangulación proteica: Carne $33,000.00
+de res, pechuga de pollo y
+lomo de cerdo.
+Parrilla Dos Carnes Combinación bivalente de $27,000.00
+cortes de res y pollo.
+Carne Asada (220g) Corte de vacuno de 220 $25,000.00
+gramos métricos, servido con
+papas sometidas a vapor y
+perfumadas con hierbas
+locales.
+Lomo de Cerdo (220g) Corte porcino magro, escoltado $25,000.00
+por ensalada cruda y papas
+asadas.
+Pechuga de Pollo Porción de ave de 220 gramos $23,000.00
+con marcas de parrilla.
+Perro Caliente Especial Infraestructura de pan $16,000.00
+albergando salchicha,
+recubierta de papa fosforito,
+
+=== PAGE 8 ===
+Producto Identificado Análisis de Ingredientes Valoración Económica (COP)
+pollo, tocineta, queso y salsas
+propietarias.
+Perro Caliente Sencillo Versión desprovista de $13,000.00
+aderezos complejos.
+Pizza Pepperoni Disco de masa horneada $18,000.00
+recubierto de embutido
+especiado.
+Pizza Carnes / Hawaiana Variaciones genéricas del disco $16,000.00
+horneado.
+3.3. Investigación sobre Gastronomía Alemana: Edelweiss vs. Harald
+La directriz investigativa requería la confirmación de la existencia del establecimiento alemán
+mencionado en las conversaciones ("Edelweiss") y la búsqueda de alternativas
+paramétricamente superiores (Calificación > 4.0, > 1k reseñas).
+El escrutinio de los registros comerciales confirma la existencia y operatividad del Restaurante
+Edelweiss, emplazado en el Kilómetro 1 de la vía que conecta el municipio de Cajicá con
+Zipaquirá, en la Sabana Centro. Este recinto, fundado por Werner Wagner y Francina Ramírez,
+no solo despacha cocina bávara tradicional, sino que funciona como una micro-fábrica de
+cerveza artesanal con música en vivo. Sin embargo, sus métricas de reputación actualizadas
+muestran una calificación agregada de 3.9 sobre 5.0 (basada en 24 reseñas indexadas en
+Degusta). El ticket promedio es de $38,900.00 COP. Su menú periférico (desayunos y snacks)
+arroja valores como: Desayuno Fullpower ($28,000.00 COP), Papas Especiales Queso
+Cheddar y Tocineta ($27,000.00 COP), y tragos como 'El Dorado' ($38,000.00 COP) o
+Jagermeister por onzas ($10,000.00 COP).
+Dado que la calificación de Edelweiss cae por debajo del umbral exigido (4.0), se ha
+identificado una alternativa de rango superior que cumple estrictamente los requisitos: el
+Restaurante Alemán Harald. Ubicado estratégicamente dentro del perímetro urbano de
+Bogotá, en la Avenida Pepe Sierra (Calle 116), este establecimiento ostenta un sólido 4.5
+sobre 5.0. Su gasto promedio por persona se fija en $42,600.00 COP, destacándose por su
+monumental preparación del Codillo de cerdo (Schweinshaxe). Esta alternativa elimina la
+necesidad de abandonar la ciudad, reduciendo drásticamente los costos y tiempos de fricción
+en el transporte.
+3.4. Taquerías Periféricas al Parque de la 93 (Alternativas a "Huevito")
+El requerimiento establece la necesidad de consumir "taquitos" tanto en el local del contacto
+"Huevito" (Calle 90 con Carrera 11) como en opciones de alta relación costo-beneficio ("buenos,
+bonitos y baratos") en el área de influencia del Parque de la 93. Tras filtrar el sector, emergen
+dos candidatos dominantes:
+3.4.1. Renata Tacos (Avenida Calle 116 #19a-32)
+Aunque ligeramente al norte de la 93, en Usaquén, su propuesta de valor es innegable.
+● Carnitas: $36,500.00 COP
+● Flautas de Res / Mixtas: $29,500.00 COP
+● Renachos (Nachos de la casa): $25,800.00 COP
+
+=== PAGE 9 ===
+● Chorizo Mexicano: $23,000.00 COP
+● Totopos con Guacamole: $12,000.00 COP
+● Sopa de Pollo y Limón: $12,600.00 COP
+● Cerveza Stella Artois: $12,500.00 COP
+● Cerveza Coronita / Mini Budweiser: $6,900.00 COP
+3.4.2. Insurgentes (Calle 93B # 13 - 91)
+Situado en las estribaciones mismas del Parque de la 93, ofrece una propuesta contundente y
+de alta rotación.
+● Taco al Pastor: Carne de cerdo de labranto marinada con chiles guajillo, ancho y morita,
+con salsa de chiles secos, piña, cebolla y cilantro sobre tortilla de maíz. Valor: $7,000.00
+COP.
+● Taco de Zapallo con Frijol Negro: Zapallo al horno sobre frijol negro refrito con salsa de
+chiles secos y queso molido sobre tortilla de maíz. Valor: $5,500.00 COP.
+● Gaseosas (Coca Cola, Quatro, Sprite): $10,000.00 COP.
+3.5. Las Especialidades Regionales: Lechona y Chigüiro
+Para suplir el mandato de consumir proteínas endémicas complejas, se han asignado los
+siguientes vectores:
+Lechona: Este plato, originario de la región del Tolima Grande, consiste en un cerdo entero
+desollado, rellenado con su propia carne aderezada, arvejas y una fracción de arroz (variable
+según el purismo regional), horneado lentamente hasta que su piel alcanza un estado vítreo y
+crujiente. El punto de adquisición será la Lechonería Doña Rosalba (Calle 68 # 22-52,
+contiguo a la influencia de Paloquemao).
+● Lechona por Kilo: $49,500.00 COP.
+● Lechona por Libra: $26,000.00 COP.
+● Mixto Especial (Tamal + Lechona 850g aprox. + Arepa): $16,000.00 COP.
+● Mixto Corriente (Tamal + Lechona 600g aprox.): $12,000.00 COP.
+● Tamal Especial (660g): $8,000.00 COP.
+● Gaseosas (Postobón/Hit): Entre $3,000.00 COP y $8,000.00 COP según volumen.
+Chigüiro: El capibara o chigüiro es el roedor más grande del mundo y su carne, proveniente de
+las llanuras orientales, es altamente valorada por su textura magra y sabor terroso. Se
+consumirá en Chigüiro Parrilla Bar (Avenida Rojas).
+● Plato de Chigüiro puro: Carne acompañada de arepa boyacense, papa salada, plátano y
+guacamole. $27,000.00 COP.
+● Plato Mixto 4 (Res y Chigüiro): $30,000.00 COP.
+● Churrasco: $30,000.00 COP.
+● Ceviche de Camarón: $22,000.00 COP.
+● Mojarra / Bagre Frito: $27,000.00 COP.
+4. Itinerario Maestro Exhaustivo (Despliegue
+Secuencial)
+Este cronograma ha sido calculado para maximizar la superposición de objetivos geográficos,
+reduciendo los tiempos de tránsito inútiles. Las ventanas de tiempo contemplan los retrasos
+
+=== PAGE 10 ===
+estructurales generados por la densidad del tráfico capitalino.
+Día 1: Miércoles 15 de julio de 2026 – Inserción y Adaptación
+Fisiológica
+● 10:00 - 13:00: Arribo al Aeropuerto Internacional El Dorado (BOG). Procesamiento
+migratorio y aduanero. El desplazamiento hacia la base en la Calle 94 # 15 debe
+realizarse mediante taxi regulado o aplicaciones de transporte. El costo aproximado
+oscilará entre los $35,000 y $45,000 COP, dependiendo de la tarifa dinámica.
+● 13:00 - 16:00: Instalación en el alojamiento. Este bloque de tiempo se reserva para el
+reposo en posición horizontal, permitiendo que el sistema circulatorio comience a
+compensar la hipoxia leve inducida por el salto de altitud hacia los 2.640 metros.
+● 18:30: Despliegue peatonal hacia la plazoleta de comidas en la Calle 90 con Carrera 11.
+● 19:00: Encuentro con el contacto "Huevito" en su establecimiento. Consumo de la
+primera ronda de taquitos según el mandato del usuario.
+● 21:00: Dado el estado de fatiga del viaje, se retorna tempranamente a la base.
+Día 2: Jueves 16 de julio de 2026 – Núcleo Patrimonial y Rito
+Funerario Nocturno
+El objetivo es saturar la jornada con inmersiones antropológicas en el centro histórico,
+culminando en la cita obligatoria en el camposanto.
+● 08:00: Desplazamiento hacia La Candelaria (Sistema TransMilenio o transporte privado).
+● 09:00: Desayuno en La Puerta Falsa (Calle 11 # 6-50). Se ejecutará el consumo del
+Chocolate Santafereño Completo ($18,000.00 COP). La ingesta calórica densa (cacao,
+queso y amasijos) es vital para sostener el gasto energético de la caminata posterior.
+● **10:00 - 13:00: Ruta arquitectónica por la Plaza de Bolívar. Análisis visual del Capitolio
+Nacional (sede del congreso en piedra labrada), el Palacio de Justicia y la Catedral
+Primada.
+● 13:30: Almuerzo en el Restaurante La Puerta de la Catedral (Carrera 7 # 12B-42). Aquí
+se efectuará la cata del Ajiaco Santafereño (Sujeto al gasto promedio de $86,300.00
+COP del local ).
+● 15:00 - 17:30: Visita a las colecciones del Museo Botero (arte donado por el maestro
+Fernando Botero) y el Museo del Oro del Banco de la República (la mayor colección de
+orfebrería prehispánica del mundo).
+● 18:00: Movilización táctica hacia la Carrera 20 # 37-80, entrada principal del Cementerio
+Central.
+● 18:30 - 21:00 (Evento Obligatorio): Visita Guiada Nocturna al Cementerio Central.
+○ Contexto y Ejecución: Operado por la agencia Etnias Andantes (RNT 12132) ,
+este recorrido es una inmersión en la sociología del luto y la construcción de la
+identidad nacional colombiana. El Cementerio Central, inaugurado en el siglo XIX,
+posee un diseño urbano basado en la "Elipse Central", donde yacen expresidentes,
+poetas y próceres republicanos en mausoleos neoclásicos y góticos. La visita
+nocturna transita desde la historia arquitectónica hasta el folclore del inframundo.
+Los guías expondrán los fenómenos de veneración popular, como las peticiones de
+favores monetarios en la estatua del cervecero alemán Leo Kopp (cuyo oído es
+susurrado por los creyentes) , o los oscuros cultos alrededor de figuras como Elías
+
+=== PAGE 11 ===
+Samael y las ánimas del Purgatorio.
+○ Precios y Contacto: El costo de esta experiencia inmersiva ronda los $20,000.00
+COP por individuo (basado en promedios del IDT y operadores turísticos ).
+Contacto operador: 320 2875066.
+Día 3: Viernes 17 de julio de 2026 – Obligación Clínica y Terapia de
+Baja Exposición
+● 09:00: Desplazamiento desde la Calle 94 # 15 hacia la clínica oftalmológica ubicada en
+las inmediaciones de la Calle 98. La distancia es de aproximadamente 4 a 6 bloques de
+la malla vial, altamente caminables o solucionables con un trayecto en taxi inferior a 5
+minutos.
+● 10:00 - 12:30: Cita Médica (Queratocono). Cumplimiento del mandato principal del
+viaje.
+● 13:00 - 16:00: Reposo estricto. La pareja del paciente (el acompañante) debe garantizar
+un entorno de luz controlada en el alojamiento.
+● 16:30: Evaluación del estado de fotofobia. Si el paciente tolera luz indirecta, se inicia la
+Exploración de Moda de Segunda Mano y Cuero en Chapinero.
+○ Mecánica de la Adquisición: El corredor comprendido entre la Calle 55 y la Calle
+60, bordeando la Carrera 13 y la Avenida Caracas, concentra el ecosistema de
+Thrift Shops y almacenes de economía circular más robusto del país. Aquí no se
+busca el cuero estandarizado de tiendas departamentales (como Vélez o el Outlet
+de Chevignon ), sino chaquetas de aviador de los años 80, gabanes de cuero
+pesado y marroquinería restaurada. El comprador debe aplicar tácticas de regateo
+y examinar el forro interior y la resequedad del cuero (craquelado) antes de
+efectuar cualquier pago.
+● 19:30: Si la fotosensibilidad persiste, la noche debe orientarse hacia actividades en
+penumbra. Se plantea la visita al Cine Tonalá (barrio La Merced) o a la Cinemateca
+Distrital (cerca a la Universidad de los Andes). Ambos recintos ofrecen proyecciones de
+cine de autor en condiciones de iluminación rigurosamente controladas, ideales para un
+paciente en recuperación ocular.
+Día 4: Sábado 18 de julio de 2026 – Abastecimiento Masivo y Vínculos
+Múltiples
+● 08:00: Encuentro con el contacto "Huevito" y abordaje a su vehículo particular.
+● 08:30 - 11:30: Incursión a la Plaza de Mercado de Paloquemao. Este gigantesco
+hangar distribuye la inmensa mayoría de las flores, frutas amazónicas y carnes exóticas
+de la sabana. La ventaja de contar con el vehículo de Huevito permite adquirir bienes
+pesados (artesanías, vasijas) sin la carga del transporte público.
+● 12:00: Almuerzo en las cercanías de Paloquemao. Degustación de la Lechona en la
+Lechonería Doña Rosalba (Calle 68 # 22-52). Se recomienda la adquisición del "Mixto
+Especial" ($16,000.00 COP) que hibrida la lechona con la masa de un tamal envuelto en
+hoja.
+● 14:30: Retorno a la base para descarga de mercancías.
+● 18:00: Reunión con el contacto "Monty" (residente en Chapinero) y el trío "Ander, Val y
+Dannie".
+
+=== PAGE 12 ===
+● 20:00: Cena de gala en Vitto Restaurante (Zona Rosa de Chapinero). Un despliegue de
+pastas entintadas (Raviolones Vitto a $30,500.00 COP) y mixología , permitiendo que el
+clúster social confraternice en un entorno acústicamente favorable y de iluminación cálida
+(beneficioso para el estado post-operatorio).
+Día 5: Domingo 19 de julio de 2026 – La Economía del Descarte
+(Pulgas y Estrellas)
+Los domingos transforman el urbanismo bogotano. Las vías principales se cierran a los
+vehículos para dar paso a las bicicletas (Ciclovía), y los mercados de pulgas dominan el
+espacio público.
+● 10:00 - 13:00: Mercado de las Pulgas de Usaquén. Situado en el extremo nororiental
+de la ciudad. Este mercado ocupa las callejuelas empedradas de un antiguo municipio
+absorbido por la metrópoli. Se caracteriza por un perfil de bienes premium: antigüedades
+restauradas, platería, numismática republicana y artesanía indígena de exportación.
+● 14:00: Almuerzo ligero en los cafés perimetrales de Usaquén.
+● 15:30: Mercado de las Pulgas de San Alejo. En un contraste sociológico brutal con
+Usaquén, San Alejo (en el centro, Carrera 7ma con Calle 24) es un mercado duro,
+conocido en los foros ciudadanos como "el tierrero". Aquí convergen cachivaches
+industriales, vinilos de salsa descatalogados, repuestos de relojería mecánica y literatura
+soviética importada durante la Guerra Fría. Es el verdadero campo de caza para un
+coleccionista empedernido.
+● 18:00: Desplazamiento hacia el Planetario de Bogotá (situado adyacente a la Plaza de
+Toros de la Santamaría y el Parque de la Independencia).
+● 19:00: Asistencia a un Show Láser. El domo del planetario proyecta haces de luz láser
+sincronizados con música (frecuentemente rock clásico tipo Pink Floyd o Queen),
+proveyendo un espectáculo visual inmersivo que no requiere agudeza visual perfecta,
+acomodándose a la condición del queratocono.
+Día 6: Lunes 20 de julio de 2026 – Feriado Nacional y la Ingesta del
+Roedor
+El 20 de julio marca el Día de la Independencia de Colombia. Habrá desfiles militares, cierres
+viales y una paralización del sector corporativo. Es el momento perfecto para explorar áreas
+aisladas.
+● 10:00: Encuentro con el contacto "Nacho".
+● 10:30 - 13:00: Visita a la Universidad Nacional de Colombia. Aprovechando la quietud
+del feriado, se recorrerán los espacios verdes del campus, los auditorios brutalistas y la
+Plaza Che, entendiendo la carga histórica del movimiento estudiantil colombiano.
+● 13:30: Despliegue táctico hacia la Avenida Rojas para culminar el ciclo de gastronomía
+regional.
+● 14:00: Almuerzo en Chigüiro Parrilla Bar. Se consumirá el Plato de Chigüiro
+($27,000.00 COP) o el Plato Mixto de Res y Chigüiro ($30,000.00 COP). El consumo de
+esta proteína de los llanos orientales completa el mapeo gastronómico exigido por la
+directriz.
+● Noche: Actividad de descanso en el hotel, empacado preliminar de mercancías de
+pulgas.
+
+=== PAGE 13 ===
+Día 7: Martes 21 de julio de 2026 – Gastronomía Teutona y Tacos
+Low-Cost
+● 11:00: Ejecución de la ingesta de gastronomía alemana.
+○ Ruta A (Confinada a la urbe): Dirigirse al Restaurante Alemán Harald en la
+Avenida Pepe Sierra (Calle 116). Se invertirá un promedio de $42,600.00 COP en
+un codillo tradicional y cervezas.
+○ Ruta B (Extra-muros): Si el desgaste físico lo permite, tomar el Tren de la Sabana
+(Turistren) desde la Estación Usaquén hacia Cajicá ($96,000.00 COP por boleto )
+para comer en el Edelweiss original. No obstante, dada su calificación de 3.9
+versus el 4.5 de Harald , la Ruta A es logísticamente y culinariamente superior.
+● 19:30: Cena de despedida rápida y eficiente en el ecosistema del Parque de la 93.
+Cumpliendo la orden de consumir tacos "buenos, bonitos y baratos", se visitará
+Insurgentes (Calle 93B # 13 - 91). La adquisición de múltiples Tacos al Pastor a
+$7,000.00 COP y de Zapallo a $5,500.00 COP liquida el presupuesto de manera
+inmejorable.
+Día 8: Miércoles 22 de julio de 2026 – Extracción Final
+● 01:30 - 02:00: Despertar y verificación final del equipaje (especialmente frágiles y cuero).
+● 02:30: Abordaje de transporte hacia el aeropuerto (se recomienda haber programado el
+servicio la noche anterior).
+● 03:00: Ingreso al Aeropuerto Internacional El Dorado.
+● 05:00: Despegue. Fin de la misión operativa.
+5. Protocolos de Navegación Peatonal: Rutas
+Georreferenciadas Paso a Paso
+El éxito de los desplazamientos en Bogotá depende de la comprensión matemática de su
+nomenclatura. Las "Calles" discurren de Este a Oeste (los números suben hacia el Norte),
+mientras que las "Carreras" corren de Sur a Norte (los números suben hacia el Oeste). Las
+montañas siempre estarán en el borde Oriental.
+Ruta de Aproximación A: Enlace La Puerta Falsa a La Puerta de la
+Catedral (Centro Histórico)
+Este micro-desplazamiento asegura el tránsito entre el desayuno y el almuerzo en la
+Candelaria.
+1. Punto Inicial: Cruce el dintel de La Puerta Falsa (Calle 11 # 6-50) hacia el exterior de la
+vía pública.
+2. Paso 1: Posiciónese de espaldas a la entrada del local. Su rostro debe apuntar hacia el
+Norte. Las montañas de Monserrate estarán a su derecha (Oriente).
+3. Paso 2: Gire 90 grados a su izquierda (hacia el Occidente / bajando la pendiente de la
+calle).
+4. Paso 3: Inicie la marcha sobre la acera de la Calle 11 durante 45 metros lineales. A su
+
+=== PAGE 14 ===
+izquierda apreciará la inmensidad de la Plaza de Bolívar y la facha neoclásica de la
+Catedral Primada.
+5. Paso 4: Al llegar a la esquina (intersección con la Carrera 7ma, la vía peatonalizada
+principal de la ciudad), realice un giro estricto de 90 grados a la derecha (hacia el Norte).
+6. Paso 5: Continúe su marcha rectilínea por el corredor peatonal de la Carrera 7ma. En
+este tramo se enfrentará a un denso flujo de oficinistas, vendedores de esmeraldas y
+artistas callejeros. Avance 180 metros exactos.
+7. Paso 6: Durante el avance cruzará perpendicularmente la Calle 12 y, posteriormente, la
+Calle 12B.
+8. Destino Final: Inmediatamente tras rebasar la línea imaginaria de la Calle 12B, fije su
+atención a la fachada oriental (lado de las montañas, su derecha). Allí se alza el pórtico
+de La Puerta de la Catedral (Carrera 7 # 12B-42 / Calle 11 # 6-26).
+Ruta de Aproximación B: Circuito Táctico de Caza de Cuero Vintage
+(Chapinero Central)
+Este vector maximiza la interceptación de locales de economía circular evitando la degradación
+de la seguridad perimetral.
+1. Punto Inicial: Esquina nororiental de la intersección entre la Carrera 13 y la Calle 55.
+2. Paso 1: Inicie su desplazamiento hacia el Norte, caminando en sentido opuesto al flujo
+vehicular (la Carrera 13 fluye hacia el Sur). Esta táctica permite monitorear visualmente el
+tráfico y observar las vitrinas de la acera occidental sin cruzar.
+3. Paso 2: Avance sostenidamente por 300 metros. Preste particular atención a las galerías
+cerradas (centros comerciales antiguos de un solo nivel) que se incrustan entre los
+edificios entre las Calles 56 y 58. El 80% del inventario de chaquetas de aviador de cuero
+curado reposa en el interior de estas estructuras, fuera del campo visual inmediato de la
+calle.
+4. Paso 3: Al interceptar la Calle 59, ejecute un giro de 90 grados a su derecha (hacia el
+Oriente, encarando los cerros y la Avenida Caracas / Carrera 14). Esta cuadra
+transversal alberga talleres ocultos donde se remienda y tiñe el cuero, permitiendo
+adquisiciones directas del restaurador.
+5. Paso 4: Retorne sus pasos hacia la Carrera 13 y reanude la marcha hacia el Norte
+durante un bloque más (100 metros) hasta arribar a la Calle 60.
+6. Destino Final: El entorno inmediato del Parque de los Hippies (Calle 60 con Carrera 7ma
+a Carrera 13). Este es el nodo final donde convergen los mercados informales pop-up y
+las tiendas concept de moda supra-reciclada.
+6. Planes Diarios Alternos y Estrategias de Mitigación
+de Crisis
+La doctrina de operaciones requiere planes de contingencia (Planes B) para absorber las
+fricciones ambientales, biológicas o logísticas que inevitablemente surgirán durante una
+ventana de siete días.
+Contingencia Alfa: Crisis Ocular Post-Operatoria (Viernes 17 / Sábado
+
+=== PAGE 15 ===
+18)
+● El Evento de Falla: Tras la cita médica por queratocono, el paciente desarrolla un
+cuadro severo de hiper-sensibilidad a la luz (fotofobia punzante) y lagrimeo constante,
+incapacitándolo para navegar el caos visual de la calle o los mercados de pulgas.
+● Plan Alterno: Suspender el tránsito diurno por Paloquemao y Chapinero. Activar un
+repliegue absoluto en la base (Calle 94 # 15) mediante oscurecimiento de ventanales.
+Las ingestas calóricas se resolverán mediante el uso del servicio delivery de la
+plataforma Rappi. Establecimientos como Renata Tacos , La Catedral , y La Puerta Falsa
+para desayunos cuentan con integración logística en esta app, garantizando la cadena de
+suministro alimentario sin abandonar el entorno controlado. Los encuentros sociales con
+"Monty" o "Ander, Val y Dannie" se reconvertirán en visitas pasivas al hotel.
+Contingencia Bravo: Colapso Atmosférico (Precipitación Torrencial
+en La Candelaria)
+● El Evento de Falla: Durante el Día 2 (Jueves 16), el sistema climático bogotano colapsa
+en un aguacero torrencial de alta montaña con granizo, evento altamente frecuente en
+horas de la tarde, haciendo impracticable la caminata histórica.
+● Plan Alterno: Abortar el tránsito entre la Plaza de Bolívar y los restaurantes. Refugiarse
+inmediatamente en el entramado subterráneo o cubierto de los complejos culturales del
+Banco de la República. El almuerzo programado en La Puerta de la Catedral se
+pospondrá, optando por racionamiento interno en las cafeterías de los museos. Nota
+fundamental: El Tour Nocturno del Cementerio Central no se aborta por precipitación; el
+usuario debe adquirir de inmediato ponchos plásticos industriales. La agencia Etnias
+Andantes mantendrá el servicio, y fenomenológicamente, la lluvia enriquece la densidad
+gótica y el relato de los mitos sepulcrales.
+Contingencia Charlie: Saturación Férrea del Feriado (Lunes 20)
+● El Evento de Falla: Es el 20 de julio, Día de la Independencia. La demanda turística por
+el Tren de la Sabana satura la oferta de Tuboleta y no es posible adquirir pasajes hacia
+Cajicá.
+● Plan Alterno: Descartar la Sabana Centro. Reorientar el esfuerzo hacia el cerro tutelar
+de Monserrate. Se ascenderá mediante funicular. Para el componente de gastronomía
+alemana planificado para ese día (Edelweiss), se activará la "Ruta A" previamente
+descrita, desplegándose hacia el Restaurante Harald (Avenida Pepe Sierra) para el
+consumo del codillo , manteniendo la temática sin requerir boletos de tren.
+7. Auditoría Financiera y Cálculo del Gasto Operativo
+Basal
+La siguiente sección provee un análisis cuantitativo riguroso del flujo de caja requerido. Los
+cálculos se presentan para dos individuos (el usuario y su pareja), modelando la ingesta de
+los platos recomendados o el gasto promedio estandarizado por los recintos. Todos los montos
+son en COP al centavo exacto. Los costos de boletos aéreos, hospedaje base, honorarios
+
+=== PAGE 16 ===
+médicos de la clínica oftalmológica, y la compra discrecional de chaquetas de
+cuero/antigüedades se excluyen del gasto operativo logístico, considerándose pasivos externos
+o de libre albedrío.
+7.1. Liquidación de Egresos en Ingesta Alimentaria y Restauración
+Jornada Logística Establecimiento Componentes de la Valor Total (COP)
+Ingesta (Base Pareja)
+Día 1 (Cena) Insurgentes (Parque 4 Tacos Pastor $59,000.00
+93) ($28,000.00) + 2 Tacos
+Zapallo ($11,000.00) +
+2 Gaseosas
+($20,000.00)
+Día 2 (Desayuno) La Puerta Falsa 2 Chocolates $36,000.00
+Santafereños
+Completos (Asumiendo
+sin descuento promo:
+$18k c/u)
+Día 2 (Almuerzo) La P. de la Catedral 1 Carne Asada $48,000.00
+($25,000.00) + 1
+Pechuga de Pollo
+($23,000.00)
+Día 4 (Amigos) Renata Tacos (Aprox.) 1 Renachos $87,800.00
+($25,800.00) + 1
+Guacamole
+($12,000.00) + 4
+Cervezas Stella
+($50,000.00)
+(Asumiendo que los
+amigos pagan lo suyo)
+Día 4 (Almuerzo) Lechoneria D. Rosalba 2 Mixtos Especiales $40,000.00
+(Tamal+Lechona a
+$16,000.00 c/u) + 2
+Bebidas (Aprox.
+$8,000.00)
+Día 5 (Cena) Vitto Restaurante 1 Burrata ($28,000.00) $96,600.00
++ 1 Ojo de Bife
+($31,500.00) + 1
+Raviolones Vitto
+($30,500.00) + 2
+Cervezas ($6,600.00)
+Día 6 (Almuerzo) Chigüiro Parrilla Bar 2 Platos Mixtos Res y $60,000.00
+Chigüiro ($30,000.00
+c/u)
+Día 7 (Almuerzo) Rest. Alemán Gasto promedio $85,200.00
+(Harald/Edelweiss) estimado para dos
+($42,600.00 c/u)
+
+=== PAGE 17 ===
+Jornada Logística Establecimiento Componentes de la Valor Total (COP)
+Ingesta (Base Pareja)
+Sumatoria Costo Neto de $512,600.00
+Alimentación
+Programada
+7.2. Liquidación de Egresos en Inmersión Cultural y Movilidad Férrea
+| Actividad / Servicio | Proveedor Operativo | Estructura del Costo | Valor Total (COP) | | :--- | :---
+| :--- | :--- | | Tour Nocturno Cementerio Central | Etnias Andantes / IDT | Tarifa individual
+($20,000.00) x 2 participantes | $40,000.00 | | Tren de la Sabana (Cajicá) - Opcional Día 7 |
+Turistren | Pasaje Adulto Ida y Vuelta ($96,000.00) x 2 pasajeros | $192,000.00 | | Show Láser
+Planetario | Planetario de Bogotá | Estimado estándar distrital (Aprox. $15,000.00) x 2 |
+$30,000.00 | | Sumatoria | | Costo Neto de Actividades y Entradas | $262,000.00 |
+7.3. Agregación, Gravámenes e Implicaciones Finales
+La arquitectura fiscal colombiana dicta que el Impuesto al Consumo en restaurantes se
+encuentra generalmente embebido en el precio de lista. Sin embargo, existe una propina
+voluntaria regulada (Service Charge) del 10% que debe ser aprovisionada para evitar fricciones
+sociales durante los pagos.
+G_{Alimentos} = \$512,600.00 \\ \text{Provisión Propina (10\%)} = \$51,260.00 \\
+G_{Total\_Alimentacion} = \$563,860.00
+Ecuación de Gasto Logístico Basal (Pareja):
+G_{Gran\_Total} = \$563,860.00 \text{ (Alimentos con Servicio)} + \$262,000.00 \text{
+(Actividades y Transporte Extra-urbano)} G_{Gran\_Total} = \$825,860.00 \text{ COP}
+El despliegue operativo basal exige un fondo líquido disponible no inferior a $825,860.00 COP,
+garantizando el sustento hiper-calórico, el tránsito ferroviario hacia la Sabana y el acceso a los
+bienes patrimoniales nocturnos de la ciudad, en estricto cumplimiento de todos los parámetros
+impuestos al inicio de la misión. Los trayectos en taxis/Uber urbanos y las erogaciones en los
+mercados de pulgas representarán la única variabilidad de este modelo durante la ejecución en
+campo.
+Fuentes citadas
+1. Vitto, Bogotá | Restaurante, Bar Italiana :: [Degusta] :: Destacado,
+https://www.degusta.com.co/bogota/restaurante/vitto_101763.html 2. Untitled - VITTO,
+https://vittoresto.com/assets/carta_pdf/carta_menu_vitto.pdf 3. La Puerta Falsa | TasteAtlas |
+Recommended authentic restaurants, https://www.tasteatlas.com/lapuertafalsa 4. Carta de
+menús La Puerta Falsa,
+https://enam-cdn.carta.menu/storage/media/companies_menu_pdf/87548720/la-puerta-falsa-bo
+gota-carta.pdf 5. La Puerta de la Catedral, Bogotá | Restaurante, Cafetería Criolla :: [Degusta],
+https://www.degusta.com.co/bogota/restaurante/la-puerta-de-la-catedral_101508.html 6. La
+Catedral - La Candelaria Precios y Menú a Domicilio - Rappi,
+https://www.rappi.com.co/restaurantes/900454591-la-catedral 7. Restaurante alemán Edelweiss
+en Cajicá | Explora - Univision,
+https://www.univision.com/explora/restaurante-aleman-edelweiss-en-cajica 8. Gastronomía del
+mundo en Bogotá - El Tiempo,
+
+=== PAGE 18 ===
+https://www.eltiempo.com/don-juan/buena-vida/gastronomia-del-mundo-en-bogota-+articulo+13
+131896 9. The 20 best family restaurants in Zipaquira - Wanderlog,
+https://wanderlog.com/list/geoCategory/561204/best-family-restaurants-in-zipaquira 10.
+Edelweiss, Bogotá | Restaurante Alemana - Degusta Colombia [Sitio Oficial],
+https://www.degusta.com.co/bogota/restaurante/edelweiss_100412.html 11. Masaya Medellín -
+Poster QR, https://menu.ps.me/aPD_SuDhaAc 12. Martica Bar - Menú Online,
+https://menu.fu.do/marticabar1/qr-menu 13. Harald, Bogotá | Restaurante Alemana - Degusta
+Colombia [Sitio Oficial], https://www.degusta.com.co/bogota/restaurante/harald_100526.html 14.
+Fotos del Restaurante Harald : : Bogotá (Avenida Pepe Sierra) : : Degusta,
+https://www.degusta.com.co/bogota/feed/harald_100526.html 15. menu renata 2025,
+http://renatatacos.com/menus/menu_renata.pdf 16. Renata Tacos - Usaquén Precios y Menú a
+Domicilio - Rappi, https://www.rappi.com.co/restaurantes/900059441-renata-tacos 17.
+Insurgentes - Chapinero Precios y Menú a Domicilio - Rappi,
+https://www.rappi.com.co/restaurantes/900192450-insurgentes 18. Insurgentes - Mexicana -
+Chapinero Precios y Menú a Domicilio - Rappi,
+https://www.rappi.com.co/restaurantes/900012688-insurgentes-mexicana 19. Lechoneria Doña
+Rosalba - Barrios Unidos Precios y Menú a Domicilio - Rappi,
+https://www.rappi.com.co/restaurantes/900269549-lechoneria-dona-rosalba 20. Menu de
+Chiguiro Parrilla Bar :: Principal : [Degusta],
+https://www.degusta.com.co/bogota/restaurante/chiguiro-parrilla-bar_104208/menu 21. la
+Puerta Falsa para Colombia - Usaquén Precios y Menú a Domicilio - Rappi,
+https://www.rappi.com.co/restaurantes/900494742-la-puerta-falsa-para-colombia 22. TOUR
+CEMENTERIO CENTRAL | etniasandantes,
+https://www.etniasandantes.com/product-page/tour-cementerio-central 23. Los monumentos del
+Cementerio Central • Un recorrido guiado por quienes los protegen,
+https://idpc.gov.co/eventos/los-monumentos-del-cementerio-central/ 24. El lado místico del
+Halloween en el Cementerio Central de Bogotá - Señal Colombia,
+https://www.senalcolombia.tv/lado-mistico-halloween-bogota 25. Tour nocturno en el
+Cementerio Central - YouTube, https://www.youtube.com/watch?v=wrgsrb6RBcA 26.
+¡'Rechinan' las puertas del Cementerio Central ! Recorridos este fin de semana - Alcaldía de
+Bogotá,
+https://bogota.gov.co/que-hacer/cultura/recorridos-en-el-cementerio-central-para-el-22-y-23-de-
+octubre-2022 27. Guía turística del Cementerio Central de Bogotá: qué ver y cómo planificar tu
+visita,
+https://www.cronista.com/colombia/tiempo-libre/guia-turistica-del-cementerio-central-de-bogota-
+que-ver-y-como-planificar-tu-visita/ 28. Sitio oficial de ropa, zapatos y accesorios en cuero |
+Vélez Colombia, https://www.velez.com.co/ 29. Outlet | Los mejores descuentos de Chevignon,
+https://www.chevignon.com.co/outlet 30. Mercado de las Pulgas de San Alejo в 2026 -
+Turizm.ru,
+https://www.turizm.ru/colombia/bogota/places/mercado_de_las_pulgas_de_san_alejo_344449/
+31. Mercado de las pulgas hi-res stock photography and images - Alamy,
+https://www.alamy.com/stock-photo/mercado-de-las-pulgas.html 32. Mercado de pulgas :
+r/Bogota - Reddit, https://www.reddit.com/r/Bogota/comments/1q4vcx7/mercado_de_pulgas/ 33.
+Planifica tu viaje – Tren de la Sabana – Turistren, https://turistren.com.co/planifica-tu-viaje/ 34.
+Carta de menús Restaurante la Puerta de la Catedral,
+https://enam-cdn.carta.menu/storage/media/companies_menu_pdf/48484036/restaurante-la-pu
+erta-de-la-catedral-bogota-carta.pdf
+

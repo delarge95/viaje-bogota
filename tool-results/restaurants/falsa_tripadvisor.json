@@ -1,0 +1,25 @@
+{
+  "code": 200,
+  "data": {
+    "description": "",
+    "external": {},
+    "html": "<html lang=\"en\"><head><title>tripadvisor.es</title><style>#cmsg{animation: A 1.5s;}@keyframes A{0%{opacity:0;}99%{opacity:0;}100%{opacity:1;}}</style><meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\"></head><body style=\"margin:0\"><script data-cfasync=\"false\">var dd={'rt':'i','cid':'AHrlqAAAAAMAV5ciEXuxxkQAIiL9yQ==','hsh':'2F05D671381DB06BEE4CC52C7A6FD3','b':1738966,'s':46694,'e':'ab6652d020dcb5abf469b1179297ee30f421c130b58d2a60ce7e740d5a3ab9044794a276fe547b136e29f3e987855a49','qp':'','host':'geo.captcha-delivery.com','cookie':'udR4aw2mBeqndDg2_gPU0YVrDpvfercBgV3mUFatOrV4goamF3RJ00M0i99lItOSrDwo99oyvy~6LYrd24Un1Jdl0fKn24KBgs0dujfEZW~pFEALOpioSFVBB0oY~Kxk'}</script><script data-cfasync=\"false\" src=\"https://ct.captcha-delivery.com/i.js\"></script><iframe src=\"https://geo.captcha-delivery.com/interstitial/?initialCid=AHrlqAAAAAMAV5ciEXuxxkQAIiL9yQ%3D%3D&amp;hash=2F05D671381DB06BEE4CC52C7A6FD3&amp;cid=udR4aw2mBeqndDg2_gPU0YVrDpvfercBgV3mUFatOrV4goamF3RJ00M0i99lItOSrDwo99oyvy~6LYrd24Un1Jdl0fKn24KBgs0dujfEZW~pFEALOpioSFVBB0oY~Kxk&amp;referer=https%3A%2F%2Fwww.tripadvisor.es%2FRestaurant_Review-g294074-d1085726-Reviews-La_Puerta_Falsa-Bogota.html&amp;s=46694&amp;e=ab6652d020dcb5abf469b1179297ee30f421c130b58d2a60ce7e740d5a3ab9044794a276fe547b136e29f3e987855a49&amp;b=1738966&amp;dm=cd\" sandbox=\"allow-scripts allow-same-origin allow-forms\" allow=\"accelerometer; gyroscope; magnetometer\" title=\"DataDome Device Check\" width=\"100%\" height=\"100%\" style=\"height:100vh;\" frameborder=\"0\" border=\"0\" scrolling=\"yes\"></iframe></body></html>",
+    "httpStatus": 200,
+    "httpStatusText": "OK",
+    "metadata": {
+      "lang": "en",
+      "viewport": "width=device-width, initial-scale=1.0"
+    },
+    "title": "tripadvisor.es",
+    "url": "https://www.tripadvisor.es/Restaurant_Review-g294074-d1085726-Reviews-La_Puerta_Falsa-Bogota.html",
+    "usage": {
+      "tokens": 683
+    }
+  },
+  "meta": {
+    "usage": {
+      "tokens": 683
+    }
+  },
+  "status": 20000
+}
