@@ -291,6 +291,7 @@ export const places: Place[] = [
     hours: 'L-Mi 12m-10pm · J-S 12m-11pm · D y festivos 12m-9pm',
     notes: 'Reservas por WhatsApp con 24h anticipación. Grupo Le Grand. NO confundir con Zona Rosa.',
     priceRange: '$35.000 - $80.000 por persona',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Vitto+Restaurante+Calle+69+4-97+Bogota',
     menu: [
       {
         title: 'ENTRADAS & PICOTEOS',
@@ -356,6 +357,7 @@ export const places: Place[] = [
     hours: 'L-S 7am-9pm · D y festivos 7am-6pm',
     notes: 'Restaurante más antiguo de Colombia (1816, 210 años). Recomendado por Anthony Bourdain y TasteAtlas (top 100 del mundo). NO acepta reservas. Fila 15-45 min.',
     priceRange: '$15.000 - $50.000 por persona',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=La+Puerta+Falsa+Calle+11+6-50+Bogota',
     menu: [
       {
         title: 'PLATOS TÍPICOS SANTAFEREÑOS',
@@ -389,6 +391,7 @@ export const places: Place[] = [
     hours: 'L-S 7am-7:30pm · D y festivos 7am-6pm',
     notes: 'Más variedad que La Puerta Falsa. Sí aceptan reservas (WhatsApp/Instagram, web en mantenimiento). Calificación Degusta 4.3/5.',
     priceRange: '$40.000 - $120.000 por persona (promedio $86.300)',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=La+Puerta+de+la+Catedral+Calle+11+6-26+Bogota',
     menu: [
       {
         title: 'SOPAS Y CALDOS',
@@ -435,9 +438,11 @@ export const places: Place[] = [
     phone: '+57 1 883 1212',
     email: 'info@edelweisscajica.com',
     instagram: '@edelweisscajica',
+    web: 'https://www.edelweisscajica.com',
     hours: 'Abre martes a domingo (CIERRA lunes). Excepción: "Lunes festivo abierto" — si un lunes es festivo, abren. Mié-Jue 1-4pm, Vie 1-8pm, Sáb 12m-6pm, Dom 12m-6pm',
     notes: 'Reservas preferibles (Degusta). Cervecería propia Ley Pureza Alemana 1516 (verificar activa al reservar). 45-60 min desde Calle 94. WhatsApp +57 311 541 1241.',
     priceRange: '$35.000 - $70.000 por persona (promedio Degusta $38.900)',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Edelweiss+Cajica+Cundinamarca',
     menu: [
       {
         title: 'PLATOS ALEMANES DESTACADOS',
@@ -473,6 +478,7 @@ export const places: Place[] = [
     hours: 'Rappi indica apertura 11:30 a.m. Confirmar por WhatsApp antes de ir.',
     notes: 'Cerca del Jardín Botánico. Ambiente familiar, económico. Servicio domicilio Rappi/WhatsApp.',
     priceRange: '$25.000 - $50.000 por persona',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Chiguiro+Parrilla+Bar+Carrera+70+55-97+Normandia+Bogota',
     menu: [
       {
         title: 'CHIGÜIRO Y CARNE LLANERA',
@@ -496,6 +502,7 @@ export const places: Place[] = [
     hours: 'Apertura 11:30 a.m. (Rappi). Cierre no confirmado.',
     notes: 'Cerca de Universidad Nacional. 20 años de tradición. Atienden eventos (trompo, barril).',
     priceRange: '$30.000 - $55.000 por persona',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Asadero+Chiguire+53+Calle+53+16-74+Teusaquillo+Bogota',
     menu: [
       {
         title: 'CHIGÜIRO Y CARNE LLANERA',
@@ -520,6 +527,7 @@ export const places: Place[] = [
     hours: 'Mié-Dom 12m-10pm. CIERRA lunes y martes (excepto lunes festivos).',
     notes: '10-15 min en carro desde Edelweiss. Cover $60.000 solo en eventos especiales. Reservas recomendadas (máx 6 personas/mesa, 15 min tolerancia, 2h estadía).',
     priceRange: '$60.000 - $150.000+ por persona',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Andres+Carne+de+Res+Chia+Calle+3+11A-56+Chia',
   },
   {
     id: 'paloquemao',
@@ -535,6 +543,7 @@ export const places: Place[] = [
     hours: 'L-S 4:30am-4:30pm · D y festivos 5am-4:30pm (web) / 5am-2:30pm (Instagram/VisitBogotá). Asumir cierre 2:30pm domingos. Mercado de Flores (Av 19 #25-02): domingos desde 3:30am.',
     notes: 'Entrada GRATUITA. Parqueo propio $5-10k. Llevar efectivo billetes pequeños. 67 locales. Plan domingo con Huevito en carro 7:30-8am. El Palacio del Jugo (Local 80013) NO abre domingos.',
     priceRange: 'Plan completo 2 pers: $100-210k · Mínimo: $50-80k',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Plaza+de+Mercado+Paloquemao+Av+Calle+19+25-04+Bogota',
     menu: [
       {
         title: 'LOCALES DESTACADOS',
@@ -561,6 +570,7 @@ export const places: Place[] = [
     hours: 'L-S 07:00-16:00 · D y Festivos 07:00-14:00 (abre festivos 20 julio)',
     notes: '50 años de tradición en Paloquemao. Lechona bogotana (con arroz) vs tolimense (sin arroz): preguntar opción disponible. Pedido de tamales requiere anticipación (llamar 3102589581 o 3106291837). Llevar efectivo en billetes pequeños.',
     priceRange: '$15.000 - $30.000 por persona',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Lechoneria+Dona+Rosalba+Paloquemao+Bogota',
     menu: [
       {
         title: 'LECHONA Y TAMALES TOLIMENSES',
@@ -590,6 +600,7 @@ export const places: Place[] = [
     address: 'Calle 90 con Carrera 11, plazoleta de comidas (a 5 min caminando de Calle 94)',
     notes: 'Taquería operada por el amigo "Huevito". NO se encontró info pública verificada. Confirmar con Huevito: nombre exacto, horarios, si atiende público general. Plan ideal encuentro social con Huevito y amigos.',
     priceRange: 'Ronda compartida $40-80k (2 pers, luego cada quien)',
+    googleMapsUrl: 'https://www.google.com/maps/search/?api=1&query=Calle+90+con+Carrera+11+Plazoleta+Comidas+Bogota',
   },
 
   // === ALTERNATIVAS ALEMÁN ===

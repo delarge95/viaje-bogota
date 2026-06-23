@@ -151,13 +151,15 @@ export default function PlaceDetail({ place, onClose }: PlaceDetailProps) {
         )}
 
         {/* Google Maps */}
-        {place.googleMapsUrl && (
-          <Button variant="outline" size="sm" className="w-full" asChild>
-            <a href={place.googleMapsUrl} target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-3.5 w-3.5 mr-1" /> Abrir en Google Maps
-            </a>
-          </Button>
-        )}
+        <Button variant="outline" size="sm" className="w-full" asChild>
+          <a
+            href={place.googleMapsUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(place.name + ' ' + place.address)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <ExternalLink className="h-3.5 w-3.5 mr-1" /> Abrir en Google Maps
+          </a>
+        </Button>
 
         {/* Notes */}
         {place.notes && (
