@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo } from 'react';
-import { dayPlans, getPlaceById, resolvePlace, toGoogleMapsMode, type TransportMode, type StepType, type PlanStep } from '@/lib/travel-data';
+import { dayPlans, getPlaceById, resolvePlace, toGoogleMapsMode, places, type TransportMode, type StepType, type PlanStep } from '@/lib/travel-data';
 import { useTravelStore } from '@/lib/travel-store';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -271,20 +271,39 @@ export default function ItineraryTimeline({
 
           // DESTINATION STEP (Actividad, Comida, Compra, Info, Espera)
           const leftBorderColor = {
-            actividad: 'border-l-indigo-500 bg-indigo-50/10 dark:bg-indigo-950/5',
-            comida: 'border-l-amber-500 bg-amber-50/10 dark:bg-amber-950/5',
-            compra: 'border-l-rose-500 bg-rose-50/10 dark:bg-rose-950/5',
-            espera: 'border-l-slate-400 bg-slate-50/10 dark:bg-slate-950/5',
-            info: 'border-l-sky-500 bg-sky-50/10 dark:bg-sky-950/5',
-          }[step.type] || 'border-l-border bg-card';
+            actividad: 'border-indigo-150 dark:border-indigo-950 bg-indigo-50/20 dark:bg-indigo-950/10 text-indigo-950 dark:text-indigo-200 border-l-[4px] border-l-indigo-500',
+            comida: 'border-amber-150 dark:border-amber-950 bg-amber-50/20 dark:bg-amber-950/10 text-amber-950 dark:text-amber-200 border-l-[4px] border-l-amber-500',
+            compra: 'border-rose-150 dark:border-rose-950 bg-rose-50/20 dark:bg-rose-950/10 text-rose-950 dark:text-rose-200 border-l-[4px] border-l-rose-500',
+            espera: 'border-slate-150 dark:border-slate-800 bg-slate-50/20 dark:bg-slate-950/10 text-slate-950 dark:text-slate-200 border-l-[4px] border-l-slate-400',
+            info: 'border-sky-150 dark:border-sky-950 bg-sky-50/20 dark:bg-sky-950/10 text-sky-950 dark:text-sky-200 border-l-[4px] border-l-sky-500',
+          }[step.type] || 'border-border bg-card border-l-[4px] border-l-primary';
 
           const activeBorderColor = {
-            actividad: 'border-indigo-300 dark:border-indigo-900 bg-indigo-50/30 dark:bg-indigo-950/15 ring-indigo-500/10',
-            comida: 'border-amber-300 dark:border-amber-900 bg-amber-50/30 dark:bg-amber-950/15 ring-amber-500/10',
-            compra: 'border-rose-300 dark:border-rose-900 bg-rose-50/30 dark:bg-rose-950/15 ring-rose-500/10',
-            espera: 'border-slate-300 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-950/15 ring-slate-400/10',
-            info: 'border-sky-300 dark:border-sky-900 bg-sky-50/30 dark:bg-sky-950/15 ring-sky-500/10',
-          }[step.type] || 'border-primary bg-card';
+            actividad: 'border-indigo-300 dark:border-indigo-800 bg-indigo-50/40 dark:bg-indigo-950/20 ring-2 ring-indigo-500/10 border-l-[4px] border-l-indigo-600 shadow-sm',
+            comida: 'border-amber-300 dark:border-amber-800 bg-amber-50/40 dark:bg-amber-950/20 ring-2 ring-amber-500/10 border-l-[4px] border-l-amber-600 shadow-sm',
+            compra: 'border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/20 ring-2 ring-rose-500/10 border-l-[4px] border-l-rose-600 shadow-sm',
+            espera: 'border-slate-300 dark:border-slate-700 bg-slate-50/40 dark:bg-slate-950/20 ring-2 ring-slate-400/10 border-l-[4px] border-l-slate-500 shadow-sm',
+            info: 'border-sky-300 dark:border-sky-800 bg-sky-50/40 dark:bg-sky-950/20 ring-2 ring-sky-500/10 border-l-[4px] border-l-sky-600 shadow-sm',
+          }[step.type] || 'border-primary bg-card border-l-[4px] border-l-primary shadow-sm';
+
+          // Proximity helper functions inside mapping
+          const getDistance = (c1: [number, number], c2: [number, number]) => {
+            const dx = (c2[1] - c1[1]) * 110.8;
+            const dy = (c2[0] - c1[0]) * 111.0;
+            return Math.sqrt(dx*dx + dy*dy);
+          };
+
+          const getReferenceCoords = (): [number, number] => {
+            for (let i = idx - 1; i >= 0; i--) {
+              const pId = steps[i].placeId || steps[i].toPlaceId || steps[i].fromPlaceId;
+              if (pId) {
+                const p = resolvePlace(pId, selectedAlternatives);
+                if (p && p.coords) return p.coords;
+              }
+            }
+            if (place && place.coords) return place.coords;
+            return [4.6760, -74.0520]; // Default: Alojamiento
+          };
 
           return (
             <div key={step.id} className="relative py-1.5">
@@ -301,8 +320,8 @@ export default function ItineraryTimeline({
                 className={cn(
                   'group relative w-full text-left rounded-xl border border-l-[5px] transition-all p-3 pl-10 cursor-pointer shadow-[0_1px_2px_rgba(0,0,0,0.02)]',
                   isActive
-                    ? cn(activeBorderColor, 'ring-1 border-l-[5px]')
-                    : cn(leftBorderColor, 'border-border/80 hover:border-primary/30 hover:bg-muted/20')
+                    ? cn(activeBorderColor)
+                    : cn(leftBorderColor)
                 )}
               >
                 {/* Step icon */}
@@ -342,6 +361,93 @@ export default function ItineraryTimeline({
                         <span className="text-[9.5px] text-primary/80 font-bold ml-1">
                           💵 {place.priceRange.split(' por')[0]}
                         </span>
+                      )}
+                    </div>
+                  )}
+
+                  {/* Alternativas Menu */}
+                  {isActive && place && (
+                    <div className="mt-2.5 pt-2 border-t border-current/10 space-y-1.5" onClick={(e) => e.stopPropagation()}>
+                      <div className="text-[9px] font-extrabold uppercase tracking-wider text-muted-foreground">
+                        Alternativas para cambiar:
+                      </div>
+                      <div className="flex flex-wrap gap-1 max-h-[120px] overflow-y-auto custom-scroll pr-1">
+                        {/* Food Category alternatives */}
+                        {place.restaurantCategory ? (
+                          places
+                            .filter((p) => p.restaurantCategory === place.restaurantCategory && p.id !== place.id)
+                            .map((alt) => {
+                              const isSel = selectedAlternatives[place.restaurantCategory!] === alt.id;
+                              return (
+                                <button
+                                  key={alt.id}
+                                  onClick={() => {
+                                    useTravelStore.getState().setSelectedAlternative(place.restaurantCategory!, alt.id);
+                                    useTravelStore.getState().setSelectedPlaceId(alt.id);
+                                  }}
+                                  className={cn(
+                                    "px-1.5 py-0.5 rounded text-[9px] border transition-all flex items-center gap-0.5",
+                                    isSel
+                                      ? "bg-primary text-primary-foreground border-primary"
+                                      : "bg-card hover:bg-muted border-border"
+                                  )}
+                                >
+                                  <span>{alt.name}</span>
+                                  {alt.priceRange && <span className="opacity-75 font-bold">({alt.priceRange.split(' por')[0]})</span>}
+                                </button>
+                              );
+                            })
+                        ) : null}
+
+                        {/* Proximity alternatives */}
+                        {(!place.restaurantCategory || place.category !== 'restaurante') && (
+                          (() => {
+                            const refCoords = getReferenceCoords();
+                            const list = places
+                              .filter((p) => p.id !== place.id && p.coords && p.id !== 'alojamiento' && p.category !== 'transporte')
+                              .map((p) => ({ ...p, distance: getDistance(refCoords, p.coords) }))
+                              .sort((a, b) => a.distance - b.distance)
+                              .slice(0, 5);
+
+                            return list.map((alt) => {
+                              const isSel = selectedAlternatives[place.id] === alt.id;
+                              return (
+                                <button
+                                  key={alt.id}
+                                  onClick={() => {
+                                    useTravelStore.getState().setSelectedAlternative(place.id, alt.id);
+                                    useTravelStore.getState().setSelectedPlaceId(alt.id);
+                                  }}
+                                  className={cn(
+                                    "px-1.5 py-0.5 rounded text-[9px] border transition-all flex items-center gap-0.5",
+                                    isSel
+                                      ? "bg-primary text-primary-foreground border-primary"
+                                      : "bg-card hover:bg-muted border-border"
+                                  )}
+                                >
+                                  <span>{alt.name}</span>
+                                  <span className="opacity-75 font-mono">({alt.distance.toFixed(1)} km)</span>
+                                </button>
+                              );
+                            });
+                          })()
+                        )}
+                      </div>
+
+                      {/* Reset button */}
+                      {(selectedAlternatives[place.restaurantCategory || ''] === place.id || selectedAlternatives[place.id]) && (
+                        <button
+                          onClick={() => {
+                            const newAlts = { ...selectedAlternatives };
+                            if (place.restaurantCategory) delete newAlts[place.restaurantCategory];
+                            delete newAlts[place.id];
+                            useTravelStore.setState({ selectedAlternatives: newAlts });
+                            useTravelStore.getState().setSelectedPlaceId(place.id);
+                          }}
+                          className="text-[9px] text-red-600 dark:text-red-400 font-bold hover:underline block mt-0.5"
+                        >
+                          ↩️ Reestablecer al lugar original
+                        </button>
                       )}
                     </div>
                   )}

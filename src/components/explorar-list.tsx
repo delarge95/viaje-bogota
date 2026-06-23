@@ -25,6 +25,49 @@ export default function ExplorarList() {
   const [atraccionSubFilter, setAtraccionSubFilter] = useState<'all' | 'cultura' | 'naturaleza' | 'compras'>('all');
   const [restauranteSubFilter, setRestauranteSubFilter] = useState<'all' | RestaurantCategory>('all');
 
+  // stepTypeConfig for flat activity list
+  const stepTypeConfig = {
+    movilidad: { color: 'text-orange-500', bg: 'bg-orange-500/10 border-orange-200', label: 'Trayecto' },
+    actividad: { color: 'text-indigo-600', bg: 'bg-indigo-500/10 border-indigo-200', label: 'Actividad' },
+    comida: { color: 'text-amber-700', bg: 'bg-amber-500/10 border-amber-200', label: 'Comida' },
+    compra: { color: 'text-violet-600', bg: 'bg-violet-500/10 border-violet-200', label: 'Compra' },
+    espera: { color: 'text-slate-500', bg: 'bg-slate-500/10 border-slate-200', label: 'Espera' },
+    info: { color: 'text-sky-600', bg: 'bg-sky-500/10 border-sky-200', label: 'Info' },
+  };
+
+  // Flat list of individual activities of all days
+  const allDaySteps = useMemo(() => {
+    const stepsList: { dayNum: number; date: string; weekday: string; step: any }[] = [];
+    dayPlans.forEach((day) => {
+      day.plan.forEach((step) => {
+        // Exclude mobility steps for "individual activity" list
+        if (!step.isMovement) {
+          stepsList.push({
+            dayNum: day.day,
+            date: day.date,
+            weekday: day.weekday,
+            step,
+          });
+        }
+      });
+    });
+    return stepsList;
+  }, []);
+
+  // Filtered Day Steps
+  const filteredDaySteps = useMemo(() => {
+    const query = searchQuery.trim().toLowerCase();
+    if (!query) return allDaySteps;
+    return allDaySteps.filter(({ step }) => {
+      const place = places.find((p) => p.id === step.placeId);
+      return (
+        step.activity.toLowerCase().includes(query) ||
+        (step.notes && step.notes.toLowerCase().includes(query)) ||
+        (place && (place.name.toLowerCase().includes(query) || place.address.toLowerCase().includes(query)))
+      );
+    });
+  }, [allDaySteps, searchQuery]);
+
   // Filtered Places/Restaurants
   const items = useMemo(() => {
     const query = searchQuery.trim().toLowerCase();
@@ -141,167 +184,164 @@ export default function ExplorarList() {
       </div>
 
       {/* SEARCH AND SUB-FILTERS */}
-      {activeTab !== 'dias' && (
-        <div className="flex flex-col sm:flex-row gap-2">
-          {/* Search box */}
-          <div className="relative flex-1">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Buscar por nombre, dirección o notas..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-9 h-9 text-xs rounded-xl"
-            />
-          </div>
-
-          {/* Atracciones Sub-filters */}
-          {activeTab === 'atracciones' && (
-            <div className="flex gap-1 overflow-x-auto custom-scroll pb-1">
-              <button
-                onClick={() => setAtraccionSubFilter('all')}
-                className={cn(
-                  'px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap',
-                  atraccionSubFilter === 'all'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-muted-foreground hover:bg-muted/70'
-                )}
-              >
-                Todos
-              </button>
-              <button
-                onClick={() => setAtraccionSubFilter('cultura')}
-                className={cn(
-                  'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap',
-                  atraccionSubFilter === 'cultura'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-muted-foreground hover:bg-muted/70'
-                )}
-              >
-                <Mountain className="h-3 w-3" /> Cultura
-              </button>
-              <button
-                onClick={() => setAtraccionSubFilter('naturaleza')}
-                className={cn(
-                  'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap',
-                  atraccionSubFilter === 'naturaleza'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-muted-foreground hover:bg-muted/70'
-                )}
-              >
-                <TreePine className="h-3 w-3" /> Naturaleza
-              </button>
-              <button
-                onClick={() => setAtraccionSubFilter('compras')}
-                className={cn(
-                  'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap',
-                  atraccionSubFilter === 'compras'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-muted-foreground hover:bg-muted/70'
-                )}
-              >
-                <ShoppingBag className="h-3 w-3" /> Compras
-              </button>
-            </div>
-          )}
-
-          {/* Restaurantes Sub-filters */}
-          {activeTab === 'restaurantes' && (
-            <div className="flex gap-1 overflow-x-auto custom-scroll pb-1">
-              <button
-                onClick={() => setRestauranteSubFilter('all')}
-                className={cn(
-                  'px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap',
-                  restauranteSubFilter === 'all'
-                    ? 'bg-primary text-primary-foreground'
-                    : 'bg-muted text-muted-foreground hover:bg-muted/70'
-                )}
-              >
-                Todos
-              </button>
-              {(['aleman', 'taqueria', 'lechona', 'chiguiro', 'tipica', 'italiana', 'mercado'] as RestaurantCategory[]).map((cat) => (
-                <button
-                  key={cat}
-                  onClick={() => setRestauranteSubFilter(cat)}
-                  className={cn(
-                    'px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap',
-                    restauranteSubFilter === cat
-                      ? 'bg-primary text-primary-foreground'
-                      : 'bg-muted text-muted-foreground hover:bg-muted/70'
-                  )}
-                >
-                  {categoryEmojis[cat]} {categoryLabels[cat]}
-                </button>
-              ))}
-            </div>
-          )}
+      <div className="flex flex-col sm:flex-row gap-2">
+        {/* Search box */}
+        <div className="relative flex-1">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+          <Input
+            placeholder={activeTab === 'dias' ? "Buscar actividades (ej. Monserrate, Museo, Oftal)..." : "Buscar por nombre, dirección o notas..."}
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="pl-9 h-9 text-xs rounded-xl"
+          />
         </div>
-      )}
+
+        {/* Atracciones Sub-filters */}
+        {activeTab === 'atracciones' && (
+          <div className="flex gap-1 overflow-x-auto custom-scroll pb-1">
+            <button
+              onClick={() => setAtraccionSubFilter('all')}
+              className={cn(
+                'px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap',
+                atraccionSubFilter === 'all'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/70'
+              )}
+            >
+              Todos
+            </button>
+            <button
+              onClick={() => setAtraccionSubFilter('cultura')}
+              className={cn(
+                'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap',
+                atraccionSubFilter === 'cultura'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/70'
+              )}
+            >
+              <Mountain className="h-3 w-3" /> Cultura
+            </button>
+            <button
+              onClick={() => setAtraccionSubFilter('naturaleza')}
+              className={cn(
+                'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap',
+                atraccionSubFilter === 'naturaleza'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/70'
+              )}
+            >
+              <TreePine className="h-3 w-3" /> Naturaleza
+            </button>
+            <button
+              onClick={() => setAtraccionSubFilter('compras')}
+              className={cn(
+                'flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap',
+                atraccionSubFilter === 'compras'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/70'
+              )}
+            >
+              <ShoppingBag className="h-3 w-3" /> Compras
+            </button>
+          </div>
+        )}
+
+        {/* Restaurantes Sub-filters */}
+        {activeTab === 'restaurantes' && (
+          <div className="flex gap-1 overflow-x-auto custom-scroll pb-1">
+            <button
+              onClick={() => setRestauranteSubFilter('all')}
+              className={cn(
+                'px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap',
+                restauranteSubFilter === 'all'
+                  ? 'bg-primary text-primary-foreground'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/70'
+              )}
+            >
+              Todos
+            </button>
+            {(['aleman', 'taqueria', 'lechona', 'chiguiro', 'tipica', 'italiana', 'mercado'] as RestaurantCategory[]).map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setRestauranteSubFilter(cat)}
+                className={cn(
+                  'px-2.5 py-1.5 rounded-lg text-[11px] font-medium transition-all whitespace-nowrap',
+                  restauranteSubFilter === cat
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-muted text-muted-foreground hover:bg-muted/70'
+                )}
+              >
+                {categoryEmojis[cat]} {categoryLabels[cat]}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
 
       {/* TWO COLUMN GRID CONTENT */}
       {activeTab === 'dias' ? (
-        /* Planes por Día uses full width since it takes you to Itinerary */
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3">
-          {dayPlans.map((day) => {
-            const movilidad = day.plan.filter((s) => s.type === 'movilidad').length;
-            const actividades = day.plan.filter((s) => s.type === 'actividad').length;
-            const comidas = day.plan.filter((s) => s.type === 'comida').length;
-
-            return (
-              <Card
-                key={day.day}
-                className="cursor-pointer hover:border-primary/60 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 border-border/80 overflow-hidden bg-card"
-                onClick={() => {
-                  setSelectedDay(day.day);
-                  setMainView('itinerario');
-                }}
-              >
-                <CardContent className="p-4 flex flex-col justify-between h-full">
-                  <div className="space-y-1.5">
-                    <div className="flex items-center gap-2 flex-wrap">
-                      <Badge className="text-[10px] py-0.5 h-4.5 bg-primary/10 border-primary/25 text-primary hover:bg-primary/20" variant="outline">
-                        Día {day.day}
-                      </Badge>
-                      <span className="text-[10px] text-muted-foreground font-mono">{day.weekday.slice(0, 3)} {day.date}</span>
-                      {day.isFeriado && (
-                        <Badge variant="outline" className="text-[9px] py-0 h-4 text-amber-700 border-amber-400 bg-amber-50">
-                          <CalendarOff className="h-2.5 w-2.5 mr-0.5" /> Feriado
+        /* Planes por Día lists individual activities with scrolling */
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:h-[calc(100vh-240px)] lg:overflow-y-auto pr-1 custom-scroll pb-4">
+          {filteredDaySteps.length === 0 ? (
+            <p className="text-xs text-muted-foreground italic p-4 text-center col-span-full">No se encontraron actividades.</p>
+          ) : (
+            filteredDaySteps.map(({ dayNum, date, weekday, step }) => {
+              const place = places.find((p) => p.id === step.placeId);
+              const config = stepTypeConfig[step.type as keyof typeof stepTypeConfig] || stepTypeConfig.actividad;
+              return (
+                <Card
+                  key={step.id}
+                  className="cursor-pointer hover:border-primary/60 hover:shadow-md hover:-translate-y-0.5 transition-all duration-300 border-border/80 bg-card flex flex-col justify-between"
+                  onClick={() => {
+                    setSelectedDay(dayNum);
+                    useTravelStore.getState().selectStep(step.id);
+                    if (step.placeId) {
+                      useTravelStore.getState().setSelectedPlaceId(step.placeId);
+                    }
+                    setMainView('itinerario');
+                  }}
+                >
+                  <CardContent className="p-4 flex flex-col justify-between h-full space-y-3">
+                    <div className="space-y-2">
+                      <div className="flex items-center gap-1.5 flex-wrap">
+                        <Badge className="text-[9px] py-0.5 h-4.5 bg-primary/10 border-primary/25 text-primary" variant="outline">
+                          Día {dayNum} · {weekday.slice(0, 3)}
                         </Badge>
-                      )}
-                      {day.isRestriccionMedica && (
-                        <Badge variant="outline" className="text-[9px] py-0 h-4 text-red-700 border-red-300 bg-red-50">
-                          <AlertTriangle className="h-2.5 w-2.5 mr-0.5" /> Pupilas
+                        <span className="text-[10px] text-muted-foreground font-mono font-bold">{step.time}</span>
+                        <Badge variant="outline" className={cn('text-[9px] py-0 px-1 h-3.5 border-current/25 font-bold uppercase tracking-wider', config.color)}>
+                          {config.label}
                         </Badge>
+                      </div>
+                      <h3 className="font-bold text-xs text-foreground leading-snug">{step.activity}</h3>
+                      {place && (
+                        <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                          <MapPin className="h-2.5 w-2.5 text-primary shrink-0" />
+                          <span className="font-medium text-foreground truncate">{place.name}</span>
+                          {place.priceRange && (
+                            <span className="text-[9px] text-primary/80 font-bold ml-1">
+                              💵 {place.priceRange.split(' por')[0]}
+                            </span>
+                          )}
+                        </div>
                       )}
                     </div>
-                    <h3 className="font-bold text-sm text-foreground leading-tight">{day.title}</h3>
-                    <p className="text-xs text-muted-foreground line-clamp-2">{day.subtitle}</p>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-2 mt-4 pt-2.5 border-t border-border/60">
-                    <div className="flex items-center gap-2.5 text-[10px] text-muted-foreground font-medium">
-                      <span className="flex items-center gap-0.5" title="Trayectos">
-                        <Bus className="h-3 w-3 text-orange-500" /> {movilidad}
-                      </span>
-                      <span className="flex items-center gap-0.5" title="Actividades">
-                        <MapPin className="h-3 w-3 text-rose-500" /> {actividades}
-                      </span>
-                      <span className="flex items-center gap-0.5" title="Comida">
-                        <Utensils className="h-3 w-3 text-amber-600" /> {comidas}
-                      </span>
-                    </div>
-                    <span className="text-xs font-bold text-primary font-mono">{day.estimatedCost}</span>
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          })}
+                    {step.notes && (
+                      <p className="text-[10px] text-muted-foreground italic line-clamp-2 bg-muted/30 p-2 rounded border border-border/40 leading-normal">
+                        {step.notes}
+                      </p>
+                    )}
+                  </CardContent>
+                </Card>
+              );
+            })
+          )}
         </div>
       ) : (
-        /* Atracciones, Restaurantes, Logística use a two-column split layout */
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        /* Atracciones, Restaurantes, Logística use a two-column split layout with independent scrolls */
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:h-[calc(100vh-240px)] lg:overflow-hidden pb-4">
           
           {/* LEFT PANEL: Lists */}
-          <div className="space-y-3.5">
+          <div className="space-y-3.5 lg:h-full lg:overflow-y-auto lg:pr-2 custom-scroll">
             {activeTab === 'restaurantes' ? (
               // Grouped restaurant view
               <div className="space-y-4">
@@ -374,13 +414,13 @@ export default function ExplorarList() {
             )}
           </div>
 
-          {/* RIGHT PANEL: Sticky details */}
-          <div className="lg:sticky lg:top-24 lg:self-start">
+          {/* RIGHT PANEL: Details with its own scroll */}
+          <div className="lg:h-full lg:overflow-y-auto lg:pl-2 custom-scroll">
             {selectedPlace ? (
               <PlaceDetail place={selectedPlace} onClose={() => setSelectedPlaceId(null)} />
             ) : (
-              <Card className="border-dashed border-border bg-muted/10">
-                <CardContent className="pt-8 pb-8 text-center text-xs text-muted-foreground">
+              <Card className="border-dashed border-border bg-muted/10 h-full flex flex-col justify-center">
+                <CardContent className="pt-8 pb-8 text-center text-xs text-muted-foreground flex flex-col justify-center items-center">
                   {activeTab === 'restaurantes' ? (
                     <Utensils className="h-8 w-8 mx-auto mb-2.5 opacity-25 text-primary" />
                   ) : (

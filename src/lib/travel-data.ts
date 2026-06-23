@@ -1100,22 +1100,27 @@ export const dayPlans: DayPlan[] = [
     date: '17 julio 2026',
     weekday: 'Viernes',
     title: 'Cita Médica + Planes Compatibles',
-    subtitle: 'Mañana tranquila, exámenes oftalmológicos, tarde con pupilas dilatadas',
+    subtitle: 'Cita oftalmológica (queratocono) hasta las 5:00 PM y cena tranquila',
     isRestriccionMedica: true,
     plan: [
       { id: 'd3-1', time: '7:30-8:30 AM', type: 'comida', placeId: 'alojamiento', activity: 'Desayuno ligero cercano: Juan Valdez, Pan Pa\' Ya, Atlanta Pastry.' },
-      { id: 'd3-2', time: '9:00-12:00', type: 'actividad', placeId: 'alojamiento', activity: 'Cita oftalmológica en clínica cerca de Calle 98. Llevar gafas de sol.' },
-      { id: 'd3-3', time: '12:00-12:15', type: 'movilidad', fromPlaceId: 'alojamiento', toPlaceId: 'vitto', isMovement: true, transportAlternatives: [        { id: 'd3-3-uber', mode: 'Uber', label: 'Uber / Cabify', duration: '10-15 min', cost: '$12.000-18.000', isRecommended: true },        { id: 'd3-3-caminata', mode: 'Caminata', label: 'Caminata', duration: '25 min', cost: '$0', notes: 'Por Calle 94 → Cra 11 → Calle 69.' },      ], activity: 'Calle 94 → Zona G (Vitto)' },
-      { id: 'd3-4', time: '12:30-1:30 PM', type: 'comida', placeId: 'vitto', activity: 'Almuerzo Zona G: Vitto, Prudencia, Mesa Franca. Evitar restaurantes oscuros.' },
-      { id: 'd3-5', time: '1:30-2:00', type: 'movilidad', fromPlaceId: 'vitto', toPlaceId: 'parque-sb', isMovement: true, transportAlternatives: [        { id: 'd3-5-uber', mode: 'Uber', label: 'Uber / Cabify', duration: '20-30 min', cost: '$15.000-22.000', isRecommended: true },        { id: 'd3-5-tm', mode: 'TM', label: 'TransMilenio', duration: '40-55 min', cost: '$3.550 c/u', notes: 'Calle 85 → Salitre El Greco + caminata.' },      ], activity: 'Zona G → Parque Simón Bolívar' },
-      { id: 'd3-6', time: '2:00-5:00', type: 'actividad', placeId: 'parque-sb', activity: 'Parque Simón Bolívar (sombras, aire libre, gratuito). Compatible con pupilas dilatadas.' },
-      { id: 'd3-7', time: '5:00-6:00', type: 'movilidad', fromPlaceId: 'parque-sb', toPlaceId: 'parque-93', isMovement: true, transportAlternatives: [        { id: 'd3-7-uber', mode: 'Uber', label: 'Uber / Cabify', duration: '20-25 min', cost: '$15.000-22.000', isRecommended: true },        { id: 'd3-7-tm', mode: 'TM', label: 'TransMilenio', duration: '35-45 min', cost: '$3.550 c/u' },      ], activity: 'Parque SB → Parque 93' },
-      { id: 'd3-8', time: '5:00-6:00', type: 'espera', placeId: 'parque-93', activity: 'Café o merienda: Juan Valdez, Café Velvet, Hommus.' },
-      { id: 'd3-9', time: '6:30-6:45', type: 'movilidad', fromPlaceId: 'parque-93', toPlaceId: 'vitto', isMovement: true, transportAlternatives: [        { id: 'd3-9-uber', mode: 'Uber', label: 'Uber', duration: '10-15 min', cost: '$12.000-18.000', isRecommended: true },        { id: 'd3-9-caminata', mode: 'Caminata', label: 'Caminata', duration: '20 min', cost: '$0' },      ], activity: 'Parque 93 → Vitto' },
-      { id: 'd3-10', time: '7:00-9:30', type: 'comida', placeId: 'vitto', activity: 'Cena Vitto (Zona G). WhatsApp +57 310 309 9727.' },
-      { id: 'd3-11', time: '9:30-10:00', type: 'movilidad', fromPlaceId: 'vitto', toPlaceId: 'alojamiento', isMovement: true, transportAlternatives: [        { id: 'd3-11-uber', mode: 'Uber', label: 'Uber', duration: '10-15 min', cost: '$12.000-18.000', isRecommended: true },        { id: 'd3-11-caminata', mode: 'Caminata', label: 'Caminata', duration: '25 min', cost: '$0' },      ], activity: 'Regreso Vitto → Calle 94' },
+      { id: 'd3-2', time: '9:00 AM - 5:00 PM', type: 'actividad', placeId: 'alojamiento', activity: 'Cita oftalmológica (queratocono) en clínica cerca de Calle 98. Llevar gafas de sol y acompañamiento.' },
+      { id: 'd3-3', time: '1:00-2:00 PM', type: 'comida', placeId: 'parque-93', activity: 'Almuerzo ligero en el norte (inmediaciones de la clínica): La Taquería o Café Velvet.', notes: 'Evitar luz solar intensa, usar gafas de sol.' },
+      { id: 'd3-4', time: '5:00-5:15 PM', type: 'movilidad', fromPlaceId: 'alojamiento', toPlaceId: 'alojamiento', isMovement: true, transportAlternatives: [
+        { id: 'd3-4-uber', mode: 'Uber', label: 'Uber / Cabify', duration: '10-15 min', cost: '$8.000-12.000', isRecommended: true },
+        { id: 'd3-4-caminata', mode: 'Caminata', label: 'Caminata', duration: '15 min', cost: '$0' }
+      ], activity: 'Traslado Clínica → Alojamiento Calle 94' },
+      { id: 'd3-5', time: '5:15-7:00 PM', type: 'espera', placeId: 'alojamiento', activity: 'Reposo estricto en el alojamiento en un entorno de luz controlada y penumbra (pupilas dilatadas).' },
+      { id: 'd3-6', time: '7:00-7:15 PM', type: 'movilidad', fromPlaceId: 'alojamiento', toPlaceId: 'vitto', isMovement: true, transportAlternatives: [
+        { id: 'd3-6-uber', mode: 'Uber', label: 'Uber / Cabify', duration: '10-15 min', cost: '$12.000-18.000', isRecommended: true },
+        { id: 'd3-6-caminata', mode: 'Caminata', label: 'Caminata', duration: '25 min', cost: '$0' }
+      ], activity: 'Traslado Alojamiento → Vitto (Zona G)' },
+      { id: 'd3-7', time: '7:15-9:30 PM', type: 'comida', placeId: 'vitto', activity: 'Cena en Vitto (Zona G) en ambiente de iluminación cálida. WhatsApp +57 310 309 9727.' },
+      { id: 'd3-8', time: '9:30-10:00 PM', type: 'movilidad', fromPlaceId: 'vitto', toPlaceId: 'alojamiento', isMovement: true, transportAlternatives: [
+        { id: 'd3-8-uber', mode: 'Uber', label: 'Uber / Cabify', duration: '10-15 min', cost: '$12.000-18.000', isRecommended: true }
+      ], activity: 'Regreso Vitto → Calle 94' }
     ],
-    estimatedCost: '$80-140k',
+    estimatedCost: '$141.000-$290.000',
   },
   {
     day: 4,
@@ -1242,6 +1247,10 @@ export function resolvePlace(
   selectedAlternatives: Record<string, string>
 ): Place | undefined {
   if (!placeId) return undefined;
+  if (selectedAlternatives[placeId]) {
+    const alt = getPlaceById(selectedAlternatives[placeId]);
+    if (alt) return alt;
+  }
   const place = getPlaceById(placeId);
   if (!place) return undefined;
   if (place.restaurantCategory && selectedAlternatives[place.restaurantCategory]) {
