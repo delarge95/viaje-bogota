@@ -26,6 +26,7 @@ interface TravelState {
   // Custom plans
   customPlans: CustomPlan[];
   activeCustomPlanId: string | null;
+  activeReplacementStepId: string | null;
 
   // Actions
   setMainView: (view: MainView) => void;
@@ -42,6 +43,7 @@ interface TravelState {
   updateCustomPlan: (planId: string, updates: Partial<CustomPlan>) => void;
   deleteCustomPlan: (planId: string) => void;
   setActiveCustomPlan: (planId: string | null) => void;
+  setActiveReplacementStepId: (stepId: string | null) => void;
 }
 
 export const useTravelStore = create<TravelState>()(
@@ -59,9 +61,10 @@ export const useTravelStore = create<TravelState>()(
       routeMode: 'driving',
       customPlans: [],
       activeCustomPlanId: null,
+      activeReplacementStepId: null,
 
       setMainView: (view) => set({ mainView: view }),
-      setSelectedDay: (day) => set({ selectedDay: day, selectedStepId: null, stepClickCount: 0, routeOriginId: null, routeDestinationId: null }),
+      setSelectedDay: (day) => set({ selectedDay: day, selectedStepId: null, stepClickCount: 0, routeOriginId: null, routeDestinationId: null, activeReplacementStepId: null }),
       selectStep: (stepId) => {
         const state = get();
         if (state.selectedStepId === stepId) {
@@ -97,6 +100,7 @@ export const useTravelStore = create<TravelState>()(
           activeCustomPlanId: state.activeCustomPlanId === planId ? null : state.activeCustomPlanId,
         })),
       setActiveCustomPlan: (planId) => set({ activeCustomPlanId: planId }),
+      setActiveReplacementStepId: (stepId) => set({ activeReplacementStepId: stepId }),
     }),
     {
       name: 'bogota-travel-store-v3',

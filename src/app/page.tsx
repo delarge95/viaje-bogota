@@ -1,7 +1,14 @@
 'use client';
 
-import { useMemo } from 'react';
-import { dayPlans, resolvePlace, places } from '@/lib/travel-data';
+import { useState, useMemo } from 'react';
+import {
+  dayPlans,
+  resolvePlace,
+  places,
+  getPlaceById,
+  getDistance,
+  reconstructSteps
+} from '@/lib/travel-data';
 import { useTravelStore } from '@/lib/travel-store';
 import dynamic from 'next/dynamic';
 import PlaceDetail from '@/components/place-detail';
@@ -9,9 +16,11 @@ import ItineraryTimeline from '@/components/itinerary-timeline';
 import ExplorarList from '@/components/explorar-list';
 import InfoPanel from '@/components/info-panel';
 import PlanEditor from '@/components/plan-editor';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Mountain, MapPin, Utensils, Info, CalendarDays, Sparkles, Edit3, Search } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Mountain, MapPin, Info, CalendarDays, Edit3, Search, X, RefreshCw } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const TravelMap = dynamic(() => import('@/components/travel-map'), {
@@ -39,38 +48,125 @@ export default function Home() {
   const stepClickCount = useTravelStore((s) => s.stepClickCount);
   const customPlans = useTravelStore((s) => s.customPlans);
   const activeCustomPlanId = useTravelStore((s) => s.activeCustomPlanId);
+  const updateCustomPlan = useTravelStore((s) => s.updateCustomPlan);
+  const setSelectedPlaceId = useTravelStore((s) => s.setSelectedPlaceId);
+
+  // Replacement panel store states
+  const activeReplacementStepId = useTravelStore((s) => s.activeReplacementStepId);
+  const setActiveReplacementStepId = useTravelStore((s) => s.setActiveReplacementStepId);
+
+  // Local state for replacement panel search
+  const [swapSearch, setSwapSearch] = useState('');
 
   const dayPlan = useMemo(() => dayPlans.find((d) => d.day === selectedDay), [selectedDay]);
   const activeCustomPlan = useMemo(() => customPlans.find((p) => p.id === activeCustomPlanId), [customPlans, activeCustomPlanId]);
 
   // Place IDs for this day (for map highlighting)
   const highlightedPlaceIds = useMemo(() => {
-    if (!dayPlan) return [];
+    const stepsToUse = activeCustomPlan ? activeCustomPlan.steps : (dayPlan?.plan || []);
     const ids = new Set<string>();
-    dayPlan.plan.forEach((step) => {
+    stepsToUse.forEach((step) => {
       [step.placeId, step.fromPlaceId, step.toPlaceId].forEach((pid) => {
         if (pid) ids.add(pid);
       });
     });
-    dayPlan.alternatives?.forEach((alt) => alt.placeIds.forEach((id) => ids.add(id)));
+    dayPlan?.alternatives?.forEach((alt) => alt.placeIds.forEach((id) => ids.add(id)));
     return Array.from(ids);
-  }, [dayPlan]);
+  }, [dayPlan, activeCustomPlan]);
 
   const selectedPlace = selectedPlaceId ? resolvePlace(selectedPlaceId, selectedAlternatives) : null;
 
   // When a step is selected (first click), center the map on that step's place
-  // even if selectedPlaceId is not set (first click shows location only)
   const stepPlaceForMap = useMemo(() => {
     if (!selectedStepId || !dayPlan) return null;
-    const step = dayPlan.plan.find((s) => s.id === selectedStepId);
+    const stepsToUse = activeCustomPlan ? activeCustomPlan.steps : dayPlan.plan;
+    const step = stepsToUse.find((s) => s.id === selectedStepId);
     if (!step) return null;
     const placeId = step.placeId || step.toPlaceId || step.fromPlaceId;
     if (!placeId) return null;
     return resolvePlace(placeId, selectedAlternatives);
-  }, [selectedStepId, dayPlan, selectedAlternatives]);
+  }, [selectedStepId, dayPlan, activeCustomPlan, selectedAlternatives]);
 
   // Show detail panel when: a place is selected AND step was clicked at least twice
   const showDetailPanel = selectedPlace && mainView === 'itinerario' && stepClickCount >= 2;
+
+  // replacement calculations
+  const activeReplacementStep = useMemo(() => {
+    if (!activeCustomPlan || !activeReplacementStepId) return null;
+    return activeCustomPlan.steps.find((s) => s.id === activeReplacementStepId);
+  }, [activeCustomPlan, activeReplacementStepId]);
+
+  const activitiesOnlyInPlan = useMemo(() => {
+    return activeCustomPlan ? activeCustomPlan.steps.filter((s) => s.type !== 'movilidad') : [];
+  }, [activeCustomPlan]);
+
+  const activeSwapIdx = useMemo(() => {
+    if (!activitiesOnlyInPlan || !activeReplacementStepId) return -1;
+    return activitiesOnlyInPlan.findIndex((s) => s.id === activeReplacementStepId);
+  }, [activitiesOnlyInPlan, activeReplacementStepId]);
+
+  const refCoords = useMemo((): [number, number] => {
+    if (activeSwapIdx <= 0 || !activitiesOnlyInPlan) {
+      return [4.6760, -74.0520]; // Default: Calle 94 lodging
+    }
+    const prevAct = activitiesOnlyInPlan[activeSwapIdx - 1];
+    if (prevAct && prevAct.placeId) {
+      const p = getPlaceById(prevAct.placeId);
+      if (p && p.coords) return p.coords;
+    }
+    return [4.6760, -74.0520];
+  }, [activeSwapIdx, activitiesOnlyInPlan]);
+
+  const refPlaceName = useMemo(() => {
+    if (activeSwapIdx <= 0 || !activitiesOnlyInPlan) {
+      return 'Alojamiento Calle 94';
+    }
+    const prevAct = activitiesOnlyInPlan[activeSwapIdx - 1];
+    if (prevAct && prevAct.placeId) {
+      const p = getPlaceById(prevAct.placeId);
+      if (p) return p.name;
+    }
+    return 'Alojamiento Calle 94';
+  }, [activeSwapIdx, activitiesOnlyInPlan]);
+
+  const proximitySortedPlaces = useMemo(() => {
+    if (activeSwapIdx === -1 || !activitiesOnlyInPlan[activeSwapIdx]) return [];
+    const currentPlaceId = activitiesOnlyInPlan[activeSwapIdx].placeId;
+    return places
+      .filter((p) => p.id !== 'alojamiento' && p.coords && p.category !== 'transporte' && p.id !== currentPlaceId)
+      .map((p) => {
+        const distance = getDistance(refCoords, p.coords);
+        return { ...p, distance };
+      })
+      .sort((a, b) => a.distance - b.distance);
+  }, [refCoords, activeSwapIdx, activitiesOnlyInPlan]);
+
+  const filteredPlaces = useMemo(() => {
+    const q = swapSearch.toLowerCase().trim();
+    if (!q) return proximitySortedPlaces;
+    return proximitySortedPlaces.filter(
+      (p) => p.name.toLowerCase().includes(q) || p.address.toLowerCase().includes(q)
+    );
+  }, [proximitySortedPlaces, swapSearch]);
+
+  const handleSelectAlternative = (newPlaceId: string) => {
+    if (activeSwapIdx === -1 || !activeCustomPlan || !activeReplacementStepId) return;
+    const newPlace = getPlaceById(newPlaceId);
+    if (!newPlace) return;
+
+    const updatedActivities = activitiesOnlyInPlan.map((act) =>
+      act.id === activeReplacementStepId
+        ? { ...act, placeId: newPlaceId, activity: `Visita a ${newPlace.name}` }
+        : act
+    );
+    const newSteps = reconstructSteps(updatedActivities);
+    updateCustomPlan(activeCustomPlan.id, { steps: newSteps });
+
+    // Clear state
+    setActiveReplacementStepId(null);
+    setSelectedPlaceId(newPlaceId);
+    setSwapSearch('');
+  };
 
   const mainTabs: { id: MainView; label: string; icon: any }[] = [
     { id: 'itinerario', label: 'Itinerario', icon: CalendarDays },
@@ -160,7 +256,7 @@ export default function Home() {
               ))}
             </div>
 
-            {/* Itinerary + Map grid */}
+            {/* Itinerary + Map/Replacement grid */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
               {/* Left: Itinerary timeline */}
               <div className="lg:col-span-5 space-y-3">
@@ -176,41 +272,124 @@ export default function Home() {
                 )}
               </div>
 
-              {/* Right: Map + detail */}
+              {/* Right: Map + details OR Replacement Panel */}
               <div className="lg:col-span-7 space-y-3">
-                {/* Map */}
-                <Card className="overflow-hidden border-border">
-                  <div className="p-2.5 border-b border-border bg-muted/30 flex items-center justify-between">
-                    <div className="flex items-center gap-1.5 min-w-0">
-                      <MapPin className="h-3.5 w-3.5 text-primary shrink-0" />
-                      <span className="text-xs font-semibold truncate">
-                        Día {selectedDay} · {dayPlan?.weekday}
-                      </span>
-                    </div>
-                    {selectedStepId && (
-                      <button
-                        onClick={() => useTravelStore.getState().clearStepSelection()}
-                        className="text-[10px] text-muted-foreground hover:text-foreground shrink-0"
+                {activeReplacementStepId && activeReplacementStep ? (
+                  /* REPLACEMENT PANEL (Visual & Proximity-based Card selection) */
+                  <Card className="border-border shadow-md flex flex-col h-[545px] overflow-hidden bg-card">
+                    <div className="p-4 border-b border-border bg-primary/[0.01] flex items-center justify-between">
+                      <div>
+                        <span className="text-[10px] font-extrabold uppercase tracking-wider text-primary flex items-center gap-1.5">
+                          <RefreshCw className="h-3.5 w-3.5 animate-spin" /> Reemplazar Actividad
+                        </span>
+                        <h3 className="font-bold text-sm text-foreground mt-0.5 leading-snug">
+                          {activeReplacementStep.activity}
+                        </h3>
+                        <p className="text-[10.5px] text-muted-foreground mt-0.5">
+                          Alternativas por cercanía a: <span className="font-semibold text-foreground">{refPlaceName}</span>
+                        </p>
+                      </div>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => {
+                          setActiveReplacementStepId(null);
+                          setSwapSearch('');
+                        }}
+                        className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground"
                       >
-                        ✕ Volver al itinerario
-                      </button>
-                    )}
-                  </div>
-                  <div className="p-2.5 h-[480px]">
-                    <TravelMap
-                      highlightedPlaceIds={highlightedPlaceIds}
-                      height="100%"
-                      overrideSelectedPlaceId={stepPlaceForMap?.id}
-                    />
-                  </div>
-                </Card>
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
 
-                {/* Detail panel (shows on 2nd click) */}
-                {showDetailPanel && selectedPlace && (
-                  <PlaceDetail
-                    place={selectedPlace}
-                    onClose={() => useTravelStore.getState().setSelectedPlaceId(null)}
-                  />
+                    <div className="p-4 border-b border-border bg-muted/10">
+                      <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                          value={swapSearch}
+                          onChange={(e) => setSwapSearch(e.target.value)}
+                          placeholder="Buscar actividad o lugar de reemplazo..."
+                          className="pl-9 h-9 text-xs bg-background border-border"
+                        />
+                      </div>
+                    </div>
+
+                    <div className="flex-1 p-4 overflow-y-auto custom-scroll">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pb-2">
+                        {filteredPlaces.length === 0 ? (
+                          <div className="col-span-full text-center py-12 text-xs text-muted-foreground italic">
+                            No se encontraron lugares de reemplazo.
+                          </div>
+                        ) : (
+                          filteredPlaces.map((p) => (
+                            <Card
+                              key={p.id}
+                              onClick={() => handleSelectAlternative(p.id)}
+                              className="cursor-pointer border border-border/80 hover:border-primary/50 hover:bg-primary/[0.01] hover:-translate-y-0.5 transition-all duration-200 p-3 flex flex-col justify-between min-h-[110px] shadow-[0_1px_2px_rgba(0,0,0,0.01)] bg-background"
+                            >
+                              <div className="space-y-1 min-w-0">
+                                <div className="flex items-start justify-between gap-2">
+                                  <h4 className="font-bold text-xs text-foreground leading-tight truncate max-w-[155px]">
+                                    {p.name}
+                                  </h4>
+                                  <Badge variant="secondary" className="text-[9px] py-0 h-4 px-1.5 font-mono font-bold text-primary bg-primary/10 border-none shrink-0">
+                                    {p.distance.toFixed(1)} km
+                                  </Badge>
+                                </div>
+                                <p className="text-[10px] text-muted-foreground line-clamp-1">{p.address}</p>
+                              </div>
+
+                              <div className="flex items-center justify-between text-[10px] pt-2 border-t border-border/40 mt-3">
+                                <span className="text-[9px] uppercase tracking-wider font-extrabold text-muted-foreground/80">
+                                  {p.category}
+                                </span>
+                                <span className="text-primary font-bold">
+                                  {p.priceRange ? p.priceRange.split(' por')[0] : 'Gratis'}
+                                </span>
+                              </div>
+                            </Card>
+                          ))
+                        )}
+                      </div>
+                    </div>
+                  </Card>
+                ) : (
+                  /* Map */
+                  <>
+                    <Card className="overflow-hidden border-border bg-card">
+                      <div className="p-2.5 border-b border-border bg-muted/30 flex items-center justify-between">
+                        <div className="flex items-center gap-1.5 min-w-0">
+                          <MapPin className="h-3.5 w-3.5 text-primary shrink-0" />
+                          <span className="text-xs font-semibold truncate">
+                            Día {selectedDay} · {dayPlan?.weekday}
+                          </span>
+                        </div>
+                        {selectedStepId && (
+                          <button
+                            onClick={() => useTravelStore.getState().clearStepSelection()}
+                            className="text-[10px] text-muted-foreground hover:text-foreground shrink-0"
+                          >
+                            ✕ Volver al itinerario
+                          </button>
+                        )}
+                      </div>
+                      <div className="p-2.5 h-[480px]">
+                        <TravelMap
+                          highlightedPlaceIds={highlightedPlaceIds}
+                          height="100%"
+                          overrideSelectedPlaceId={stepPlaceForMap?.id}
+                        />
+                      </div>
+                    </Card>
+
+                    {/* Detail panel (shows on 2nd click) */}
+                    {showDetailPanel && selectedPlace && (
+                      <PlaceDetail
+                        place={selectedPlace}
+                        onClose={() => useTravelStore.getState().setSelectedPlaceId(null)}
+                      />
+                    )}
+                  </>
                 )}
               </div>
             </div>

@@ -1308,3 +1308,100 @@ export const categoryEmojis: Record<RestaurantCategory, string> = {
   italiana: '🍝',
   mercado: '🥭',
 };
+
+// Helper to calculate distance in km between two Bogotá coordinates
+export const getDistance = (c1: [number, number], c2: [number, number]): number => {
+  const dx = (c2[1] - c1[1]) * 110.8;
+  const dy = (c2[0] - c1[0]) * 111.0;
+  return Math.sqrt(dx * dx + dy * dy);
+};
+
+// Automatical Route & Cost Recalculation engine
+export const recomputeCustomPlanSteps = (steps: PlanStep[]): PlanStep[] => {
+  return steps.map((step, idx) => {
+    if (step.type === 'movilidad') {
+      let fromId = '';
+      for (let j = idx - 1; j >= 0; j--) {
+        if (steps[j].placeId) {
+          fromId = steps[j].placeId!;
+          break;
+        }
+      }
+      let toId = '';
+      for (let j = idx + 1; j < steps.length; j++) {
+        if (steps[j].placeId) {
+          toId = steps[j].placeId!;
+          break;
+        }
+      }
+
+      const fromPlace = getPlaceById(fromId);
+      const toPlace = getPlaceById(toId);
+
+      const updated = {
+        ...step,
+        fromPlaceId: fromId || undefined,
+        toPlaceId: toId || undefined,
+        isMovement: true,
+      };
+
+      if (fromPlace && toPlace) {
+        const dist = getDistance(fromPlace.coords, toPlace.coords);
+        const mode = step.transportMode || (dist < 1.2 ? 'Caminata' : 'Uber');
+        updated.transportMode = mode;
+
+        if (mode === 'Caminata') {
+          const durationMin = Math.round(dist * 12 + 3);
+          updated.transportDuration = `${durationMin} min`;
+          updated.transportCost = 'Gratis';
+        } else if (mode === 'TM' || mode === 'SITP') {
+          const durationMin = Math.round(dist * 4.5 + 12);
+          updated.transportDuration = `${durationMin} min`;
+          updated.transportCost = '$3.550 c/u';
+        } else if (mode === 'Tren') {
+          updated.transportDuration = '60 min';
+          updated.transportCost = '$96.000 c/u';
+        } else {
+          // Uber / Taxi / Cabify
+          const durationMin = Math.round(dist * 3.5 + 4);
+          const costK = Math.round(8 + dist * 2.2);
+          updated.transportDuration = `${durationMin} min`;
+          updated.transportCost = `$${costK}.000`;
+        }
+        updated.activity = `Traslado a ${toPlace.name}`;
+      } else {
+        updated.transportDuration = undefined;
+        updated.transportCost = undefined;
+      }
+      return updated;
+    } else {
+      const place = getPlaceById(step.placeId);
+      if (place && (!step.activity || step.activity === 'Nueva actividad' || step.activity.startsWith('Visita a '))) {
+        step.activity = `Visita a ${place.name}`;
+      }
+    }
+    return step;
+  });
+};
+
+// Rebuilds plan steps by inserting new mobility segments between each pair of activity steps
+export const reconstructSteps = (activitiesOnly: PlanStep[]): PlanStep[] => {
+  const result: PlanStep[] = [];
+  for (let i = 0; i < activitiesOnly.length; i++) {
+    result.push(activitiesOnly[i]);
+    if (i < activitiesOnly.length - 1) {
+      const act1 = activitiesOnly[i];
+      const act2 = activitiesOnly[i + 1];
+      result.push({
+        id: `move-${act1.id}-${act2.id}`,
+        time: `${act1.time} - ${act2.time}`,
+        type: 'movilidad',
+        isMovement: true,
+        fromPlaceId: act1.placeId,
+        toPlaceId: act2.placeId,
+        activity: `Traslado a ${getPlaceById(act2.placeId || '')?.name || 'siguiente sitio'}`,
+      });
+    }
+  }
+  return recomputeCustomPlanSteps(result);
+};

@@ -1,49 +1,35 @@
 'use client';
 
-import { useMemo } from 'react';
-import { dayPlans, getPlaceById, resolvePlace, toGoogleMapsMode, places, type TransportMode, type StepType, type PlanStep } from '@/lib/travel-data';
+import { useState, useMemo } from 'react';
+import {
+  dayPlans,
+  getPlaceById,
+  resolvePlace,
+  places,
+  reconstructSteps,
+  recomputeCustomPlanSteps,
+  type PlanStep,
+  type CustomPlan
+} from '@/lib/travel-data';
 import { useTravelStore } from '@/lib/travel-store';
-import { Card } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import {
   CalendarOff,
   AlertTriangle,
-  Bus,
-  Car,
-  Footprints,
-  Train,
-  ArrowRight,
   MapPin,
   Utensils,
   ShoppingBag,
   Clock,
   Info,
-  ChevronRight,
+  RefreshCw,
+  Trash2,
+  Undo2,
+  Sparkles
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
-
-const stepTypeConfig: Record<StepType, { icon: typeof Bus; color: string; bg: string; label: string }> = {
-  movilidad: { icon: Car, color: 'text-orange-500', bg: 'bg-orange-500/10 border-orange-200', label: 'Trayecto' },
-  actividad: { icon: MapPin, color: 'text-indigo-600', bg: 'bg-indigo-500/10 border-indigo-200', label: 'Actividad' },
-  comida: { icon: Utensils, color: 'text-amber-700', bg: 'bg-amber-500/10 border-amber-200', label: 'Comida' },
-  compra: { icon: ShoppingBag, color: 'text-violet-600', bg: 'bg-violet-500/10 border-violet-200', label: 'Compra' },
-  espera: { icon: Clock, color: 'text-slate-500', bg: 'bg-slate-500/10 border-slate-200', label: 'Espera' },
-  info: { icon: Info, color: 'text-sky-600', bg: 'bg-sky-500/10 border-sky-200', label: 'Info' },
-};
-
-const transportIcons: Record<TransportMode, typeof Bus> = {
-  TM: Bus,
-  SITP: Bus,
-  Tren: Train,
-  Uber: Car,
-  Cabify: Car,
-  Carro: Car,
-  Taxi: Car,
-  Teleferico: Car,
-  Caminata: Footprints,
-  Espera: Clock,
-  Interno: MapPin,
-};
 
 interface ItineraryTimelineProps {
   steps?: PlanStep[]; // override (for custom plans)
@@ -64,13 +50,25 @@ export default function ItineraryTimeline({
 }: ItineraryTimelineProps) {
   const selectedDay = useTravelStore((s) => s.selectedDay);
   const selectedAlternatives = useTravelStore((s) => s.selectedAlternatives);
-  const selectedTransport = useTravelStore((s) => s.selectedTransport);
   const setSelectedPlaceId = useTravelStore((s) => s.setSelectedPlaceId);
   const selectStep = useTravelStore((s) => s.selectStep);
   const selectedStepId = useTravelStore((s) => s.selectedStepId);
   const stepClickCount = useTravelStore((s) => s.stepClickCount);
-  const setRoute = useTravelStore((s) => s.setRoute);
   const clearRoute = useTravelStore((s) => s.clearRoute);
+
+  // Custom Plan store actions
+  const customPlans = useTravelStore((s) => s.customPlans);
+  const addCustomPlan = useTravelStore((s) => s.addCustomPlan);
+  const updateCustomPlan = useTravelStore((s) => s.updateCustomPlan);
+  const deleteCustomPlan = useTravelStore((s) => s.deleteCustomPlan);
+  const activeCustomPlanId = useTravelStore((s) => s.activeCustomPlanId);
+  const setActiveCustomPlan = useTravelStore((s) => s.setActiveCustomPlan);
+  const activeReplacementStepId = useTravelStore((s) => s.activeReplacementStepId);
+  const setActiveReplacementStepId = useTravelStore((s) => s.setActiveReplacementStepId);
+
+  // States
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [editingTimeIdx, setEditingTimeIdx] = useState<number | null>(null);
 
   const dayPlan = useMemo(() => dayPlans.find((d) => d.day === selectedDay), [selectedDay]);
 
@@ -81,40 +79,94 @@ export default function ItineraryTimeline({
   const showMedica = isRestriccionMedica ?? dayPlan?.isRestriccionMedica;
   const cost = estimatedCost || dayPlan?.estimatedCost || '';
 
-  const handleStepClick = (step: PlanStep) => {
+  // Filter only activities (no mobility cards)
+  const activitiesOnly = useMemo(() => {
+    return steps.filter((s) => s.type !== 'movilidad');
+  }, [steps]);
+
+  // Helper to ensure a custom plan exists before modification
+  const getOrCreateActiveCustomPlan = (): string => {
+    if (activeCustomPlanId) {
+      return activeCustomPlanId;
+    }
+    const id = `custom-${Date.now()}`;
+    const baseSteps = dayPlan?.plan.map((s) => ({ ...s, id: `${id}-${s.id}` })) || [];
+    const plan: CustomPlan = {
+      id,
+      name: `Mi Plan - Día ${selectedDay}`,
+      description: `Itinerario personalizado del día ${selectedDay}`,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+      basedOnDay: selectedDay,
+      steps: recomputeCustomPlanSteps(baseSteps),
+    };
+    addCustomPlan(plan);
+    setActiveCustomPlan(id);
+    return id;
+  };
+
+  // Drag & Drop Handlers
+  const handleDragStart = (idx: number) => {
+    setDraggedIndex(idx);
+  };
+
+  const handleDragOver = (e: React.DragEvent, idx: number) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (targetIdx: number) => {
+    if (draggedIndex === null || draggedIndex === targetIdx) return;
+    const updatedActivities = [...activitiesOnly];
+    const [removed] = updatedActivities.splice(draggedIndex, 1);
+    updatedActivities.splice(targetIdx, 0, removed);
+
+    const newSteps = reconstructSteps(updatedActivities);
+    const planId = getOrCreateActiveCustomPlan();
+    updateCustomPlan(planId, { steps: newSteps });
+    setDraggedIndex(null);
+  };
+
+  // Time update
+  const handleUpdateTime = (idx: number, newTime: string) => {
+    const updatedActivities = activitiesOnly.map((act, i) =>
+      i === idx ? { ...act, time: newTime } : act
+    );
+    const newSteps = reconstructSteps(updatedActivities);
+    const planId = getOrCreateActiveCustomPlan();
+    updateCustomPlan(planId, { steps: newSteps });
+  };
+
+  // Remove activity
+  const handleRemoveActivity = (idx: number) => {
+    const updatedActivities = activitiesOnly.filter((_, i) => i !== idx);
+    const newSteps = reconstructSteps(updatedActivities);
+    const planId = getOrCreateActiveCustomPlan();
+    updateCustomPlan(planId, { steps: newSteps });
+    if (activeReplacementStepId === activitiesOnly[idx]?.id) {
+      setActiveReplacementStepId(null);
+    }
+  };
+
+  // Replace action
+  const handleReplaceClick = (step: PlanStep) => {
+    getOrCreateActiveCustomPlan();
+    setActiveReplacementStepId(step.id);
+  };
+
+  // Card click behaviour (Map centering)
+  const handleCardClick = (step: PlanStep) => {
     const state = useTravelStore.getState();
     const isSameStep = state.selectedStepId === step.id;
     const newClickCount = isSameStep ? state.stepClickCount + 1 : 1;
 
-    // Call selectStep to update store
     selectStep(step.id);
 
-    if (step.isMovement && step.fromPlaceId && step.toPlaceId) {
-      // Determine which transport alternative is selected
-      let mode = step.transportMode;
-      if (step.transportAlternatives && step.transportAlternatives.length > 0) {
-        const selectedAltId = state.selectedTransport[step.id];
-        const selectedAlt = step.transportAlternatives.find((a) => a.id === selectedAltId)
-          || step.transportAlternatives.find((a) => a.isRecommended)
-          || step.transportAlternatives[0];
-        if (selectedAlt) mode = selectedAlt.mode;
-      }
-      const gmapsMode = toGoogleMapsMode(mode);
-      setRoute(step.fromPlaceId, step.toPlaceId, gmapsMode);
-
-      // On second click (newClickCount >= 2), show place detail
-      if (newClickCount >= 2) {
-        const destPlace = resolvePlace(step.toPlaceId, state.selectedAlternatives);
-        if (destPlace) setSelectedPlaceId(destPlace.id);
-      } else {
-        setSelectedPlaceId(null);
-      }
-    } else if (step.placeId) {
-      const place = resolvePlace(step.placeId, state.selectedAlternatives);
+    if (step.placeId) {
+      const place = resolvePlace(step.placeId, selectedAlternatives);
       if (place) {
         clearRoute();
-        // First click: show location on map only (no detail panel). 
-        // Second click: show detail panel.
+        // First click: select place (highlights on map)
+        // Second click: open detail drawer
         if (newClickCount >= 2) {
           setSelectedPlaceId(place.id);
         } else {
@@ -124,15 +176,46 @@ export default function ItineraryTimeline({
     }
   };
 
+  // Helper to get category-specific styling
+  const getCardStyle = (type: string, isSelected: boolean) => {
+    const base = "relative w-full text-left rounded-xl border border-l-[5px] p-4 transition-all cursor-pointer flex flex-col space-y-2 shadow-[0_1px_3px_rgba(0,0,0,0.02)]";
+    const selectedRing = isSelected ? "ring-2 ring-primary border-primary bg-primary/[0.01]" : "";
+
+    const typeStyles = {
+      actividad: 'border-indigo-100 dark:border-indigo-950/40 bg-indigo-50/10 dark:bg-indigo-950/5 border-l-indigo-500 hover:border-indigo-300',
+      comida: 'border-amber-100 dark:border-amber-950/40 bg-amber-50/10 dark:bg-amber-950/5 border-l-amber-500 hover:border-amber-300',
+      compra: 'border-rose-100 dark:border-rose-950/40 bg-rose-50/10 dark:bg-rose-950/5 border-l-rose-500 hover:border-rose-300',
+      espera: 'border-slate-100 dark:border-slate-800 bg-slate-50/10 dark:bg-slate-950/5 border-l-slate-400 hover:border-slate-300',
+      info: 'border-sky-100 dark:border-sky-950/40 bg-sky-50/10 dark:bg-sky-950/5 border-l-sky-500 hover:border-sky-300',
+    }[type] || 'border-border bg-card border-l-primary hover:border-primary/50';
+
+    return cn(base, typeStyles, selectedRing);
+  };
+
+  const getStepEmoji = (type: string) => {
+    return {
+      actividad: '📍',
+      comida: '🍽️',
+      compra: '🛍️',
+      espera: '⏱️',
+      info: 'ℹ️',
+    }[type] || '✨';
+  };
+
   return (
-    <div className="space-y-3">
+    <div className="space-y-4">
       {/* Day header - compact */}
-      <div className="flex items-start justify-between gap-3 pb-2 border-b border-border">
+      <div className="flex items-start justify-between gap-3 pb-3 border-b border-border">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-1.5 mb-1 flex-wrap">
+          <div className="flex items-center gap-1.5 mb-1.5 flex-wrap">
             <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-primary">
               Día {selectedDay}
             </span>
+            {activeCustomPlanId && (
+              <Badge variant="default" className="text-[9px] py-0 h-4 bg-primary/10 text-primary hover:bg-primary/20 border-none font-bold">
+                ✨ Personalizado
+              </Badge>
+            )}
             {showFeriado && (
               <Badge variant="outline" className="text-[9px] py-0 h-4 text-amber-700 border-amber-400 bg-amber-50">
                 <CalendarOff className="h-2.5 w-2.5 mr-0.5" /> Feriado
@@ -140,7 +223,7 @@ export default function ItineraryTimeline({
             )}
             {showMedica && (
               <Badge variant="outline" className="text-[9px] py-0 h-4 text-red-700 border-red-300 bg-red-50">
-                <AlertTriangle className="h-2.5 w-2.5 mr-0.5" /> Pupilas dilatadas
+                <AlertTriangle className="h-2.5 w-2.5 mr-0.5" /> Ojo dilato
               </Badge>
             )}
           </div>
@@ -149,325 +232,164 @@ export default function ItineraryTimeline({
         </div>
         {cost && (
           <div className="text-right shrink-0">
-            <div className="text-[9px] uppercase tracking-wider text-muted-foreground">2 pers.</div>
+            <div className="text-[9px] uppercase tracking-wider text-muted-foreground">Presupuesto</div>
             <div className="text-xs font-bold text-primary">{cost}</div>
           </div>
         )}
       </div>
 
-      {/* Steps */}
-      <div className="space-y-1">
-        {steps.map((step, idx) => {
-          const isActive = selectedStepId === step.id;
-          const showDetail = isActive && stepClickCount >= 2;
-          const config = stepTypeConfig[step.type];
-          const StepIcon = config.icon;
-          const place = resolvePlace(step.placeId, selectedAlternatives);
-          const fromPlace = resolvePlace(step.fromPlaceId, selectedAlternatives);
-          const toPlace = resolvePlace(step.toPlaceId, selectedAlternatives);
+      {/* Discard Customizations / Reset Option */}
+      {activeCustomPlanId && (
+        <div className="flex items-center justify-between p-2 rounded-lg bg-primary/[0.02] border border-primary/10 text-xs">
+          <span className="text-muted-foreground text-[11px]">Estás editando una versión personalizada de este día.</span>
+          <Button
+            size="sm"
+            variant="ghost"
+            onClick={() => {
+              deleteCustomPlan(activeCustomPlanId);
+              setActiveCustomPlan(null);
+              setActiveReplacementStepId(null);
+            }}
+            className="h-6 text-[10px] px-2 text-destructive hover:bg-destructive/10 font-bold"
+          >
+            <Undo2 className="h-3 w-3 mr-1" /> Resetear día
+          </Button>
+        </div>
+      )}
 
-          // Determine effective transport
-          let effectiveMode = step.transportMode;
-          if (step.transportAlternatives && step.transportAlternatives.length > 0) {
-            const sel = selectedTransport[step.id];
-            const alt = step.transportAlternatives.find((a) => a.id === sel)
-              || step.transportAlternatives.find((a) => a.isRecommended)
-              || step.transportAlternatives[0];
-            if (alt) effectiveMode = alt.mode;
-          }
-          const TransportIcon = effectiveMode ? transportIcons[effectiveMode] : null;
+      {/* Minimalist Large Cards List */}
+      <div className="space-y-3">
+        {activitiesOnly.length === 0 ? (
+          <div className="text-center py-12 text-xs text-muted-foreground italic border border-dashed rounded-xl bg-muted/5">
+            No quedan actividades en este día. ¡Añade o personaliza!
+          </div>
+        ) : (
+          activitiesOnly.map((step, idx) => {
+            const isStepSelected = selectedStepId === step.id;
+            const place = resolvePlace(step.placeId, selectedAlternatives);
+            const isReplacing = activeReplacementStepId === step.id;
 
-          if (step.isMovement) {
-            // MOVEMENT / TRANSIT STEP: render as a compact, subtle connector
             return (
-              <div key={step.id} className="relative py-1">
-                {/* Timeline connector line inside movement */}
-                {idx < steps.length - 1 && (
-                  <div className="absolute left-[15px] top-6 bottom-[-6px] w-px border-l border-dashed border-muted-foreground/30" />
-                )}
-
-                <div
-                  onClick={() => handleStepClick(step)}
-                  role="button"
-                  tabIndex={0}
-                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleStepClick(step); } }}
-                  className={cn(
-                    'group relative w-full text-left rounded-xl transition-all p-2 pl-10 cursor-pointer text-xs border border-transparent',
-                    isActive
-                      ? 'bg-muted/60 border-primary/20 ring-1 ring-primary/10 font-medium'
-                      : 'hover:bg-muted/10'
-                  )}
-                >
-                  {/* Small step icon */}
-                  <div className={cn(
-                    'absolute left-2.5 top-2 w-5 h-5 rounded-full flex items-center justify-center border transition-all text-xs',
-                    isActive ? 'bg-primary border-primary text-primary-foreground scale-105 shadow-sm' : 'bg-muted/30 border-border text-muted-foreground'
-                  )}>
-                    {TransportIcon ? <TransportIcon className="h-2.5 w-2.5" /> : <StepIcon className="h-2.5 w-2.5" />}
-                  </div>
-
-                  <div className="flex items-center gap-1.5 flex-wrap text-muted-foreground text-[11px]">
-                    <span className="font-mono font-bold text-primary">{step.time}</span>
-                    <span>·</span>
-                    <span className="font-semibold text-foreground">
-                      {step.activity.replace('Traslado ', 'Ir: ').replace('Trayecto ', '')}
-                    </span>
-                    {step.transportDuration && (
-                      <span className="inline-flex items-center gap-0.5 text-muted-foreground">
-                        ⏱️ {step.transportDuration}
-                      </span>
-                    )}
-                    {step.transportCost && (
-                      <span className="inline-flex items-center gap-0.5 text-primary/80 font-mono font-bold">
-                        💵 {step.transportCost}
-                      </span>
-                    )}
-                  </div>
-
-                  {/* Selector for multi-transport alternatives shown inside */}
-                  {step.transportAlternatives && step.transportAlternatives.length > 1 && (
-                    <div className="mt-1.5 flex flex-wrap gap-1" onClick={(e) => e.stopPropagation()}>
-                      {step.transportAlternatives.map((alt) => {
-                        const sel = selectedTransport[step.id];
-                        const isSelected = sel ? sel === alt.id : alt.isRecommended;
-                        const AltIcon = transportIcons[alt.mode];
-                        return (
-                          <button
-                            key={alt.id}
-                            onClick={() => {
-                              useTravelStore.getState().setSelectedTransport(step.id, alt.id);
-                              if (isActive) {
-                                const gmapsMode = toGoogleMapsMode(alt.mode);
-                                setRoute(step.fromPlaceId!, step.toPlaceId!, gmapsMode);
-                              }
-                            }}
-                            className={cn(
-                              'flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] border transition-all',
-                              isSelected
-                                ? 'bg-primary text-primary-foreground border-primary shadow-[0_1px_2px_rgba(0,0,0,0.05)]'
-                                : 'bg-card text-muted-foreground border-border hover:border-primary/30'
-                            )}
-                          >
-                            <AltIcon className="h-2 w-2" />
-                            <span>{alt.label}</span>
-                            <span>· {alt.duration}</span>
-                            <span>· {alt.cost}</span>
-                          </button>
-                        );
-                      })}
-                    </div>
-                  )}
-
-                  {/* Notes shown if active */}
-                  {showDetail && step.transportNotes && (
-                    <div className="mt-1 text-[10px] text-muted-foreground italic leading-relaxed bg-card border border-border/60 rounded p-1.5">
-                      {step.transportNotes}
-                    </div>
-                  )}
-                </div>
-              </div>
-            );
-          }
-
-          // DESTINATION STEP (Actividad, Comida, Compra, Info, Espera)
-          const leftBorderColor = {
-            actividad: 'border-indigo-150 dark:border-indigo-950 bg-indigo-50/20 dark:bg-indigo-950/10 text-indigo-950 dark:text-indigo-200 border-l-[4px] border-l-indigo-500',
-            comida: 'border-amber-150 dark:border-amber-950 bg-amber-50/20 dark:bg-amber-950/10 text-amber-950 dark:text-amber-200 border-l-[4px] border-l-amber-500',
-            compra: 'border-rose-150 dark:border-rose-950 bg-rose-50/20 dark:bg-rose-950/10 text-rose-950 dark:text-rose-200 border-l-[4px] border-l-rose-500',
-            espera: 'border-slate-150 dark:border-slate-800 bg-slate-50/20 dark:bg-slate-950/10 text-slate-950 dark:text-slate-200 border-l-[4px] border-l-slate-400',
-            info: 'border-sky-150 dark:border-sky-950 bg-sky-50/20 dark:bg-sky-950/10 text-sky-950 dark:text-sky-200 border-l-[4px] border-l-sky-500',
-          }[step.type] || 'border-border bg-card border-l-[4px] border-l-primary';
-
-          const activeBorderColor = {
-            actividad: 'border-indigo-300 dark:border-indigo-800 bg-indigo-50/40 dark:bg-indigo-950/20 ring-2 ring-indigo-500/10 border-l-[4px] border-l-indigo-600 shadow-sm',
-            comida: 'border-amber-300 dark:border-amber-800 bg-amber-50/40 dark:bg-amber-950/20 ring-2 ring-amber-500/10 border-l-[4px] border-l-amber-600 shadow-sm',
-            compra: 'border-rose-300 dark:border-rose-800 bg-rose-50/40 dark:bg-rose-950/20 ring-2 ring-rose-500/10 border-l-[4px] border-l-rose-600 shadow-sm',
-            espera: 'border-slate-300 dark:border-slate-700 bg-slate-50/40 dark:bg-slate-950/20 ring-2 ring-slate-400/10 border-l-[4px] border-l-slate-500 shadow-sm',
-            info: 'border-sky-300 dark:border-sky-800 bg-sky-50/40 dark:bg-sky-950/20 ring-2 ring-sky-500/10 border-l-[4px] border-l-sky-600 shadow-sm',
-          }[step.type] || 'border-primary bg-card border-l-[4px] border-l-primary shadow-sm';
-
-          // Proximity helper functions inside mapping
-          const getDistance = (c1: [number, number], c2: [number, number]) => {
-            const dx = (c2[1] - c1[1]) * 110.8;
-            const dy = (c2[0] - c1[0]) * 111.0;
-            return Math.sqrt(dx*dx + dy*dy);
-          };
-
-          const getReferenceCoords = (): [number, number] => {
-            for (let i = idx - 1; i >= 0; i--) {
-              const pId = steps[i].placeId || steps[i].toPlaceId || steps[i].fromPlaceId;
-              if (pId) {
-                const p = resolvePlace(pId, selectedAlternatives);
-                if (p && p.coords) return p.coords;
-              }
-            }
-            if (place && place.coords) return place.coords;
-            return [4.6760, -74.0520]; // Default: Alojamiento
-          };
-
-          return (
-            <div key={step.id} className="relative py-1.5">
-              {/* Timeline connector */}
-              {idx < steps.length - 1 && (
-                <div className="absolute left-[15px] top-8 bottom-[-8px] w-px bg-border" />
-              )}
-
               <div
-                onClick={() => handleStepClick(step)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleStepClick(step); } }}
+                key={step.id}
+                draggable
+                onDragStart={() => handleDragStart(idx)}
+                onDragOver={(e) => handleDragOver(e, idx)}
+                onDrop={() => handleDrop(idx)}
+                onClick={() => handleCardClick(step)}
                 className={cn(
-                  'group relative w-full text-left rounded-xl border border-l-[5px] transition-all p-3 pl-10 cursor-pointer shadow-[0_1px_2px_rgba(0,0,0,0.02)]',
-                  isActive
-                    ? cn(activeBorderColor)
-                    : cn(leftBorderColor)
+                  getCardStyle(step.type, isStepSelected),
+                  draggedIndex === idx && "opacity-40 scale-[0.98]",
+                  "group transition-all duration-200"
                 )}
               >
-                {/* Step icon */}
-                <div className={cn(
-                  'absolute left-2.5 top-3 w-5.5 h-5.5 rounded-full flex items-center justify-center border-2 transition-transform text-xs',
-                  isActive 
-                    ? 'bg-primary border-primary text-primary-foreground scale-105 shadow-sm' 
-                    : cn('bg-card border-border', config.color)
-                )}>
-                  <StepIcon className="h-2.5 w-2.5" />
-                </div>
-
-                {/* Content */}
-                <div className="min-w-0 space-y-0.5">
-                  {/* Time + type badge */}
-                  <div className="flex items-center gap-1.5 flex-wrap">
-                    <span className="text-[10px] font-mono font-bold text-primary">{step.time}</span>
-                    <Badge variant="outline" className={cn('text-[9px] py-0 px-1 h-3.5 border-current/25 font-bold uppercase tracking-wider', config.color)}>
-                      {config.label}
+                {/* Header row: Time adjustment + Replace / Delete actions */}
+                <div className="flex items-center justify-between">
+                  {/* Time badge / Inline Editor */}
+                  {editingTimeIdx === idx ? (
+                    <Input
+                      value={step.time}
+                      onChange={(e) => handleUpdateTime(idx, e.target.value)}
+                      onBlur={() => setEditingTimeIdx(null)}
+                      onKeyDown={(e) => { if (e.key === 'Enter') setEditingTimeIdx(null); }}
+                      className="h-6 w-24 text-[10.5px] font-mono p-1 rounded border bg-background"
+                      onClick={(e) => e.stopPropagation()}
+                      autoFocus
+                    />
+                  ) : (
+                    <Badge
+                      variant="secondary"
+                      className="text-[9.5px] font-mono font-bold hover:bg-muted bg-background py-0.5 px-2 border border-border"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setEditingTimeIdx(idx);
+                      }}
+                    >
+                      ⏱️ {step.time}
                     </Badge>
-                    {showDetail && (
-                      <ChevronRight className="h-3.5 w-3.5 text-primary ml-auto animate-pulse" />
-                    )}
-                  </div>
-
-                  {/* Activity */}
-                  <div className="text-xs font-semibold text-foreground leading-snug">
-                    {step.activity}
-                  </div>
-
-                  {/* Place name */}
-                  {place && (
-                    <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
-                      <MapPin className="h-2.5 w-2.5 text-primary shrink-0" />
-                      <span className="font-medium text-foreground truncate">{place.name}</span>
-                      {place.priceRange && (
-                        <span className="text-[9.5px] text-primary/80 font-bold ml-1">
-                          💵 {place.priceRange.split(' por')[0]}
-                        </span>
-                      )}
-                    </div>
                   )}
 
-                  {/* Alternativas Menu */}
-                  {isActive && place && (
-                    <div className="mt-2.5 pt-2 border-t border-current/10 space-y-1.5" onClick={(e) => e.stopPropagation()}>
-                      <div className="text-[9px] font-extrabold uppercase tracking-wider text-muted-foreground">
-                        Alternativas para cambiar:
-                      </div>
-                      <div className="flex flex-wrap gap-1 max-h-[120px] overflow-y-auto custom-scroll pr-1">
-                        {/* Food Category alternatives */}
-                        {place.restaurantCategory ? (
-                          places
-                            .filter((p) => p.restaurantCategory === place.restaurantCategory && p.id !== place.id)
-                            .map((alt) => {
-                              const isSel = selectedAlternatives[place.restaurantCategory!] === alt.id;
-                              return (
-                                <button
-                                  key={alt.id}
-                                  onClick={() => {
-                                    useTravelStore.getState().setSelectedAlternative(place.restaurantCategory!, alt.id);
-                                    useTravelStore.getState().setSelectedPlaceId(alt.id);
-                                  }}
-                                  className={cn(
-                                    "px-1.5 py-0.5 rounded text-[9px] border transition-all flex items-center gap-0.5",
-                                    isSel
-                                      ? "bg-primary text-primary-foreground border-primary"
-                                      : "bg-card hover:bg-muted border-border"
-                                  )}
-                                >
-                                  <span>{alt.name}</span>
-                                  {alt.priceRange && <span className="opacity-75 font-bold">({alt.priceRange.split(' por')[0]})</span>}
-                                </button>
-                              );
-                            })
-                        ) : null}
+                  {/* Actions buttons */}
+                  <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity focus-within:opacity-100">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleReplaceClick(step);
+                      }}
+                      className={cn(
+                        "h-6 px-1.5 text-[10px] font-bold gap-1 border-primary/20 text-primary hover:bg-primary/5",
+                        isReplacing && "bg-primary text-primary-foreground border-primary"
+                      )}
+                      title="Reemplazar esta actividad por otra"
+                    >
+                      <RefreshCw className={cn("h-3 w-3", isReplacing && "animate-spin")} />
+                      Reemplazar
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleRemoveActivity(idx);
+                      }}
+                      className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                      title="Eliminar"
+                    >
+                      <Trash2 className="h-3 w-3" />
+                    </Button>
+                  </div>
+                </div>
 
-                        {/* Proximity alternatives */}
-                        {(!place.restaurantCategory || place.category !== 'restaurante') && (
-                          (() => {
-                            const refCoords = getReferenceCoords();
-                            const list = places
-                              .filter((p) => p.id !== place.id && p.coords && p.id !== 'alojamiento' && p.category !== 'transporte')
-                              .map((p) => ({ ...p, distance: getDistance(refCoords, p.coords) }))
-                              .sort((a, b) => a.distance - b.distance)
-                              .slice(0, 5);
-
-                            return list.map((alt) => {
-                              const isSel = selectedAlternatives[place.id] === alt.id;
-                              return (
-                                <button
-                                  key={alt.id}
-                                  onClick={() => {
-                                    useTravelStore.getState().setSelectedAlternative(place.id, alt.id);
-                                    useTravelStore.getState().setSelectedPlaceId(alt.id);
-                                  }}
-                                  className={cn(
-                                    "px-1.5 py-0.5 rounded text-[9px] border transition-all flex items-center gap-0.5",
-                                    isSel
-                                      ? "bg-primary text-primary-foreground border-primary"
-                                      : "bg-card hover:bg-muted border-border"
-                                  )}
-                                >
-                                  <span>{alt.name}</span>
-                                  <span className="opacity-75 font-mono">({alt.distance.toFixed(1)} km)</span>
-                                </button>
-                              );
-                            });
-                          })()
+                {/* Body: Emoji + Activity title */}
+                <div className="flex items-start gap-2 min-w-0">
+                  <span className="text-base shrink-0 select-none">
+                    {getStepEmoji(step.type)}
+                  </span>
+                  <div className="min-w-0 space-y-1">
+                    <h3 className="font-bold text-sm text-foreground leading-snug">
+                      {step.activity}
+                    </h3>
+                    
+                    {place && (
+                      <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                        <MapPin className="h-3 w-3 text-primary shrink-0" />
+                        <span className="font-semibold text-foreground truncate">{place.name}</span>
+                        {place.priceRange && (
+                          <span className="text-[10px] text-primary/80 font-bold bg-primary/5 px-1 rounded">
+                            {place.priceRange.split(' por')[0]}
+                          </span>
                         )}
                       </div>
-
-                      {/* Reset button */}
-                      {(selectedAlternatives[place.restaurantCategory || ''] === place.id || selectedAlternatives[place.id]) && (
-                        <button
-                          onClick={() => {
-                            const newAlts = { ...selectedAlternatives };
-                            if (place.restaurantCategory) delete newAlts[place.restaurantCategory];
-                            delete newAlts[place.id];
-                            useTravelStore.setState({ selectedAlternatives: newAlts });
-                            useTravelStore.getState().setSelectedPlaceId(place.id);
-                          }}
-                          className="text-[9px] text-red-600 dark:text-red-400 font-bold hover:underline block mt-0.5"
-                        >
-                          ↩️ Reestablecer al lugar original
-                        </button>
-                      )}
-                    </div>
-                  )}
-
-                  {/* Notes (only when detail shown) */}
-                  {showDetail && step.notes && (
-                    <div className="mt-2 text-[10px] text-muted-foreground italic leading-relaxed bg-card border border-border/60 rounded p-2">
-                      {step.notes}
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
+
+                {/* Subtitle / Notes input */}
+                <Input
+                  value={step.notes || ''}
+                  onChange={(e) => {
+                    const updatedActivities = activitiesOnly.map((act, i) =>
+                      i === idx ? { ...act, notes: e.target.value } : act
+                    );
+                    const newSteps = reconstructSteps(updatedActivities);
+                    const planId = getOrCreateActiveCustomPlan();
+                    updateCustomPlan(planId, { steps: newSteps });
+                  }}
+                  placeholder="Añadir nota rápida..."
+                  className="h-6 text-[10px] border-none shadow-none focus-visible:ring-0 p-0 text-muted-foreground/80 placeholder-muted-foreground/30 bg-transparent"
+                  onClick={(e) => e.stopPropagation()}
+                />
               </div>
-            </div>
-          );
-        })}
+            );
+          })
+        )}
       </div>
 
-      {/* Tip */}
-      <div className="text-[10px] text-muted-foreground italic px-2 py-1.5 bg-muted/30 rounded-lg">
-        💡 Clic en un paso para ver la ruta en el mapa · Doble clic para ver detalles del lugar
+      {/* Tip explaining drag and click to replacement */}
+      <div className="text-[10.5px] text-muted-foreground/80 leading-relaxed bg-muted/40 border border-border/50 rounded-xl p-3">
+        💡 <span className="font-bold text-foreground">Tip:</span> Arrastra las tarjetas para reorganizar tu día. Haz clic en <span className="font-bold text-primary">Reemplazar</span> para cambiar el lugar por sugerencias cercanas de forma automática. Haz clic en la hora para ajustarla.
       </div>
     </div>
   );
