@@ -32,7 +32,10 @@ import {
   Bus,
   Car,
   Footprints,
-  Train
+  Train,
+  ChevronDown,
+  ChevronUp,
+  Layers
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -103,6 +106,7 @@ export default function ItineraryTimeline({
   // States
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [editingTimeIdx, setEditingTimeIdx] = useState<number | null>(null);
+  const [expandedGroups, setExpandedGroups] = useState<Record<string, boolean>>({});
 
   const dayPlan = useMemo(() => dayPlans.find((d) => d.day === selectedDay), [selectedDay]);
 
@@ -117,6 +121,75 @@ export default function ItineraryTimeline({
   const activitiesOnly = useMemo(() => {
     return steps.filter((s) => s.type !== 'movilidad');
   }, [steps]);
+
+  // Group steps dynamically: adjacent activities connected by Caminata or Interno
+  const timelineNodes = useMemo(() => {
+    const nodes: {
+      id: string;
+      type: 'single' | 'group';
+      step?: PlanStep;
+      steps?: PlanStep[];
+      activities?: PlanStep[];
+    }[] = [];
+
+    let i = 0;
+    while (i < steps.length) {
+      const current = steps[i];
+      if (current.type === 'movilidad') {
+        nodes.push({ id: current.id, type: 'single', step: current });
+        i++;
+        continue;
+      }
+
+      // Check for grouping
+      const groupStepsList: PlanStep[] = [current];
+      const groupActivities: PlanStep[] = [current];
+
+      let j = i + 1;
+      while (j < steps.length) {
+        const nextMobility = steps[j];
+        const nextActivity = steps[j + 1];
+
+        if (
+          nextMobility &&
+          nextMobility.type === 'movilidad' &&
+          (nextMobility.transportMode === 'Caminata' || nextMobility.transportMode === 'Interno') &&
+          nextActivity &&
+          nextActivity.type !== 'movilidad'
+        ) {
+          groupStepsList.push(nextMobility);
+          groupStepsList.push(nextActivity);
+          groupActivities.push(nextActivity);
+          j += 2;
+        } else {
+          break;
+        }
+      }
+
+      if (groupActivities.length > 1) {
+        const groupId = `group-${groupActivities.map((a) => a.id).join('-')}`;
+        if (expandedGroups[groupId]) {
+          // Render individually if expanded
+          groupStepsList.forEach((s) => {
+            nodes.push({ id: s.id, type: 'single', step: s });
+          });
+        } else {
+          // Render grouped card if collapsed
+          nodes.push({
+            id: groupId,
+            type: 'group',
+            steps: groupStepsList,
+            activities: groupActivities
+          });
+        }
+        i = j;
+      } else {
+        nodes.push({ id: current.id, type: 'single', step: current });
+        i++;
+      }
+    }
+    return nodes;
+  }, [steps, expandedGroups]);
 
   // Helper to ensure a custom plan exists before modification
   const getOrCreateActiveCustomPlan = (): string => {
@@ -181,10 +254,15 @@ export default function ItineraryTimeline({
     }
   };
 
-  // Replace action
+  // Replace action - Fixed first-click bug mapping ID correctly
   const handleReplaceClick = (step: PlanStep) => {
-    getOrCreateActiveCustomPlan();
-    setActiveReplacementStepId(step.id);
+    const isDefault = !activeCustomPlanId;
+    const planId = getOrCreateActiveCustomPlan();
+    if (isDefault) {
+      setActiveReplacementStepId(`${planId}-${step.id}`);
+    } else {
+      setActiveReplacementStepId(step.id);
+    }
   };
 
   // Card click behaviour (First-click details)
@@ -194,7 +272,6 @@ export default function ItineraryTimeline({
       const place = resolvePlace(step.placeId, selectedAlternatives);
       if (place) {
         clearRoute();
-        // First click instantly displays details
         setSelectedPlaceId(place.id);
       }
     }
@@ -217,6 +294,32 @@ export default function ItineraryTimeline({
       const gmapsMode = toGoogleMapsMode(mode);
       setRoute(step.fromPlaceId, step.toPlaceId, gmapsMode);
     }
+  };
+
+  // Group click behavior: select and show details on right, double click to expand
+  const handleGroupClick = (groupId: string) => {
+    const state = useTravelStore.getState();
+    const isSame = state.selectedStepId === groupId;
+
+    selectStep(groupId);
+    setSelectedPlaceId(null);
+    clearRoute();
+
+    if (isSame) {
+      // Toggle expansion if clicked again
+      setExpandedGroups((prev) => ({
+        ...prev,
+        [groupId]: !prev[groupId]
+      }));
+    }
+  };
+
+  const toggleGroupExpand = (e: React.MouseEvent, groupId: string) => {
+    e.stopPropagation();
+    setExpandedGroups((prev) => ({
+      ...prev,
+      [groupId]: !prev[groupId]
+    }));
   };
 
   // Helper to get category-specific styling for activity cards
@@ -300,10 +403,80 @@ export default function ItineraryTimeline({
         </div>
       )}
 
-      {/* Steps List (showing both activities and mobility) */}
+      {/* Steps List (showing single steps and grouped nodes) */}
       <div className="space-y-1">
-        {steps.map((step, idx) => {
-          const isStepSelected = selectedStepId === step.id;
+        {timelineNodes.map((node, nodeIdx) => {
+          const isNodeSelected = selectedStepId === node.id;
+
+          // Render vertical connector lines between cards
+          const showConnectorLine = nodeIdx < timelineNodes.length - 1;
+
+          if (node.type === 'group' && node.activities) {
+            // GROUP OF ACTIVITIES CARD (Walk connected adjacent activities in same area)
+            const acts = node.activities;
+            const startTime = acts[0].time;
+            const endTime = acts[acts.length - 1].time;
+            const groupTitle = acts.map((a) => a.activity.replace('Visita a ', '').replace('Almuerzo ', '').replace('Cena ', '')).join(' + ');
+            const emojis = acts.map((a) => getStepEmoji(a.type)).join(' ');
+
+            return (
+              <div key={node.id} className="relative py-2">
+                {showConnectorLine && (
+                  <div className="absolute left-[17px] top-8 bottom-[-8px] w-px bg-border" />
+                )}
+
+                <div
+                  onClick={() => handleGroupClick(node.id)}
+                  className={cn(
+                    "relative w-full text-left rounded-xl border border-l-[6px] border-l-emerald-600 p-4 transition-all cursor-pointer flex flex-col space-y-2.5 shadow-[0_2px_4px_rgba(0,0,0,0.03)] bg-gradient-to-r from-emerald-500/[0.01] to-emerald-500/[0.03]",
+                    isNodeSelected ? "ring-2 ring-emerald-500 border-emerald-500 bg-emerald-500/[0.02]" : "border-emerald-100 hover:border-emerald-300"
+                  )}
+                >
+                  {/* Top row: Time range + toggle expand chevron */}
+                  <div className="flex items-center justify-between">
+                    <Badge variant="outline" className="text-[9.5px] font-mono font-bold bg-background text-emerald-800 dark:text-emerald-300 border-emerald-500/20">
+                      ⏱️ {startTime} - {endTime}
+                    </Badge>
+
+                    {/* Small chevron in the corner to toggle expand (requested) */}
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={(e) => toggleGroupExpand(e, node.id)}
+                      className="h-6 w-6 p-0 text-emerald-700 hover:bg-emerald-500/10 hover:text-emerald-800"
+                      title="Desplegar actividades del grupo"
+                    >
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </div>
+
+                  {/* Emojis row & Group summary */}
+                  <div className="flex items-start gap-2.5 min-w-0">
+                    <span className="text-base shrink-0 select-none bg-emerald-500/10 p-1.5 rounded-lg">
+                      📦
+                    </span>
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-xs font-bold text-emerald-800 dark:text-emerald-400">Grupo de Actividades a Pie</span>
+                        <Badge className="text-[9px] py-0 h-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold border-none shrink-0">
+                          {acts.length} actividades
+                        </Badge>
+                      </div>
+                      <h3 className="font-bold text-sm text-foreground leading-snug mt-1 truncate">
+                        {groupTitle}
+                      </h3>
+                      <p className="text-[10px] text-muted-foreground mt-0.5">
+                        {emojis} Actividades consecutivas en la misma zona peatonal.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          }
+
+          // SINGLE NODE (either mobility step or activity step)
+          const step = node.step!;
 
           if (step.type === 'movilidad') {
             // MOBILITY / CONNECTOR STEP
@@ -320,8 +493,7 @@ export default function ItineraryTimeline({
 
             return (
               <div key={step.id} className="relative py-1">
-                {/* Visual vertical connector line */}
-                {idx < steps.length - 1 && (
+                {showConnectorLine && (
                   <div className="absolute left-[17px] top-6 bottom-[-6px] w-px border-l border-dashed border-muted-foreground/30" />
                 )}
 
@@ -332,7 +504,7 @@ export default function ItineraryTimeline({
                   onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleMobilityClick(step); } }}
                   className={cn(
                     'group relative w-full text-left rounded-xl transition-all p-2 pl-10 cursor-pointer text-xs border border-transparent',
-                    isStepSelected
+                    isNodeSelected
                       ? 'bg-muted/70 border-primary/20 ring-1 ring-primary/10 font-medium'
                       : 'hover:bg-muted/10'
                   )}
@@ -340,7 +512,7 @@ export default function ItineraryTimeline({
                   {/* Transport Icon */}
                   <div className={cn(
                     'absolute left-2.5 top-2 w-5 h-5 rounded-full flex items-center justify-center border transition-all text-[10px]',
-                    isStepSelected ? 'bg-primary border-primary text-primary-foreground scale-105 shadow-sm' : 'bg-muted/30 border-border text-muted-foreground'
+                    isNodeSelected ? 'bg-primary border-primary text-primary-foreground scale-105 shadow-sm' : 'bg-muted/30 border-border text-muted-foreground'
                   )}>
                     <TransportIcon className="h-3 w-3" />
                   </div>
@@ -375,8 +547,7 @@ export default function ItineraryTimeline({
 
           return (
             <div key={step.id} className="relative py-1.5">
-              {/* Visual vertical connector line */}
-              {idx < steps.length - 1 && (
+              {showConnectorLine && (
                 <div className="absolute left-[17px] top-8 bottom-[-8px] w-px bg-border" />
               )}
 
@@ -387,7 +558,7 @@ export default function ItineraryTimeline({
                 onDrop={() => handleDrop(actIdx)}
                 onClick={() => handleCardClick(step)}
                 className={cn(
-                  getCardStyle(step.type, isStepSelected),
+                  getCardStyle(step.type, isNodeSelected),
                   draggedIndex === actIdx && "opacity-40 scale-[0.98]",
                   "group transition-all duration-200"
                 )}
@@ -498,7 +669,7 @@ export default function ItineraryTimeline({
 
       {/* Tip explaining drag and click to replacement */}
       <div className="text-[10.5px] text-muted-foreground/80 leading-relaxed bg-muted/40 border border-border/50 rounded-xl p-3">
-        💡 <span className="font-bold text-foreground">Tip:</span> Haz clic en las tarjetas o trayectos para ver su información en el panel derecho al instante. Reorganiza actividades arrastrándolas.
+        💡 <span className="font-bold text-foreground">Tip:</span> Actividades contiguas a pie se agrupan automáticamente. Haz clic sobre el grupo para ver su detalle, o haz doble click (o click en la esquina de la tarjeta 📦) para expandir.
       </div>
     </div>
   );

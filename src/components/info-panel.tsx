@@ -174,6 +174,55 @@ export default function InfoPanel() {
         </div>
       </div>
 
+      {/* Guía de Orientación Urbana y Altitud */}
+      <Card className="border-emerald-300/50 bg-[#2D6A4F]/[0.02]">
+        <CardContent className="p-4 space-y-3">
+          <div className="flex items-center gap-2 pb-1.5 border-b border-[#2D6A4F]/20">
+            <span className="text-lg">🧭</span>
+            <h3 className="text-sm font-bold text-[#2D6A4F]">Guía de Orientación en Bogotá</h3>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div className="space-y-2">
+              <h4 className="font-bold text-foreground">🗺️ ¿Cómo ubicarse en la ciudad?</h4>
+              <p className="text-muted-foreground leading-relaxed">
+                Bogotá está organizada en una cuadrícula natural delimitada por su geografía:
+              </p>
+              <ul className="space-y-1.5 list-disc pl-4 text-muted-foreground">
+                <li>
+                  <strong className="text-foreground">Los Cerros Orientales ⛰️:</strong> Son tu brújula natural. Siempre definen el <span className="font-semibold text-primary">Oriente (Este)</span>. Si los miras de frente, estás de cara al Este.
+                </li>
+                <li>
+                  <strong className="text-foreground">Las Calles (Cl.) ↔️:</strong> Corren de Este a Oeste (perpendiculares a los cerros). Sus números aumentan hacia el <span className="font-semibold text-foreground">Norte</span> (ej. del Centro Histórico Calle 10 a la Calle 94 del alojamiento).
+                </li>
+                <li>
+                  <strong className="text-foreground">Las Carreras (Cra.) ↕️:</strong> Corren de Sur a Norte (paralelas a los cerros). Aumentan a medida que te alejas de las montañas hacia el <span className="font-semibold text-foreground">Occidente (Oeste)</span> (ej. Cra. 7 está junto al cerro; Cra. 15 está más lejos).
+                </li>
+              </ul>
+            </div>
+            <div className="space-y-2">
+              <h4 className="font-bold text-foreground">🏃 Altitud y Clima (2.640 m s.n.m.)</h4>
+              <p className="text-muted-foreground leading-relaxed">
+                El "soroche" o mal de altura es común debido al menor oxígeno en el aire de la Sabana. Sigue estas recomendaciones:
+              </p>
+              <ul className="space-y-1.5 list-disc pl-4 text-muted-foreground">
+                <li>
+                  <strong className="text-foreground">Primeros días:</strong> Evita esfuerzos físicos intensos y caminatas empinadas rápidas.
+                </li>
+                <li>
+                  <strong className="text-foreground">Hidratación constante:</strong> Toma agua embotellada o del grifo (es 100% potable en Bogotá).
+                </li>
+                <li>
+                  <strong className="text-foreground">Alimentación:</strong> Evita comidas excesivamente pesadas o grasosas en tus primeras cenas para facilitar la digestión en altura.
+                </li>
+                <li>
+                  <strong className="text-foreground">El clima:</strong> El sol andino quema con fuerza (usa protector solar), pero a la sombra o al atardecer la temperatura baja rápido (lleva siempre abrigo).
+                </li>
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+
       {/* Acciones urgentes */}
       <Card className="border-amber-300 bg-amber-50/40">
         <CardContent className="p-4">

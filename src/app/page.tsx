@@ -8,7 +8,8 @@ import {
   getPlaceById,
   getDistance,
   reconstructSteps,
-  recomputeCustomPlanSteps
+  recomputeCustomPlanSteps,
+  toGoogleMapsMode
 } from '@/lib/travel-data';
 import { useTravelStore } from '@/lib/travel-store';
 import dynamic from 'next/dynamic';
@@ -18,7 +19,7 @@ import ItineraryTimeline from '@/components/itinerary-timeline';
 import ExplorarList from '@/components/explorar-list';
 import InfoPanel from '@/components/info-panel';
 import PlanEditor from '@/components/plan-editor';
-import { Card } from '@/components/ui/card';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -96,6 +97,14 @@ export default function Home() {
     return stepsToUse.findIndex((s) => s.id === selectedStepId);
   }, [selectedStepId, dayPlan, activeCustomPlan]);
 
+  // Selected Group reconstruction (Requested)
+  const selectedGroupNode = useMemo(() => {
+    if (!selectedStepId || !selectedStepId.startsWith('group-') || !dayPlan) return null;
+    const stepsToUse = activeCustomPlan ? activeCustomPlan.steps : dayPlan.plan;
+    const stepIds = selectedStepId.replace('group-', '').split('-');
+    return stepsToUse.filter((s) => stepIds.includes(s.id));
+  }, [selectedStepId, dayPlan, activeCustomPlan]);
+
   // When a step is selected, center the map on that step's place
   const stepPlaceForMap = useMemo(() => {
     if (!selectedStepId || !dayPlan) return null;
@@ -110,6 +119,7 @@ export default function Home() {
   // Show detail panels at the FIRST click (stepClickCount >= 1)
   const showPlaceDetailPanel = selectedPlace && mainView === 'itinerario' && stepClickCount >= 1;
   const showRouteDetailPanel = selectedStep && selectedStep.type === 'movilidad' && mainView === 'itinerario' && stepClickCount >= 1;
+  const showGroupDetailPanel = selectedGroupNode && mainView === 'itinerario' && stepClickCount >= 1;
 
   // Clone or activate custom plan
   const getOrCreateActiveCustomPlan = (): string => {
@@ -132,6 +142,7 @@ export default function Home() {
     return id;
   };
 
+  // Select transport mode and update the map route in real-time (Requested)
   const handleSelectTransportMode = (idx: number, mode: any) => {
     const planId = getOrCreateActiveCustomPlan();
     const state = useTravelStore.getState();
@@ -152,6 +163,13 @@ export default function Home() {
 
     const finalSteps = recomputeCustomPlanSteps(updatedSteps);
     updateCustomPlan(planId, { steps: finalSteps });
+
+    // Update map route dynamically in the store
+    const updatedStep = finalSteps[idx];
+    if (updatedStep && updatedStep.fromPlaceId && updatedStep.toPlaceId) {
+      const gmapsMode = toGoogleMapsMode(mode);
+      state.setRoute(updatedStep.fromPlaceId, updatedStep.toPlaceId, gmapsMode);
+    }
   };
 
   // Replacement calculations
@@ -241,12 +259,11 @@ export default function Home() {
 
   return (
     <div className="min-h-screen flex flex-col bg-background selection:bg-primary/20">
-      {/* HEADER - Minimalist Local theme */}
+      {/* HEADER - Minimalist Local theme (Unused badges removed as requested) */}
       <header className="border-b border-border/80 bg-card/60 backdrop-blur-md sticky top-0 z-40">
         <div className="max-w-6xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
             <div className="flex items-center gap-2.5">
-              {/* Bogotá green/gold mountain visual brand */}
               <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-[#2D6A4F] to-[#D4AF37] flex items-center justify-center text-primary-foreground shadow-sm">
                 <Mountain className="h-4.5 w-4.5 text-white" />
               </div>
@@ -254,14 +271,6 @@ export default function Home() {
                 <h1 className="text-base font-bold leading-tight">Bogotá · Plan Maestro</h1>
                 <p className="text-[10px] text-muted-foreground leading-tight font-medium">15 - 22 de Julio 2026 · Sabana & Cerros</p>
               </div>
-            </div>
-            <div className="hidden sm:flex items-center gap-2 text-[11px] text-muted-foreground font-medium">
-              <Badge variant="outline" className="text-[10px] border-emerald-600/20 text-emerald-800 dark:text-emerald-300 bg-emerald-500/5 font-bold">
-                ⛰️ Cerros Orientales
-              </Badge>
-              <Badge variant="outline" className="text-[10px] border-amber-600/20 text-amber-800 dark:text-amber-300 bg-amber-500/5 font-bold">
-                ✨ {places.length} Sitios
-              </Badge>
             </div>
           </div>
         </div>
@@ -308,7 +317,7 @@ export default function Home() {
         {mainView === 'itinerario' && (
           <div className="space-y-4">
             
-            {/* Custom Plan Switcher above the Day Selector (Requested) */}
+            {/* Custom Plan Switcher above the Day Selector */}
             {customPlansForDay.length > 0 && (
               <div className="flex items-center gap-2 bg-gradient-to-r from-emerald-500/[0.02] to-amber-500/[0.02] p-2.5 rounded-xl border border-border/80 text-xs shadow-[0_1px_2px_rgba(0,0,0,0.01)]">
                 <span className="text-[11px] font-bold text-muted-foreground shrink-0">Plan activo del día:</span>
@@ -506,7 +515,7 @@ export default function Home() {
                       />
                     )}
 
-                    {/* Detail panel for Routes (shows on first click) (Requested) */}
+                    {/* Detail panel for Routes (shows on first click) */}
                     {showRouteDetailPanel && selectedStep && (
                       <RouteDetail
                         step={selectedStep}
@@ -514,6 +523,60 @@ export default function Home() {
                         onSelectTransport={handleSelectTransportMode}
                         onClose={() => useTravelStore.getState().clearStepSelection()}
                       />
+                    )}
+
+                    {/* Detail panel for Grouped Activities (Requested) */}
+                    {showGroupDetailPanel && selectedGroupNode && (
+                      <Card className="border-border shadow-lg animate-fade-in-up bg-card overflow-hidden">
+                        <CardHeader className="pb-3 bg-emerald-500/[0.02] border-b border-border">
+                          <div className="flex items-start justify-between gap-2">
+                            <div>
+                              <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 flex items-center gap-1">
+                                📦 Resumen de Grupo
+                              </span>
+                              <CardTitle className="text-base font-bold mt-1 text-[#2D6A4F]">
+                                Agenda Peatonal de la Zona
+                              </CardTitle>
+                            </div>
+                            <Button
+                              variant="ghost"
+                              size="icon"
+                              className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                              onClick={() => useTravelStore.getState().clearStepSelection()}
+                            >
+                              <X className="h-4 w-4" />
+                            </Button>
+                          </div>
+                        </CardHeader>
+                        <CardContent className="p-4 space-y-4 max-h-[300px] overflow-y-auto custom-scroll">
+                          <p className="text-xs text-muted-foreground leading-relaxed">
+                            Actividades continuas en el mismo sector. Planificadas para recorrerse a pie sin necesidad de transporte público o privado.
+                          </p>
+                          <div className="space-y-4 pt-1">
+                            {selectedGroupNode.map((act) => {
+                              const placeObj = act.placeId ? getPlaceById(act.placeId) : null;
+                              return (
+                                <div key={act.id} className="relative pl-5 border-l-2 border-emerald-500/30 last:border-l-0 pb-1">
+                                  <span className="absolute left-[-5px] top-1 w-2.5 h-2.5 rounded-full bg-[#2D6A4F] border border-white" />
+                                  <div className="text-[10px] font-mono text-[#2D6A4F] font-bold">{act.time}</div>
+                                  <h4 className="text-xs font-bold text-foreground mt-0.5">{act.activity}</h4>
+                                  {placeObj && (
+                                    <div className="text-[10.5px] text-muted-foreground mt-0.5 flex items-center gap-1">
+                                      <MapPin className="h-3 w-3 text-primary shrink-0" />
+                                      <span className="truncate">{placeObj.name} · {placeObj.address}</span>
+                                    </div>
+                                  )}
+                                  {act.notes && (
+                                    <p className="text-[10px] text-muted-foreground/80 italic mt-1 bg-muted/40 p-1.5 rounded-md leading-normal">
+                                      "{act.notes}"
+                                    </p>
+                                  )}
+                                </div>
+                              );
+                            })}
+                          </div>
+                        </CardContent>
+                      </Card>
                     )}
                   </>
                 )}
