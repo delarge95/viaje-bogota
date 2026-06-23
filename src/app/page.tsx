@@ -6,14 +6,12 @@ import { useTravelStore } from '@/lib/travel-store';
 import dynamic from 'next/dynamic';
 import PlaceDetail from '@/components/place-detail';
 import ItineraryTimeline from '@/components/itinerary-timeline';
-import LugaresList from '@/components/lugares-list';
-import RestaurantList from '@/components/restaurant-list';
-import ActividadesList from '@/components/actividades-list';
+import ExplorarList from '@/components/explorar-list';
 import InfoPanel from '@/components/info-panel';
 import PlanEditor from '@/components/plan-editor';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Mountain, MapPin, Utensils, Info, CalendarDays, Sparkles, Edit3 } from 'lucide-react';
+import { Mountain, MapPin, Utensils, Info, CalendarDays, Sparkles, Edit3, Search } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 const TravelMap = dynamic(() => import('@/components/travel-map'), {
@@ -28,7 +26,7 @@ const TravelMap = dynamic(() => import('@/components/travel-map'), {
   ),
 });
 
-type MainView = 'lugares' | 'restaurantes' | 'actividades' | 'info' | 'mi-plan' | 'itinerario';
+type MainView = 'explorar' | 'info' | 'mi-plan' | 'itinerario';
 
 export default function Home() {
   const mainView = useTravelStore((s) => s.mainView);
@@ -74,11 +72,9 @@ export default function Home() {
   // Show detail panel when: a place is selected AND step was clicked at least twice
   const showDetailPanel = selectedPlace && mainView === 'itinerario' && stepClickCount >= 2;
 
-  const mainTabs: { id: MainView; label: string; icon: typeof MapPin }[] = [
+  const mainTabs: { id: MainView; label: string; icon: any }[] = [
     { id: 'itinerario', label: 'Itinerario', icon: CalendarDays },
-    { id: 'lugares', label: 'Lugares', icon: MapPin },
-    { id: 'restaurantes', label: 'Restaurantes', icon: Utensils },
-    { id: 'actividades', label: 'Actividades', icon: Sparkles },
+    { id: 'explorar', label: 'Explorar', icon: Search },
     { id: 'mi-plan', label: 'Mi Plan', icon: Edit3 },
     { id: 'info', label: 'Info', icon: Info },
   ];
@@ -221,14 +217,8 @@ export default function Home() {
           </div>
         )}
 
-        {/* LUGARES VIEW */}
-        {mainView === 'lugares' && <LugaresList />}
-
-        {/* RESTAURANTES VIEW */}
-        {mainView === 'restaurantes' && <RestaurantList />}
-
-        {/* ACTIVIDADES VIEW */}
-        {mainView === 'actividades' && <ActividadesList />}
+        {/* EXPLORAR Guía VIEW */}
+        {mainView === 'explorar' && <ExplorarList />}
 
         {/* MI PLAN VIEW */}
         {mainView === 'mi-plan' && <PlanEditor />}

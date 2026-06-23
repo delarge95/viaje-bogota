@@ -23,12 +23,12 @@ import {
 import { cn } from '@/lib/utils';
 
 const stepTypeConfig: Record<StepType, { icon: typeof Bus; color: string; bg: string; label: string }> = {
-  movilidad: { icon: Car, color: 'text-orange-600', bg: 'bg-orange-50 border-orange-200', label: 'Trayecto' },
-  actividad: { icon: MapPin, color: 'text-rose-600', bg: 'bg-rose-50 border-rose-200', label: 'Actividad' },
-  comida: { icon: Utensils, color: 'text-amber-700', bg: 'bg-amber-50 border-amber-200', label: 'Comida' },
-  compra: { icon: ShoppingBag, color: 'text-violet-600', bg: 'bg-violet-50 border-violet-200', label: 'Compra' },
-  espera: { icon: Clock, color: 'text-gray-500', bg: 'bg-gray-50 border-gray-200', label: 'Espera' },
-  info: { icon: Info, color: 'text-blue-600', bg: 'bg-blue-50 border-blue-200', label: 'Info' },
+  movilidad: { icon: Car, color: 'text-orange-500', bg: 'bg-orange-500/10 border-orange-200', label: 'Trayecto' },
+  actividad: { icon: MapPin, color: 'text-indigo-600', bg: 'bg-indigo-500/10 border-indigo-200', label: 'Actividad' },
+  comida: { icon: Utensils, color: 'text-amber-700', bg: 'bg-amber-500/10 border-amber-200', label: 'Comida' },
+  compra: { icon: ShoppingBag, color: 'text-violet-600', bg: 'bg-violet-500/10 border-violet-200', label: 'Compra' },
+  espera: { icon: Clock, color: 'text-slate-500', bg: 'bg-slate-500/10 border-slate-200', label: 'Espera' },
+  info: { icon: Info, color: 'text-sky-600', bg: 'bg-sky-500/10 border-sky-200', label: 'Info' },
 };
 
 const transportIcons: Record<TransportMode, typeof Bus> = {
@@ -118,8 +118,6 @@ export default function ItineraryTimeline({
         if (newClickCount >= 2) {
           setSelectedPlaceId(place.id);
         } else {
-          // First click: clear selectedPlaceId so detail panel doesn't show,
-          // but the map will still center on the place via selectedStepId
           setSelectedPlaceId(null);
         }
       }
@@ -179,85 +177,55 @@ export default function ItineraryTimeline({
           }
           const TransportIcon = effectiveMode ? transportIcons[effectiveMode] : null;
 
-          return (
-            <div key={step.id} className="relative">
-              {/* Timeline connector */}
-              {idx < steps.length - 1 && (
-                <div className={cn(
-                  'absolute left-[15px] top-8 bottom-[-4px] w-px',
-                  step.isMovement ? 'bg-orange-200' : 'bg-border'
-                )} />
-              )}
-
-              <div
-                onClick={() => handleStepClick(step)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleStepClick(step); } }}
-                className={cn(
-                  'group relative w-full text-left rounded-xl border transition-all p-3 pl-10 cursor-pointer',
-                  isActive
-                    ? cn(config.bg, 'border-primary/40 shadow-sm ring-1 ring-primary/20')
-                    : 'border-border hover:border-primary/30 hover:bg-muted/30'
+          if (step.isMovement) {
+            // MOVEMENT / TRANSIT STEP: render as a compact, subtle connector
+            return (
+              <div key={step.id} className="relative py-1">
+                {/* Timeline connector line inside movement */}
+                {idx < steps.length - 1 && (
+                  <div className="absolute left-[15px] top-6 bottom-[-6px] w-px border-l border-dashed border-muted-foreground/30" />
                 )}
-              >
-                {/* Step icon */}
-                <div className={cn(
-                  'absolute left-2 top-3 w-6 h-6 rounded-full flex items-center justify-center border-2 transition-transform',
-                  isActive ? cn('bg-primary border-primary text-primary-foreground scale-110') : cn('bg-card border-border', config.color)
-                )}>
-                  {step.isMovement && TransportIcon ? (
-                    <TransportIcon className="h-3 w-3" />
-                  ) : (
-                    <StepIcon className="h-3 w-3" />
-                  )}
-                </div>
 
-                {/* Content */}
-                <div className="min-w-0">
-                  {/* Time + type badge */}
-                  <div className="flex items-center gap-1.5 mb-0.5 flex-wrap">
-                    <span className="text-[10px] font-mono font-bold text-primary">{step.time}</span>
-                    <span className={cn('text-[9px] uppercase tracking-wide font-semibold', config.color)}>
-                      {config.label}
+                <div
+                  onClick={() => handleStepClick(step)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleStepClick(step); } }}
+                  className={cn(
+                    'group relative w-full text-left rounded-xl transition-all p-2 pl-10 cursor-pointer text-xs border border-transparent',
+                    isActive
+                      ? 'bg-muted/60 border-primary/20 ring-1 ring-primary/10 font-medium'
+                      : 'hover:bg-muted/10'
+                  )}
+                >
+                  {/* Small step icon */}
+                  <div className={cn(
+                    'absolute left-2.5 top-2 w-5 h-5 rounded-full flex items-center justify-center border transition-all text-xs',
+                    isActive ? 'bg-primary border-primary text-primary-foreground scale-105 shadow-sm' : 'bg-muted/30 border-border text-muted-foreground'
+                  )}>
+                    {TransportIcon ? <TransportIcon className="h-2.5 w-2.5" /> : <StepIcon className="h-2.5 w-2.5" />}
+                  </div>
+
+                  <div className="flex items-center gap-1.5 flex-wrap text-muted-foreground text-[11px]">
+                    <span className="font-mono font-bold text-primary">{step.time}</span>
+                    <span>·</span>
+                    <span className="font-semibold text-foreground">
+                      {step.activity.replace('Traslado ', 'Ir: ').replace('Trayecto ', '')}
                     </span>
-                    {step.isMovement && effectiveMode && (
-                      <span className={cn('text-[9px] font-medium', config.color)}>
-                        · {effectiveMode === 'TM' ? 'TransMilenio' : effectiveMode}
+                    {step.transportDuration && (
+                      <span className="inline-flex items-center gap-0.5 text-muted-foreground">
+                        ⏱️ {step.transportDuration}
                       </span>
                     )}
-                    {showDetail && (
-                      <ChevronRight className="h-3 w-3 text-primary ml-auto" />
+                    {step.transportCost && (
+                      <span className="inline-flex items-center gap-0.5 text-primary/80 font-mono font-bold">
+                        💵 {step.transportCost}
+                      </span>
                     )}
                   </div>
 
-                  {/* Activity */}
-                  <div className={cn(
-                    'text-xs leading-snug',
-                    step.isMovement ? 'font-medium' : 'text-foreground'
-                  )}>
-                    {step.activity}
-                  </div>
-
-                  {/* Place name */}
-                  {place && (
-                    <div className="flex items-center gap-1 mt-0.5 text-[11px]">
-                      <MapPin className="h-2.5 w-2.5 text-primary shrink-0" />
-                      <span className="font-medium truncate">{place.name}</span>
-                    </div>
-                  )}
-
-                  {/* Movement: from → to */}
-                  {step.isMovement && fromPlace && toPlace && (
-                    <div className="flex items-center gap-1 mt-0.5 text-[11px] text-muted-foreground">
-                      <span className="font-medium text-foreground truncate">{fromPlace.name}</span>
-                      <ArrowRight className="h-2.5 w-2.5 shrink-0" />
-                      <span className="font-medium text-foreground truncate">{toPlace.name}</span>
-                    </div>
-                  )}
-
-                  {/* Transport alternatives selector (if multiple) */}
-                  {step.isMovement && step.transportAlternatives && step.transportAlternatives.length > 1 && (
+                  {/* Selector for multi-transport alternatives shown inside */}
+                  {step.transportAlternatives && step.transportAlternatives.length > 1 && (
                     <div className="mt-1.5 flex flex-wrap gap-1" onClick={(e) => e.stopPropagation()}>
                       {step.transportAlternatives.map((alt) => {
                         const sel = selectedTransport[step.id];
@@ -268,7 +236,6 @@ export default function ItineraryTimeline({
                             key={alt.id}
                             onClick={() => {
                               useTravelStore.getState().setSelectedTransport(step.id, alt.id);
-                              // Update route if this step is active
                               if (isActive) {
                                 const gmapsMode = toGoogleMapsMode(alt.mode);
                                 setRoute(step.fromPlaceId!, step.toPlaceId!, gmapsMode);
@@ -277,31 +244,112 @@ export default function ItineraryTimeline({
                             className={cn(
                               'flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] border transition-all',
                               isSelected
-                                ? 'bg-primary text-primary-foreground border-primary'
-                                : 'bg-card text-muted-foreground border-border hover:border-primary/40'
+                                ? 'bg-primary text-primary-foreground border-primary shadow-[0_1px_2px_rgba(0,0,0,0.05)]'
+                                : 'bg-card text-muted-foreground border-border hover:border-primary/30'
                             )}
                           >
                             <AltIcon className="h-2 w-2" />
-                            <span className="font-medium">{alt.label}</span>
-                            <span className="opacity-70">· {alt.duration}</span>
-                            <span className="opacity-70">· {alt.cost}</span>
+                            <span>{alt.label}</span>
+                            <span>· {alt.duration}</span>
+                            <span>· {alt.cost}</span>
                           </button>
                         );
                       })}
                     </div>
                   )}
 
-                  {/* Single transport info */}
-                  {step.isMovement && (!step.transportAlternatives || step.transportAlternatives.length === 0) && step.transportDuration && (
-                    <div className="mt-0.5 text-[10px] text-muted-foreground">
-                      ⏱ {step.transportDuration} · {step.transportCost}
+                  {/* Notes shown if active */}
+                  {showDetail && step.transportNotes && (
+                    <div className="mt-1 text-[10px] text-muted-foreground italic leading-relaxed bg-card border border-border/60 rounded p-1.5">
+                      {step.transportNotes}
+                    </div>
+                  )}
+                </div>
+              </div>
+            );
+          }
+
+          // DESTINATION STEP (Actividad, Comida, Compra, Info, Espera)
+          const leftBorderColor = {
+            actividad: 'border-l-indigo-500 bg-indigo-50/10 dark:bg-indigo-950/5',
+            comida: 'border-l-amber-500 bg-amber-50/10 dark:bg-amber-950/5',
+            compra: 'border-l-rose-500 bg-rose-50/10 dark:bg-rose-950/5',
+            espera: 'border-l-slate-400 bg-slate-50/10 dark:bg-slate-950/5',
+            info: 'border-l-sky-500 bg-sky-50/10 dark:bg-sky-950/5',
+          }[step.type] || 'border-l-border bg-card';
+
+          const activeBorderColor = {
+            actividad: 'border-indigo-300 dark:border-indigo-900 bg-indigo-50/30 dark:bg-indigo-950/15 ring-indigo-500/10',
+            comida: 'border-amber-300 dark:border-amber-900 bg-amber-50/30 dark:bg-amber-950/15 ring-amber-500/10',
+            compra: 'border-rose-300 dark:border-rose-900 bg-rose-50/30 dark:bg-rose-950/15 ring-rose-500/10',
+            espera: 'border-slate-300 dark:border-slate-800 bg-slate-50/30 dark:bg-slate-950/15 ring-slate-400/10',
+            info: 'border-sky-300 dark:border-sky-900 bg-sky-50/30 dark:bg-sky-950/15 ring-sky-500/10',
+          }[step.type] || 'border-primary bg-card';
+
+          return (
+            <div key={step.id} className="relative py-1.5">
+              {/* Timeline connector */}
+              {idx < steps.length - 1 && (
+                <div className="absolute left-[15px] top-8 bottom-[-8px] w-px bg-border" />
+              )}
+
+              <div
+                onClick={() => handleStepClick(step)}
+                role="button"
+                tabIndex={0}
+                onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleStepClick(step); } }}
+                className={cn(
+                  'group relative w-full text-left rounded-xl border border-l-[5px] transition-all p-3 pl-10 cursor-pointer shadow-[0_1px_2px_rgba(0,0,0,0.02)]',
+                  isActive
+                    ? cn(activeBorderColor, 'ring-1 border-l-[5px]')
+                    : cn(leftBorderColor, 'border-border/80 hover:border-primary/30 hover:bg-muted/20')
+                )}
+              >
+                {/* Step icon */}
+                <div className={cn(
+                  'absolute left-2.5 top-3 w-5.5 h-5.5 rounded-full flex items-center justify-center border-2 transition-transform text-xs',
+                  isActive 
+                    ? 'bg-primary border-primary text-primary-foreground scale-105 shadow-sm' 
+                    : cn('bg-card border-border', config.color)
+                )}>
+                  <StepIcon className="h-2.5 w-2.5" />
+                </div>
+
+                {/* Content */}
+                <div className="min-w-0 space-y-0.5">
+                  {/* Time + type badge */}
+                  <div className="flex items-center gap-1.5 flex-wrap">
+                    <span className="text-[10px] font-mono font-bold text-primary">{step.time}</span>
+                    <Badge variant="outline" className={cn('text-[9px] py-0 px-1 h-3.5 border-current/25 font-bold uppercase tracking-wider', config.color)}>
+                      {config.label}
+                    </Badge>
+                    {showDetail && (
+                      <ChevronRight className="h-3.5 w-3.5 text-primary ml-auto animate-pulse" />
+                    )}
+                  </div>
+
+                  {/* Activity */}
+                  <div className="text-xs font-semibold text-foreground leading-snug">
+                    {step.activity}
+                  </div>
+
+                  {/* Place name */}
+                  {place && (
+                    <div className="flex items-center gap-1 text-[10px] text-muted-foreground">
+                      <MapPin className="h-2.5 w-2.5 text-primary shrink-0" />
+                      <span className="font-medium text-foreground truncate">{place.name}</span>
+                      {place.priceRange && (
+                        <span className="text-[9.5px] text-primary/80 font-bold ml-1">
+                          💵 {place.priceRange.split(' por')[0]}
+                        </span>
+                      )}
                     </div>
                   )}
 
                   {/* Notes (only when detail shown) */}
-                  {showDetail && (step.notes || step.transportNotes) && (
-                    <div className="mt-1 text-[10px] text-muted-foreground italic leading-snug bg-muted/50 rounded p-1.5">
-                      {step.transportNotes || step.notes}
+                  {showDetail && step.notes && (
+                    <div className="mt-2 text-[10px] text-muted-foreground italic leading-relaxed bg-card border border-border/60 rounded p-2">
+                      {step.notes}
                     </div>
                   )}
                 </div>
@@ -313,7 +361,7 @@ export default function ItineraryTimeline({
 
       {/* Tip */}
       <div className="text-[10px] text-muted-foreground italic px-2 py-1.5 bg-muted/30 rounded-lg">
-        💡 Clic en un paso para ver la ruta en el mapa · Clic again para ver detalles
+        💡 Clic en un paso para ver la ruta en el mapa · Doble clic para ver detalles del lugar
       </div>
     </div>
   );

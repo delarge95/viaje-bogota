@@ -4,7 +4,7 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import type { CustomPlan } from './travel-data';
 
-type MainView = 'lugares' | 'restaurantes' | 'actividades' | 'info' | 'mi-plan' | 'itinerario';
+type MainView = 'explorar' | 'info' | 'mi-plan' | 'itinerario';
 
 interface TravelState {
   // Navigation
