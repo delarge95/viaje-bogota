@@ -8,8 +8,10 @@ import {
   places,
   reconstructSteps,
   recomputeCustomPlanSteps,
+  toGoogleMapsMode,
   type PlanStep,
-  type CustomPlan
+  type CustomPlan,
+  type TransportMode
 } from '@/lib/travel-data';
 import { useTravelStore } from '@/lib/travel-store';
 import { Card, CardContent } from '@/components/ui/card';
@@ -27,9 +29,40 @@ import {
   RefreshCw,
   Trash2,
   Undo2,
-  Sparkles
+  Bus,
+  Car,
+  Footprints,
+  Train
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
+const transportIcons: Record<TransportMode, typeof Bus> = {
+  TM: Bus,
+  SITP: Bus,
+  Tren: Train,
+  Uber: Car,
+  Cabify: Car,
+  Carro: Car,
+  Taxi: Car,
+  Teleferico: Car,
+  Caminata: Footprints,
+  Espera: Clock,
+  Interno: MapPin,
+};
+
+const transportNames: Record<TransportMode, string> = {
+  TM: 'TransMilenio 🟥',
+  SITP: 'SITP 🟦',
+  Tren: 'Tren de la Sabana 🚂',
+  Uber: 'Uber / Cabify 🚗',
+  Cabify: 'Cabify 🚗',
+  Carro: 'Vehículo Particular 🚗',
+  Taxi: 'Taxi Oficial 🚖',
+  Teleferico: 'Teleférico Monserrate 🚠',
+  Caminata: 'Caminata Peatonal 🚶',
+  Espera: 'Tiempo de Espera ⏱️',
+  Interno: 'Traslado Interno 🚶',
+};
 
 interface ItineraryTimelineProps {
   steps?: PlanStep[]; // override (for custom plans)
@@ -50,11 +83,12 @@ export default function ItineraryTimeline({
 }: ItineraryTimelineProps) {
   const selectedDay = useTravelStore((s) => s.selectedDay);
   const selectedAlternatives = useTravelStore((s) => s.selectedAlternatives);
+  const selectedTransport = useTravelStore((s) => s.selectedTransport);
   const setSelectedPlaceId = useTravelStore((s) => s.setSelectedPlaceId);
   const selectStep = useTravelStore((s) => s.selectStep);
   const selectedStepId = useTravelStore((s) => s.selectedStepId);
-  const stepClickCount = useTravelStore((s) => s.stepClickCount);
   const clearRoute = useTravelStore((s) => s.clearRoute);
+  const setRoute = useTravelStore((s) => s.setRoute);
 
   // Custom Plan store actions
   const customPlans = useTravelStore((s) => s.customPlans);
@@ -79,7 +113,7 @@ export default function ItineraryTimeline({
   const showMedica = isRestriccionMedica ?? dayPlan?.isRestriccionMedica;
   const cost = estimatedCost || dayPlan?.estimatedCost || '';
 
-  // Filter only activities (no mobility cards)
+  // Get only the activities (destination steps) for Drag & Drop indexes mapping
   const activitiesOnly = useMemo(() => {
     return steps.filter((s) => s.type !== 'movilidad');
   }, [steps]);
@@ -105,7 +139,7 @@ export default function ItineraryTimeline({
     return id;
   };
 
-  // Drag & Drop Handlers
+  // Drag & Drop Handlers for activities
   const handleDragStart = (idx: number) => {
     setDraggedIndex(idx);
   };
@@ -153,32 +187,41 @@ export default function ItineraryTimeline({
     setActiveReplacementStepId(step.id);
   };
 
-  // Card click behaviour (Map centering)
+  // Card click behaviour (First-click details)
   const handleCardClick = (step: PlanStep) => {
-    const state = useTravelStore.getState();
-    const isSameStep = state.selectedStepId === step.id;
-    const newClickCount = isSameStep ? state.stepClickCount + 1 : 1;
-
     selectStep(step.id);
-
     if (step.placeId) {
       const place = resolvePlace(step.placeId, selectedAlternatives);
       if (place) {
         clearRoute();
-        // First click: select place (highlights on map)
-        // Second click: open detail drawer
-        if (newClickCount >= 2) {
-          setSelectedPlaceId(place.id);
-        } else {
-          setSelectedPlaceId(null);
-        }
+        // First click instantly displays details
+        setSelectedPlaceId(place.id);
       }
     }
   };
 
-  // Helper to get category-specific styling
+  // Mobility click behavior (First-click route on map + details panel)
+  const handleMobilityClick = (step: PlanStep) => {
+    selectStep(step.id);
+    setSelectedPlaceId(null); // Clear selected place detail to show route detail
+
+    if (step.fromPlaceId && step.toPlaceId) {
+      let mode = step.transportMode;
+      if (step.transportAlternatives && step.transportAlternatives.length > 0) {
+        const selectedAltId = selectedTransport[step.id];
+        const selectedAlt = step.transportAlternatives.find((a) => a.id === selectedAltId)
+          || step.transportAlternatives.find((a) => a.isRecommended)
+          || step.transportAlternatives[0];
+        if (selectedAlt) mode = selectedAlt.mode;
+      }
+      const gmapsMode = toGoogleMapsMode(mode);
+      setRoute(step.fromPlaceId, step.toPlaceId, gmapsMode);
+    }
+  };
+
+  // Helper to get category-specific styling for activity cards
   const getCardStyle = (type: string, isSelected: boolean) => {
-    const base = "relative w-full text-left rounded-xl border border-l-[5px] p-4 transition-all cursor-pointer flex flex-col space-y-2 shadow-[0_1px_3px_rgba(0,0,0,0.02)]";
+    const base = "relative w-full text-left rounded-xl border border-l-[5px] p-4 transition-all cursor-pointer flex flex-col space-y-2 shadow-[0_1px_3px_rgba(0,0,0,0.02)] bg-card";
     const selectedRing = isSelected ? "ring-2 ring-primary border-primary bg-primary/[0.01]" : "";
 
     const typeStyles = {
@@ -257,39 +300,105 @@ export default function ItineraryTimeline({
         </div>
       )}
 
-      {/* Minimalist Large Cards List */}
-      <div className="space-y-3">
-        {activitiesOnly.length === 0 ? (
-          <div className="text-center py-12 text-xs text-muted-foreground italic border border-dashed rounded-xl bg-muted/5">
-            No quedan actividades en este día. ¡Añade o personaliza!
-          </div>
-        ) : (
-          activitiesOnly.map((step, idx) => {
-            const isStepSelected = selectedStepId === step.id;
-            const place = resolvePlace(step.placeId, selectedAlternatives);
-            const isReplacing = activeReplacementStepId === step.id;
+      {/* Steps List (showing both activities and mobility) */}
+      <div className="space-y-1">
+        {steps.map((step, idx) => {
+          const isStepSelected = selectedStepId === step.id;
+
+          if (step.type === 'movilidad') {
+            // MOBILITY / CONNECTOR STEP
+            let effectiveMode = step.transportMode || 'Uber';
+            const selectedAltId = selectedTransport[step.id];
+            if (step.transportAlternatives && step.transportAlternatives.length > 0) {
+              const alt = step.transportAlternatives.find((a) => a.id === selectedAltId)
+                || step.transportAlternatives.find((a) => a.isRecommended)
+                || step.transportAlternatives[0];
+              if (alt) effectiveMode = alt.mode;
+            }
+            const TransportIcon = transportIcons[effectiveMode] || Car;
+            const modeName = transportNames[effectiveMode] || 'Traslado';
 
             return (
+              <div key={step.id} className="relative py-1">
+                {/* Visual vertical connector line */}
+                {idx < steps.length - 1 && (
+                  <div className="absolute left-[17px] top-6 bottom-[-6px] w-px border-l border-dashed border-muted-foreground/30" />
+                )}
+
+                <div
+                  onClick={() => handleMobilityClick(step)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleMobilityClick(step); } }}
+                  className={cn(
+                    'group relative w-full text-left rounded-xl transition-all p-2 pl-10 cursor-pointer text-xs border border-transparent',
+                    isStepSelected
+                      ? 'bg-muted/70 border-primary/20 ring-1 ring-primary/10 font-medium'
+                      : 'hover:bg-muted/10'
+                  )}
+                >
+                  {/* Transport Icon */}
+                  <div className={cn(
+                    'absolute left-2.5 top-2 w-5 h-5 rounded-full flex items-center justify-center border transition-all text-[10px]',
+                    isStepSelected ? 'bg-primary border-primary text-primary-foreground scale-105 shadow-sm' : 'bg-muted/30 border-border text-muted-foreground'
+                  )}>
+                    <TransportIcon className="h-3 w-3" />
+                  </div>
+
+                  <div className="flex items-center gap-1.5 flex-wrap text-muted-foreground text-[11px]">
+                    <span className="font-mono font-bold text-primary">{step.time}</span>
+                    <span>·</span>
+                    <span className="font-semibold text-foreground">
+                      {modeName}
+                    </span>
+                    {step.transportDuration && (
+                      <span className="inline-flex items-center gap-0.5 text-muted-foreground">
+                        ⏱️ {step.transportDuration}
+                      </span>
+                    )}
+                    {step.transportCost && (
+                      <span className="inline-flex items-center gap-0.5 text-primary/80 font-mono font-bold">
+                        💵 {step.transportCost}
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          }
+
+          // DESTINATION STEP (Actividad, Comida, Compra, Info, Espera)
+          // Find its index in activitiesOnly to pass the correct indexes for drag & drop reordering
+          const actIdx = activitiesOnly.findIndex((a) => a.id === step.id);
+          const place = resolvePlace(step.placeId, selectedAlternatives);
+          const isReplacing = activeReplacementStepId === step.id;
+
+          return (
+            <div key={step.id} className="relative py-1.5">
+              {/* Visual vertical connector line */}
+              {idx < steps.length - 1 && (
+                <div className="absolute left-[17px] top-8 bottom-[-8px] w-px bg-border" />
+              )}
+
               <div
-                key={step.id}
                 draggable
-                onDragStart={() => handleDragStart(idx)}
-                onDragOver={(e) => handleDragOver(e, idx)}
-                onDrop={() => handleDrop(idx)}
+                onDragStart={() => handleDragStart(actIdx)}
+                onDragOver={(e) => handleDragOver(e, actIdx)}
+                onDrop={() => handleDrop(actIdx)}
                 onClick={() => handleCardClick(step)}
                 className={cn(
                   getCardStyle(step.type, isStepSelected),
-                  draggedIndex === idx && "opacity-40 scale-[0.98]",
+                  draggedIndex === actIdx && "opacity-40 scale-[0.98]",
                   "group transition-all duration-200"
                 )}
               >
                 {/* Header row: Time adjustment + Replace / Delete actions */}
                 <div className="flex items-center justify-between">
                   {/* Time badge / Inline Editor */}
-                  {editingTimeIdx === idx ? (
+                  {editingTimeIdx === actIdx ? (
                     <Input
                       value={step.time}
-                      onChange={(e) => handleUpdateTime(idx, e.target.value)}
+                      onChange={(e) => handleUpdateTime(actIdx, e.target.value)}
                       onBlur={() => setEditingTimeIdx(null)}
                       onKeyDown={(e) => { if (e.key === 'Enter') setEditingTimeIdx(null); }}
                       className="h-6 w-24 text-[10.5px] font-mono p-1 rounded border bg-background"
@@ -302,7 +411,7 @@ export default function ItineraryTimeline({
                       className="text-[9.5px] font-mono font-bold hover:bg-muted bg-background py-0.5 px-2 border border-border"
                       onClick={(e) => {
                         e.stopPropagation();
-                        setEditingTimeIdx(idx);
+                        setEditingTimeIdx(actIdx);
                       }}
                     >
                       ⏱️ {step.time}
@@ -332,7 +441,7 @@ export default function ItineraryTimeline({
                       variant="ghost"
                       onClick={(e) => {
                         e.stopPropagation();
-                        handleRemoveActivity(idx);
+                        handleRemoveActivity(actIdx);
                       }}
                       className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
                       title="Eliminar"
@@ -351,7 +460,7 @@ export default function ItineraryTimeline({
                     <h3 className="font-bold text-sm text-foreground leading-snug">
                       {step.activity}
                     </h3>
-                    
+
                     {place && (
                       <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
                         <MapPin className="h-3 w-3 text-primary shrink-0" />
@@ -371,7 +480,7 @@ export default function ItineraryTimeline({
                   value={step.notes || ''}
                   onChange={(e) => {
                     const updatedActivities = activitiesOnly.map((act, i) =>
-                      i === idx ? { ...act, notes: e.target.value } : act
+                      i === actIdx ? { ...act, notes: e.target.value } : act
                     );
                     const newSteps = reconstructSteps(updatedActivities);
                     const planId = getOrCreateActiveCustomPlan();
@@ -382,14 +491,14 @@ export default function ItineraryTimeline({
                   onClick={(e) => e.stopPropagation()}
                 />
               </div>
-            );
-          })
-        )}
+            </div>
+          );
+        })}
       </div>
 
       {/* Tip explaining drag and click to replacement */}
       <div className="text-[10.5px] text-muted-foreground/80 leading-relaxed bg-muted/40 border border-border/50 rounded-xl p-3">
-        💡 <span className="font-bold text-foreground">Tip:</span> Arrastra las tarjetas para reorganizar tu día. Haz clic en <span className="font-bold text-primary">Reemplazar</span> para cambiar el lugar por sugerencias cercanas de forma automática. Haz clic en la hora para ajustarla.
+        💡 <span className="font-bold text-foreground">Tip:</span> Haz clic en las tarjetas o trayectos para ver su información en el panel derecho al instante. Reorganiza actividades arrastrándolas.
       </div>
     </div>
   );
