@@ -2,55 +2,109 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import type { CustomPlan } from './travel-data';
+
+type MainView = 'lugares' | 'restaurantes' | 'actividades' | 'info' | 'mi-plan' | 'itinerario';
 
 interface TravelState {
+  // Navigation
+  mainView: MainView;
   selectedDay: number;
-  selectedAlternatives: Record<string, string>; // category -> placeId
+  // Itinerary interaction
+  selectedStepId: string | null;
+  stepClickCount: number; // 0 = no selection, 1 = show route, 2 = show detail
+  // Place selection
   selectedPlaceId: string | null;
-  selectedStepId: string | null; // active step in itinerary
-  selectedView: 'itinerario' | 'mapa' | 'restaurantes' | 'info';
-  // Route display state
+  // Restaurant alternatives
+  selectedAlternatives: Record<string, string>; // category -> placeId
+  // Transport alternatives per step
+  selectedTransport: Record<string, string>; // stepId -> transportAltId
+  // Route display
   routeOriginId: string | null;
   routeDestinationId: string | null;
   routeMode: 'driving' | 'transit' | 'walking' | 'bicycling';
+  // Custom plans
+  customPlans: CustomPlan[];
+  activeCustomPlanId: string | null;
+
+  // Actions
+  setMainView: (view: MainView) => void;
   setSelectedDay: (day: number) => void;
-  setSelectedAlternative: (category: string, placeId: string) => void;
+  selectStep: (stepId: string) => void;
+  clearStepSelection: () => void;
   setSelectedPlaceId: (placeId: string | null) => void;
-  setSelectedStepId: (stepId: string | null) => void;
-  setSelectedView: (view: 'itinerario' | 'mapa' | 'restaurantes' | 'info') => void;
+  setSelectedAlternative: (category: string, placeId: string) => void;
+  setSelectedTransport: (stepId: string, transportAltId: string) => void;
   setRoute: (originId: string | null, destinationId: string | null, mode: 'driving' | 'transit' | 'walking' | 'bicycling') => void;
   clearRoute: () => void;
+  // Custom plan actions
+  addCustomPlan: (plan: CustomPlan) => void;
+  updateCustomPlan: (planId: string, updates: Partial<CustomPlan>) => void;
+  deleteCustomPlan: (planId: string) => void;
+  setActiveCustomPlan: (planId: string | null) => void;
 }
 
 export const useTravelStore = create<TravelState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
+      mainView: 'itinerario',
       selectedDay: 1,
-      selectedAlternatives: {},
-      selectedPlaceId: null,
       selectedStepId: null,
-      selectedView: 'itinerario',
+      stepClickCount: 0,
+      selectedPlaceId: null,
+      selectedAlternatives: {},
+      selectedTransport: {},
       routeOriginId: null,
       routeDestinationId: null,
       routeMode: 'driving',
-      setSelectedDay: (day) => set({ selectedDay: day, selectedStepId: null }),
+      customPlans: [],
+      activeCustomPlanId: null,
+
+      setMainView: (view) => set({ mainView: view }),
+      setSelectedDay: (day) => set({ selectedDay: day, selectedStepId: null, stepClickCount: 0, routeOriginId: null, routeDestinationId: null }),
+      selectStep: (stepId) => {
+        const state = get();
+        if (state.selectedStepId === stepId) {
+          set({ stepClickCount: state.stepClickCount + 1 });
+        } else {
+          set({ selectedStepId: stepId, stepClickCount: 1 });
+        }
+      },
+      clearStepSelection: () => set({ selectedStepId: null, stepClickCount: 0, routeOriginId: null, routeDestinationId: null }),
+      setSelectedPlaceId: (placeId) => set({ selectedPlaceId: placeId }),
       setSelectedAlternative: (category, placeId) =>
         set((state) => ({
           selectedAlternatives: { ...state.selectedAlternatives, [category]: placeId },
         })),
-      setSelectedPlaceId: (placeId) => set({ selectedPlaceId: placeId }),
-      setSelectedStepId: (stepId) => set({ selectedStepId: stepId }),
-      setSelectedView: (view) => set({ selectedView: view }),
+      setSelectedTransport: (stepId, transportAltId) =>
+        set((state) => ({
+          selectedTransport: { ...state.selectedTransport, [stepId]: transportAltId },
+        })),
       setRoute: (originId, destinationId, mode) =>
         set({ routeOriginId: originId, routeDestinationId: destinationId, routeMode: mode }),
       clearRoute: () => set({ routeOriginId: null, routeDestinationId: null }),
+      addCustomPlan: (plan) =>
+        set((state) => ({ customPlans: [...state.customPlans, plan] })),
+      updateCustomPlan: (planId, updates) =>
+        set((state) => ({
+          customPlans: state.customPlans.map((p) =>
+            p.id === planId ? { ...p, ...updates, updatedAt: new Date().toISOString() } : p
+          ),
+        })),
+      deleteCustomPlan: (planId) =>
+        set((state) => ({
+          customPlans: state.customPlans.filter((p) => p.id !== planId),
+          activeCustomPlanId: state.activeCustomPlanId === planId ? null : state.activeCustomPlanId,
+        })),
+      setActiveCustomPlan: (planId) => set({ activeCustomPlanId: planId }),
     }),
     {
-      name: 'bogota-travel-store-v2',
+      name: 'bogota-travel-store-v3',
       partialize: (state) => ({
         selectedDay: state.selectedDay,
         selectedAlternatives: state.selectedAlternatives,
-        selectedView: state.selectedView,
+        selectedTransport: state.selectedTransport,
+        customPlans: state.customPlans,
       }),
     }
   )
