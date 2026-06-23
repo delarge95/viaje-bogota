@@ -82,7 +82,17 @@ export default function RouteDetail({
   const alternatives = useMemo(() => {
     if (!fromPlace || !toPlace) return [];
 
-    const list: { mode: TransportMode; duration: string; cost: string }[] = [];
+    // If the step has predefined transport alternatives, we MUST use them!
+    if (step.transportAlternatives && step.transportAlternatives.length > 0) {
+      return step.transportAlternatives.map((alt) => ({
+        mode: alt.mode,
+        duration: alt.duration,
+        cost: alt.cost,
+        label: alt.label,
+      }));
+    }
+
+    const list: { mode: TransportMode; duration: string; cost: string; label?: string }[] = [];
 
     // 1. Caminata (always show, but comment on it if too far)
     const walkDuration = Math.round(distance * 12 + 3);
@@ -117,7 +127,7 @@ export default function RouteDetail({
     });
 
     return list;
-  }, [fromPlace, toPlace, distance]);
+  }, [fromPlace, toPlace, distance, step]);
 
   const selectedTransport = useTravelStore((s) => s.selectedTransport);
 
@@ -265,7 +275,7 @@ export default function RouteDetail({
                   <div className="flex-1 min-w-0">
                     <div className="flex items-baseline justify-between gap-2">
                       <span className="font-bold text-xs text-foreground truncate">
-                        {meta.label}
+                        {alt.label || meta.label}
                       </span>
                       <div className="flex gap-1.5 font-mono text-[10px] shrink-0 font-bold">
                         <span className="text-foreground">⏱️ {alt.duration}</span>

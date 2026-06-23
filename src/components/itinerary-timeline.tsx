@@ -129,6 +129,7 @@ export default function ItineraryTimeline({
   const selectedTransport = useTravelStore((s) => s.selectedTransport);
   const setSelectedPlaceId = useTravelStore((s) => s.setSelectedPlaceId);
   const selectStep = useTravelStore((s) => s.selectStep);
+  const selectGroupStep = useTravelStore((s) => s.selectGroupStep);
   const selectedStepId = useTravelStore((s) => s.selectedStepId);
   const clearRoute = useTravelStore((s) => s.clearRoute);
   const setRoute = useTravelStore((s) => s.setRoute);
@@ -216,7 +217,7 @@ export default function ItineraryTimeline({
       }
 
       if (groupActivities.length > 1) {
-        const groupId = `group-${groupActivities.map((a) => a.id).join('-')}`;
+        const groupId = `group-${groupActivities.map((a) => a.id).join('__')}`;
         nodes.push({
           id: groupId,
           type: 'group',
@@ -331,11 +332,11 @@ export default function ItineraryTimeline({
   };
 
   // Group click behavior: select and show details on right, second click to expand/collapse
-  const handleGroupClick = (groupId: string) => {
+  const handleGroupClick = (groupId: string, activities: PlanStep[]) => {
     const state = useTravelStore.getState();
     const isSame = state.selectedStepId === groupId;
 
-    selectStep(groupId);
+    selectGroupStep(groupId, activities);
     setSelectedPlaceId(null);
     clearRoute();
 
@@ -461,8 +462,14 @@ export default function ItineraryTimeline({
             const isExpanded = !!expandedGroups[node.id];
 
             const acts = node.activities;
-            const startTime = acts[0].time;
-            const endTime = acts[acts.length - 1].time;
+            // Extract clean start / end from ranges like "1:00-2:00 PM" or "7:30-8:30 AM"
+            const extractStart = (t: string) => t.split('-')[0].trim();
+            const extractEnd = (t: string) => {
+              const parts = t.split('-');
+              return parts[parts.length - 1].trim();
+            };
+            const startTime = extractStart(acts[0].time);
+            const endTime = extractEnd(acts[acts.length - 1].time);
             const groupTitle = acts.map((a) => a.activity.replace('Visita a ', '').replace('Almuerzo ', '').replace('Cena ', '').replace('Comprar tarjeta ', 'Tarjeta ')).join(' + ');
             const emojis = acts.map((a) => getStepEmoji(a.type)).join(' ');
 
@@ -637,7 +644,7 @@ export default function ItineraryTimeline({
                   )}
 
                   <div
-                    onClick={() => handleGroupClick(node.id)}
+                    onClick={() => handleGroupClick(node.id, node.activities!)}
                     className={cn(
                       "relative w-full text-left rounded-xl border border-l-[6px] p-4 transition-all cursor-pointer flex flex-col space-y-2.5 shadow-[0_2px_4px_rgba(0,0,0,0.03)] bg-gradient-to-r from-background to-muted/10",
                       theme.border,

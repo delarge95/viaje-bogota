@@ -58,6 +58,8 @@ export default function Home() {
   // Replacement panel store states
   const activeReplacementStepId = useTravelStore((s) => s.activeReplacementStepId);
   const setActiveReplacementStepId = useTravelStore((s) => s.setActiveReplacementStepId);
+  // Group activities from store (set by selectGroupStep when user clicks a group card)
+  const selectedGroupActivities = useTravelStore((s) => s.selectedGroupActivities);
 
   // Local state for replacement panel search
   const [swapSearch, setSwapSearch] = useState('');
@@ -98,13 +100,20 @@ export default function Home() {
     return stepsToUse.findIndex((s) => s.id === selectedStepId);
   }, [selectedStepId, dayPlan, activeCustomPlan]);
 
-  // Selected Group reconstruction (Requested)
+  // Selected Group — use selectedGroupActivities stored directly when a group card was clicked
+  // (this is more reliable than reconstructing from the group ID string)
   const selectedGroupNode = useMemo(() => {
-    if (!selectedStepId || !selectedStepId.startsWith('group-') || !dayPlan) return null;
+    if (!selectedStepId || !selectedStepId.startsWith('group-')) return null;
+    // Prefer the directly-stored activities (populated by selectGroupStep)
+    if (selectedGroupActivities && selectedGroupActivities.length > 0) {
+      return selectedGroupActivities;
+    }
+    // Fallback: reconstruct from ID in case of state drift
+    if (!dayPlan) return null;
     const stepsToUse = activeCustomPlan ? activeCustomPlan.steps : dayPlan.plan;
-    const stepIds = selectedStepId.replace('group-', '').split('-');
+    const stepIds = selectedStepId.replace('group-', '').split('__');
     return stepsToUse.filter((s) => stepIds.includes(s.id));
-  }, [selectedStepId, dayPlan, activeCustomPlan]);
+  }, [selectedStepId, selectedGroupActivities, dayPlan, activeCustomPlan]);
 
   // When a step is selected, center the map on that step's place
   const stepPlaceForMap = useMemo(() => {
@@ -150,7 +159,7 @@ export default function Home() {
     const step = stepsToUse[idx];
     if (!step) return;
 
-    if (activeCustomPlanId) {
+    if (activeCustomPlanId && activeCustomPlan) {
       const updatedSteps = activeCustomPlan.steps.map((s, sIdx) => {
         if (sIdx === idx) {
           return {

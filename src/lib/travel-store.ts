@@ -2,7 +2,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { CustomPlan } from './travel-data';
+import type { CustomPlan, PlanStep } from './travel-data';
 
 type MainView = 'explorar' | 'info' | 'mi-plan' | 'itinerario';
 
@@ -13,6 +13,8 @@ interface TravelState {
   // Itinerary interaction
   selectedStepId: string | null;
   stepClickCount: number; // 0 = no selection, 1 = show route, 2 = show detail
+  // Group activities (set when a group card is clicked)
+  selectedGroupActivities: PlanStep[] | null;
   // Place selection
   selectedPlaceId: string | null;
   // Restaurant alternatives
@@ -32,6 +34,7 @@ interface TravelState {
   setMainView: (view: MainView) => void;
   setSelectedDay: (day: number) => void;
   selectStep: (stepId: string) => void;
+  selectGroupStep: (groupId: string, activities: PlanStep[]) => void;
   clearStepSelection: () => void;
   setSelectedPlaceId: (placeId: string | null) => void;
   setSelectedAlternative: (category: string, placeId: string) => void;
@@ -53,6 +56,7 @@ export const useTravelStore = create<TravelState>()(
       selectedDay: 1,
       selectedStepId: null,
       stepClickCount: 0,
+      selectedGroupActivities: null,
       selectedPlaceId: null,
       selectedAlternatives: {},
       selectedTransport: {},
@@ -64,16 +68,24 @@ export const useTravelStore = create<TravelState>()(
       activeReplacementStepId: null,
 
       setMainView: (view) => set({ mainView: view }),
-      setSelectedDay: (day) => set({ selectedDay: day, selectedStepId: null, stepClickCount: 0, routeOriginId: null, routeDestinationId: null, activeReplacementStepId: null }),
+      setSelectedDay: (day) => set({ selectedDay: day, selectedStepId: null, stepClickCount: 0, routeOriginId: null, routeDestinationId: null, activeReplacementStepId: null, selectedGroupActivities: null }),
       selectStep: (stepId) => {
         const state = get();
         if (state.selectedStepId === stepId) {
           set({ stepClickCount: state.stepClickCount + 1 });
         } else {
-          set({ selectedStepId: stepId, stepClickCount: 1 });
+          set({ selectedStepId: stepId, stepClickCount: 1, selectedGroupActivities: null });
         }
       },
-      clearStepSelection: () => set({ selectedStepId: null, stepClickCount: 0, routeOriginId: null, routeDestinationId: null }),
+      selectGroupStep: (groupId, activities) => {
+        const state = get();
+        if (state.selectedStepId === groupId) {
+          set({ stepClickCount: state.stepClickCount + 1, selectedGroupActivities: activities });
+        } else {
+          set({ selectedStepId: groupId, stepClickCount: 1, selectedGroupActivities: activities });
+        }
+      },
+      clearStepSelection: () => set({ selectedStepId: null, stepClickCount: 0, routeOriginId: null, routeDestinationId: null, selectedGroupActivities: null }),
       setSelectedPlaceId: (placeId) => set({ selectedPlaceId: placeId }),
       setSelectedAlternative: (category, placeId) =>
         set((state) => ({
@@ -103,7 +115,7 @@ export const useTravelStore = create<TravelState>()(
       setActiveReplacementStepId: (stepId) => set({ activeReplacementStepId: stepId }),
     }),
     {
-      name: 'bogota-travel-store-v3',
+      name: 'bogota-travel-store-v4',
       partialize: (state) => ({
         selectedDay: state.selectedDay,
         selectedAlternatives: state.selectedAlternatives,
