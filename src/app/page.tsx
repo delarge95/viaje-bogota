@@ -9,7 +9,8 @@ import {
   getDistance,
   reconstructSteps,
   recomputeCustomPlanSteps,
-  toGoogleMapsMode
+  toGoogleMapsMode,
+  getZoneTextForGroup
 } from '@/lib/travel-data';
 import { useTravelStore } from '@/lib/travel-store';
 import dynamic from 'next/dynamic';
@@ -542,10 +543,10 @@ export default function Home() {
                           <div className="flex items-start justify-between gap-2">
                             <div>
                               <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 flex items-center gap-1">
-                                📦 Resumen del Grupo
+                                📦 Zona Seleccionada
                               </span>
-                              <CardTitle className="text-base font-bold mt-1 text-[#2D6A4F]">
-                                Resumen y Orden de Actividades
+                              <CardTitle className="text-base font-bold mt-1 text-[#2D6A4F] leading-tight">
+                                {getZoneTextForGroup(selectedGroupNode)}
                               </CardTitle>
                             </div>
                             <Button

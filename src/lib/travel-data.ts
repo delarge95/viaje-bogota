@@ -1347,7 +1347,7 @@ export const recomputeCustomPlanSteps = (steps: PlanStep[]): PlanStep[] => {
 
       if (fromPlace && toPlace) {
         const dist = getDistance(fromPlace.coords, toPlace.coords);
-        const mode = step.transportMode || (dist < 1.2 ? 'Caminata' : 'Uber');
+        const mode = step.transportMode || getDefaultRecommendedMode(fromId, toId, dist, step.time);
         updated.transportMode = mode;
 
         if (mode === 'Caminata') {
@@ -1558,5 +1558,96 @@ export function getEffectiveTransportDetails(
     label: transportNames[mode] || mode,
   };
 }
+
+export function getZoneNameForPlace(placeId: string | undefined): string {
+  if (!placeId) return 'Zona General';
+  
+  const zoneMapping: Record<string, string> = {
+    'alojamiento': 'Sector Chicó (Cl 94)',
+    'aeropuerto': 'Aeropuerto El Dorado',
+    'estacion-usaquen': 'Usaquén',
+    'cc-gran-estacion': 'Gran Estación',
+    'planetario': 'Centro / La Candelaria',
+    'cinemateca': 'Centro / La Candelaria',
+    'jbb': 'Jardín Botánico',
+    'cementerio': 'Centro / Santa Fe',
+    'monserrate': 'Cerro de Monserrate',
+    'museo-oro': 'Centro / La Candelaria',
+    'parque-sb': 'Parque Simón Bolívar',
+    'unal': 'Ciudad Universitaria (UNAL)',
+    'vitto': 'Chapinero / Zona G',
+    'la-puerta-falsa': 'Centro / La Candelaria',
+    'la-puerta-catedral': 'Centro / La Candelaria',
+    'edelweiss': 'Cajicá (Sabana)',
+    'chiguiro-parrilla': 'Normandía',
+    'chiguire-53': 'Teusaquillo (Cl 53)',
+    'andres-chia': 'Chía (Sabana)',
+    'paloquemao': 'Plaza Paloquemao',
+    'lechoneria-dona-rosalba': 'Plaza Paloquemao',
+    'taqueria-huevito': 'Sector Chicó (Cl 90)',
+    'alt-harald': 'Sector Cl 116',
+    'alt-bruder': 'Chapinero / Zona T',
+    'alt-la-taqueria': 'Parque de la 93',
+    'alt-renata': 'Sector Chicó',
+    'alt-insurgentes': 'Parque de la 93',
+    'alt-oliveto': 'Parkway (Teusaquillo)',
+    'parque-93': 'Parque de la 93',
+    'zona-t': 'Chapinero / Zona T',
+    'parkway': 'Parkway (Teusaquillo)',
+  };
+
+  return zoneMapping[placeId] || 'Bogotá';
+}
+
+export function getZoneTextForGroup(activities: PlanStep[]): string {
+  const uniqueZones = Array.from(new Set(
+    activities.map((a) => getZoneNameForPlace(a.placeId)).filter((z) => z !== 'Bogotá' && z !== 'Zona General')
+  ));
+  return uniqueZones.length > 0 ? uniqueZones.join(' → ') : 'Zona Local';
+}
+
+export function getDefaultRecommendedMode(
+  fromPlaceId: string | undefined,
+  toPlaceId: string | undefined,
+  distance: number,
+  timeStr?: string
+): TransportMode {
+  // Special case: Airport departure or arrival with luggage -> Uber/Taxi is recommended
+  if (fromPlaceId === 'aeropuerto' || toPlaceId === 'aeropuerto') {
+    return 'Uber';
+  }
+
+  // Special case: Monserrate summit to base (it's teleferico/funicular/walking)
+  if (
+    (fromPlaceId === 'monserrate' && toPlaceId === 'alt-casa-santa-clara') ||
+    (fromPlaceId === 'alt-casa-santa-clara' && toPlaceId === 'monserrate')
+  ) {
+    return 'Caminata';
+  }
+
+  // Special case: Night time (after 8 PM) -> Uber for security
+  if (timeStr) {
+    const isNight = timeStr.includes('PM') && (
+      timeStr.startsWith('8:') ||
+      timeStr.startsWith('9:') ||
+      timeStr.startsWith('10:') ||
+      timeStr.startsWith('11:') ||
+      timeStr.startsWith('12:')
+    );
+    if (isNight) {
+      return 'Uber';
+    }
+  }
+
+  // General rule:
+  // Short distance (up to 3.0 km, approx 35 mins walking) -> Caminata (Peatonal)
+  if (distance <= 3.0) {
+    return 'Caminata';
+  }
+
+  // Long distance -> TransMilenio (cheap and fast)
+  return 'TM';
+}
+
 
 

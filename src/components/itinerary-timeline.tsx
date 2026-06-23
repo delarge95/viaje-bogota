@@ -13,6 +13,7 @@ import {
   isSameZone,
   transportNames,
   getEffectiveTransportDetails,
+  getZoneTextForGroup,
   type PlanStep,
   type CustomPlan,
   type TransportMode
@@ -486,7 +487,7 @@ export default function ItineraryTimeline({
                       <div className="flex items-center gap-2">
                         <Layers className="h-4 w-4 text-primary animate-pulse" />
                         <span className="text-[11px] font-bold uppercase tracking-wider text-foreground">
-                          {theme.name} ({acts.length} actividades)
+                          {getZoneTextForGroup(acts)} ({acts.length} actividades)
                         </span>
                       </div>
                       <Button
@@ -666,7 +667,7 @@ export default function ItineraryTimeline({
                       </span>
                       <div className="min-w-0 flex-1">
                         <div className="flex items-center gap-1.5">
-                          <span className="text-xs font-extrabold uppercase tracking-wider text-muted-foreground">Grupo {theme.name.split(' ')[0]}</span>
+                          <span className="text-xs font-extrabold uppercase tracking-wider text-[#2D6A4F]">{getZoneTextForGroup(acts)}</span>
                           <Badge className={cn("text-[9.5px] py-0 h-4 border-none font-bold shrink-0", theme.badge)}>
                             {acts.length} actividades
                           </Badge>
