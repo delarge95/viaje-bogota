@@ -9,6 +9,10 @@ import {
   reconstructSteps,
   recomputeCustomPlanSteps,
   toGoogleMapsMode,
+  getEffectiveTransportMode,
+  isSameZone,
+  transportNames,
+  getEffectiveTransportDetails,
   type PlanStep,
   type CustomPlan,
   type TransportMode
@@ -53,19 +57,54 @@ const transportIcons: Record<TransportMode, typeof Bus> = {
   Interno: MapPin,
 };
 
-const transportNames: Record<TransportMode, string> = {
-  TM: 'TransMilenio 🟥',
-  SITP: 'SITP 🟦',
-  Tren: 'Tren de la Sabana 🚂',
-  Uber: 'Uber / Cabify 🚗',
-  Cabify: 'Cabify 🚗',
-  Carro: 'Vehículo Particular 🚗',
-  Taxi: 'Taxi Oficial 🚖',
-  Teleferico: 'Teleférico Monserrate 🚠',
-  Caminata: 'Caminata Peatonal 🚶',
-  Espera: 'Tiempo de Espera ⏱️',
-  Interno: 'Traslado Interno 🚶',
-};
+
+const groupThemes = [
+  {
+    name: 'Verde Cerros ⛰️',
+    border: 'border-emerald-500/80',
+    bg: 'bg-emerald-50/10 dark:bg-emerald-950/5',
+    text: 'text-emerald-800 dark:text-emerald-400',
+    badge: 'bg-emerald-500/10 text-emerald-800 dark:text-emerald-300 border-emerald-500/20',
+    glow: 'ring-emerald-500/20',
+    accent: '#2D6A4F'
+  },
+  {
+    name: 'Ladrillo Colonial 🟥',
+    border: 'border-red-500/80',
+    bg: 'bg-red-50/10 dark:bg-red-950/5',
+    text: 'text-red-800 dark:text-red-400',
+    badge: 'bg-red-500/10 text-red-800 dark:text-red-300 border-red-500/20',
+    glow: 'ring-red-500/20',
+    accent: '#B14A2E'
+  },
+  {
+    name: 'Oro Precolombino 🪙',
+    border: 'border-amber-500/80',
+    bg: 'bg-amber-50/10 dark:bg-amber-950/5',
+    text: 'text-amber-800 dark:text-amber-400',
+    badge: 'bg-amber-500/10 text-amber-800 dark:text-amber-300 border-amber-500/20',
+    glow: 'ring-amber-500/20',
+    accent: '#D4AF37'
+  },
+  {
+    name: 'Índigo Cielo 🌌',
+    border: 'border-indigo-500/80',
+    bg: 'bg-indigo-50/10 dark:bg-indigo-950/5',
+    text: 'text-indigo-800 dark:text-indigo-400',
+    badge: 'bg-indigo-500/10 text-indigo-800 dark:text-indigo-300 border-indigo-500/20',
+    glow: 'ring-indigo-500/20',
+    accent: '#4F46E5'
+  },
+  {
+    name: 'Rosa Buganvilia 🌸',
+    border: 'border-rose-500/80',
+    bg: 'bg-rose-50/10 dark:bg-rose-950/5',
+    text: 'text-rose-800 dark:text-rose-400',
+    badge: 'bg-rose-500/10 text-rose-800 dark:text-rose-300 border-rose-500/20',
+    glow: 'ring-rose-500/20',
+    accent: '#E11D48'
+  }
+];
 
 interface ItineraryTimelineProps {
   steps?: PlanStep[]; // override (for custom plans)
@@ -122,7 +161,7 @@ export default function ItineraryTimeline({
     return steps.filter((s) => s.type !== 'movilidad');
   }, [steps]);
 
-  // Group steps dynamically: adjacent activities connected by Caminata or Interno
+  // Group steps dynamically based on zone (adjacent activities connected by walking, internal, or direct adjacency)
   const timelineNodes = useMemo(() => {
     const nodes: {
       id: string;
@@ -141,47 +180,48 @@ export default function ItineraryTimeline({
         continue;
       }
 
-      // Check for grouping
+      // Check for grouping (adjacent activities or walking activities in same area)
       const groupStepsList: PlanStep[] = [current];
       const groupActivities: PlanStep[] = [current];
 
       let j = i + 1;
       while (j < steps.length) {
-        const nextMobility = steps[j];
-        const nextActivity = steps[j + 1];
+        const nextStep = steps[j];
+        if (!nextStep) break;
 
-        if (
-          nextMobility &&
-          nextMobility.type === 'movilidad' &&
-          (nextMobility.transportMode === 'Caminata' || nextMobility.transportMode === 'Interno') &&
-          nextActivity &&
-          nextActivity.type !== 'movilidad'
+        if (nextStep.type !== 'movilidad') {
+          // Direct adjacency (e.g. lunch immediately followed by campus tour with no travel card)
+          groupStepsList.push(nextStep);
+          groupActivities.push(nextStep);
+          j++;
+        } else if (
+          nextStep.type === 'movilidad' &&
+          isSameZone(nextStep.fromPlaceId, nextStep.toPlaceId, nextStep, selectedTransport)
         ) {
-          groupStepsList.push(nextMobility);
-          groupStepsList.push(nextActivity);
-          groupActivities.push(nextActivity);
-          j += 2;
+          // Walk/internal mobility step. Check if followed by a destination card.
+          const nextActivity = steps[j + 1];
+          if (nextActivity && nextActivity.type !== 'movilidad') {
+            groupStepsList.push(nextStep);
+            groupStepsList.push(nextActivity);
+            groupActivities.push(nextActivity);
+            j += 2;
+          } else {
+            break;
+          }
         } else {
+          // Long transit stops grouping
           break;
         }
       }
 
       if (groupActivities.length > 1) {
         const groupId = `group-${groupActivities.map((a) => a.id).join('-')}`;
-        if (expandedGroups[groupId]) {
-          // Render individually if expanded
-          groupStepsList.forEach((s) => {
-            nodes.push({ id: s.id, type: 'single', step: s });
-          });
-        } else {
-          // Render grouped card if collapsed
-          nodes.push({
-            id: groupId,
-            type: 'group',
-            steps: groupStepsList,
-            activities: groupActivities
-          });
-        }
+        nodes.push({
+          id: groupId,
+          type: 'group',
+          steps: groupStepsList,
+          activities: groupActivities
+        });
         i = j;
       } else {
         nodes.push({ id: current.id, type: 'single', step: current });
@@ -189,7 +229,7 @@ export default function ItineraryTimeline({
       }
     }
     return nodes;
-  }, [steps, expandedGroups]);
+  }, [steps, selectedTransport]);
 
   // Helper to ensure a custom plan exists before modification
   const getOrCreateActiveCustomPlan = (): string => {
@@ -254,7 +294,7 @@ export default function ItineraryTimeline({
     }
   };
 
-  // Replace action - Fixed first-click bug mapping ID correctly
+  // Replace action
   const handleReplaceClick = (step: PlanStep) => {
     const isDefault = !activeCustomPlanId;
     const planId = getOrCreateActiveCustomPlan();
@@ -280,23 +320,16 @@ export default function ItineraryTimeline({
   // Mobility click behavior (First-click route on map + details panel)
   const handleMobilityClick = (step: PlanStep) => {
     selectStep(step.id);
-    setSelectedPlaceId(null); // Clear selected place detail to show route detail
+    setSelectedPlaceId(null);
 
     if (step.fromPlaceId && step.toPlaceId) {
-      let mode = step.transportMode;
-      if (step.transportAlternatives && step.transportAlternatives.length > 0) {
-        const selectedAltId = selectedTransport[step.id];
-        const selectedAlt = step.transportAlternatives.find((a) => a.id === selectedAltId)
-          || step.transportAlternatives.find((a) => a.isRecommended)
-          || step.transportAlternatives[0];
-        if (selectedAlt) mode = selectedAlt.mode;
-      }
+      const mode = getEffectiveTransportMode(step, selectedTransport);
       const gmapsMode = toGoogleMapsMode(mode);
       setRoute(step.fromPlaceId, step.toPlaceId, gmapsMode);
     }
   };
 
-  // Group click behavior: select and show details on right, double click to expand
+  // Group click behavior: select and show details on right, second click to expand/collapse
   const handleGroupClick = (groupId: string) => {
     const state = useTravelStore.getState();
     const isSame = state.selectedStepId === groupId;
@@ -306,7 +339,6 @@ export default function ItineraryTimeline({
     clearRoute();
 
     if (isSame) {
-      // Toggle expansion if clicked again
       setExpandedGroups((prev) => ({
         ...prev,
         [groupId]: !prev[groupId]
@@ -323,19 +355,27 @@ export default function ItineraryTimeline({
   };
 
   // Helper to get category-specific styling for activity cards
-  const getCardStyle = (type: string, isSelected: boolean) => {
+  const getCardStyle = (type: string, isSelected: boolean, groupThemeBorder?: string) => {
     const base = "relative w-full text-left rounded-xl border border-l-[5px] p-4 transition-all cursor-pointer flex flex-col space-y-2 shadow-[0_1px_3px_rgba(0,0,0,0.02)] bg-card";
     const selectedRing = isSelected ? "ring-2 ring-primary border-primary bg-primary/[0.01]" : "";
 
     const typeStyles = {
-      actividad: 'border-indigo-100 dark:border-indigo-950/40 bg-indigo-50/10 dark:bg-indigo-950/5 border-l-indigo-500 hover:border-indigo-300',
-      comida: 'border-amber-100 dark:border-amber-950/40 bg-amber-50/10 dark:bg-amber-950/5 border-l-amber-500 hover:border-amber-300',
-      compra: 'border-rose-100 dark:border-rose-950/40 bg-rose-50/10 dark:bg-rose-950/5 border-l-rose-500 hover:border-rose-300',
-      espera: 'border-slate-100 dark:border-slate-800 bg-slate-50/10 dark:bg-slate-950/5 border-l-slate-400 hover:border-slate-300',
-      info: 'border-sky-100 dark:border-sky-950/40 bg-sky-50/10 dark:bg-sky-950/5 border-l-sky-500 hover:border-sky-300',
-    }[type] || 'border-border bg-card border-l-primary hover:border-primary/50';
+      actividad: 'border-indigo-100 dark:border-indigo-950/40 bg-indigo-50/10 dark:bg-indigo-950/5 hover:border-indigo-300',
+      comida: 'border-amber-100 dark:border-amber-950/40 bg-amber-50/10 dark:bg-amber-950/5 hover:border-amber-300',
+      compra: 'border-rose-100 dark:border-rose-950/40 bg-rose-50/10 dark:bg-rose-950/5 hover:border-rose-300',
+      espera: 'border-slate-100 dark:border-slate-800 bg-slate-50/10 dark:bg-slate-950/5 hover:border-slate-300',
+      info: 'border-sky-100 dark:border-sky-950/40 bg-sky-50/10 dark:bg-sky-950/5 hover:border-sky-300',
+    }[type] || 'border-border bg-card hover:border-primary/50';
 
-    return cn(base, typeStyles, selectedRing);
+    const borderLeft = groupThemeBorder || {
+      actividad: 'border-l-indigo-500',
+      comida: 'border-l-amber-500',
+      compra: 'border-l-rose-500',
+      espera: 'border-l-slate-400',
+      info: 'border-l-sky-500',
+    }[type] || 'border-l-primary';
+
+    return cn(base, typeStyles, borderLeft, selectedRing);
   };
 
   const getStepEmoji = (type: string) => {
@@ -347,6 +387,9 @@ export default function ItineraryTimeline({
       info: 'ℹ️',
     }[type] || '✨';
   };
+
+  // Group index counter to cycle through groupThemes
+  let groupCounter = 0;
 
   return (
     <div className="space-y-4">
@@ -403,93 +446,252 @@ export default function ItineraryTimeline({
         </div>
       )}
 
-      {/* Steps List (showing single steps and grouped nodes) */}
+      {/* Steps List */}
       <div className="space-y-1">
         {timelineNodes.map((node, nodeIdx) => {
           const isNodeSelected = selectedStepId === node.id;
-
-          // Render vertical connector lines between cards
           const showConnectorLine = nodeIdx < timelineNodes.length - 1;
 
-          if (node.type === 'group' && node.activities) {
-            // GROUP OF ACTIVITIES CARD (Walk connected adjacent activities in same area)
+          if (node.type === 'group' && node.activities && node.steps) {
+            // Increment group counter and select color theme
+            const currentGroupIdx = groupCounter;
+            groupCounter++;
+            const theme = groupThemes[currentGroupIdx % groupThemes.length];
+            const isExpanded = !!expandedGroups[node.id];
+
             const acts = node.activities;
             const startTime = acts[0].time;
             const endTime = acts[acts.length - 1].time;
-            const groupTitle = acts.map((a) => a.activity.replace('Visita a ', '').replace('Almuerzo ', '').replace('Cena ', '')).join(' + ');
+            const groupTitle = acts.map((a) => a.activity.replace('Visita a ', '').replace('Almuerzo ', '').replace('Cena ', '').replace('Comprar tarjeta ', 'Tarjeta ')).join(' + ');
             const emojis = acts.map((a) => getStepEmoji(a.type)).join(' ');
 
-            return (
-              <div key={node.id} className="relative py-2">
-                {showConnectorLine && (
-                  <div className="absolute left-[17px] top-8 bottom-[-8px] w-px bg-border" />
-                )}
-
-                <div
-                  onClick={() => handleGroupClick(node.id)}
-                  className={cn(
-                    "relative w-full text-left rounded-xl border border-l-[6px] border-l-emerald-600 p-4 transition-all cursor-pointer flex flex-col space-y-2.5 shadow-[0_2px_4px_rgba(0,0,0,0.03)] bg-gradient-to-r from-emerald-500/[0.01] to-emerald-500/[0.03]",
-                    isNodeSelected ? "ring-2 ring-emerald-500 border-emerald-500 bg-emerald-500/[0.02]" : "border-emerald-100 hover:border-emerald-300"
+            if (isExpanded) {
+              // EXPANDED GROUP REPRESENTATION (Inside a beautiful color-coded visual boundary)
+              return (
+                <div key={node.id} className="relative py-2.5">
+                  {showConnectorLine && (
+                    <div className="absolute left-[17px] top-12 bottom-[-8px] w-px bg-border" />
                   )}
-                >
-                  {/* Top row: Time range + toggle expand chevron */}
-                  <div className="flex items-center justify-between">
-                    <Badge variant="outline" className="text-[9.5px] font-mono font-bold bg-background text-emerald-800 dark:text-emerald-300 border-emerald-500/20">
-                      ⏱️ {startTime} - {endTime}
-                    </Badge>
 
-                    {/* Small chevron in the corner to toggle expand (requested) */}
-                    <Button
-                      size="sm"
-                      variant="ghost"
+                  <div className={cn(
+                    "w-full rounded-2xl border-l-[6px] border border-border p-3.5 space-y-3.5 transition-all shadow-sm",
+                    theme.border,
+                    theme.bg
+                  )}>
+                    {/* Expanded group header (lets user collapse back easily) */}
+                    <div
                       onClick={(e) => toggleGroupExpand(e, node.id)}
-                      className="h-6 w-6 p-0 text-emerald-700 hover:bg-emerald-500/10 hover:text-emerald-800"
-                      title="Desplegar actividades del grupo"
+                      className="flex items-center justify-between pb-2 border-b border-border/60 cursor-pointer select-none"
                     >
-                      <ChevronDown className="h-4 w-4" />
-                    </Button>
-                  </div>
-
-                  {/* Emojis row & Group summary */}
-                  <div className="flex items-start gap-2.5 min-w-0">
-                    <span className="text-base shrink-0 select-none bg-emerald-500/10 p-1.5 rounded-lg">
-                      📦
-                    </span>
-                    <div className="min-w-0 flex-1">
-                      <div className="flex items-center gap-1.5">
-                        <span className="text-xs font-bold text-emerald-800 dark:text-emerald-400">Grupo de Actividades a Pie</span>
-                        <Badge className="text-[9px] py-0 h-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold border-none shrink-0">
-                          {acts.length} actividades
-                        </Badge>
+                      <div className="flex items-center gap-2">
+                        <Layers className="h-4 w-4 text-primary animate-pulse" />
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-foreground">
+                          {theme.name} ({acts.length} actividades)
+                        </span>
                       </div>
-                      <h3 className="font-bold text-sm text-foreground leading-snug mt-1 truncate">
-                        {groupTitle}
-                      </h3>
-                      <p className="text-[10px] text-muted-foreground mt-0.5">
-                        {emojis} Actividades consecutivas en la misma zona peatonal.
-                      </p>
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        className="h-6 px-1.5 text-[10px] gap-1 text-muted-foreground hover:bg-muted font-bold"
+                      >
+                        <ChevronUp className="h-3.5 w-3.5" />
+                        Replegar
+                      </Button>
+                    </div>
+
+                    {/* Render individual steps inside group boundaries */}
+                    <div className="space-y-2">
+                      {node.steps.map((innerStep, innerIdx) => {
+                        const isStepActive = selectedStepId === innerStep.id;
+
+                        if (innerStep.type === 'movilidad') {
+                          // Mobility step inside group
+                          const details = getEffectiveTransportDetails(innerStep, selectedTransport);
+                          const TransportIcon = transportIcons[details.mode] || Footprints;
+                          return (
+                            <div
+                              key={innerStep.id}
+                              onClick={() => handleMobilityClick(innerStep)}
+                              className={cn(
+                                'flex items-center gap-2 pl-4 py-1.5 rounded-lg text-xs cursor-pointer border border-transparent transition-all hover:bg-muted/10 text-muted-foreground',
+                                isStepActive && 'bg-muted/60 border-primary/10 font-medium'
+                              )}
+                            >
+                              <TransportIcon className="h-3 w-3 shrink-0" />
+                              <span className="font-mono font-bold text-primary">{innerStep.time}</span>
+                              <span>·</span>
+                              <span className="font-semibold text-foreground truncate">{innerStep.activity}</span>
+                              {details.duration && <span className="opacity-80">({details.duration})</span>}
+                            </div>
+                          );
+                        }
+
+                        // Activity step inside group (draggable and fully interactive)
+                        const innerActIdx = activitiesOnly.findIndex((a) => a.id === innerStep.id);
+                        const placeObj = resolvePlace(innerStep.placeId, selectedAlternatives);
+                        const isReplacingInner = activeReplacementStepId === innerStep.id;
+
+                        return (
+                          <div
+                            key={innerStep.id}
+                            draggable
+                            onDragStart={() => handleDragStart(innerActIdx)}
+                            onDragOver={(e) => handleDragOver(e, innerActIdx)}
+                            onDrop={() => handleDrop(innerActIdx)}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleCardClick(innerStep);
+                            }}
+                            className={cn(
+                              getCardStyle(innerStep.type, isStepActive, theme.border.replace('border-', 'border-l-')),
+                              draggedIndex === innerActIdx && "opacity-40 scale-[0.98]",
+                              "group/inner transition-all duration-200"
+                            )}
+                          >
+                            <div className="flex items-center justify-between">
+                              {/* Time editor */}
+                              {editingTimeIdx === innerActIdx ? (
+                                <Input
+                                  value={innerStep.time}
+                                  onChange={(e) => handleUpdateTime(innerActIdx, e.target.value)}
+                                  onBlur={() => setEditingTimeIdx(null)}
+                                  onKeyDown={(e) => { if (e.key === 'Enter') setEditingTimeIdx(null); }}
+                                  className="h-6 w-24 text-[10.5px] font-mono p-1 rounded border bg-background"
+                                  onClick={(e) => e.stopPropagation()}
+                                  autoFocus
+                                />
+                              ) : (
+                                <Badge
+                                  variant="secondary"
+                                  className="text-[9.5px] font-mono font-bold hover:bg-muted bg-background py-0.5 px-2 border border-border"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    setEditingTimeIdx(innerActIdx);
+                                  }}
+                                >
+                                  ⏱️ {innerStep.time}
+                                </Badge>
+                              )}
+
+                              {/* Card buttons */}
+                              <div className="flex items-center gap-1 opacity-0 group-hover/inner:opacity-100 transition-opacity focus-within:opacity-100">
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleReplaceClick(innerStep);
+                                  }}
+                                  className={cn(
+                                    "h-6 px-1.5 text-[10px] font-bold gap-1 border-primary/20 text-primary hover:bg-primary/5",
+                                    isReplacingInner && "bg-primary text-primary-foreground border-primary"
+                                  )}
+                                >
+                                  <RefreshCw className={cn("h-3 w-3", isReplacingInner && "animate-spin")} />
+                                  Reemplazar
+                                </Button>
+                                <Button
+                                  size="sm"
+                                  variant="ghost"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    handleRemoveActivity(innerActIdx);
+                                  }}
+                                  className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
+                                >
+                                  <Trash2 className="h-3 w-3" />
+                                </Button>
+                              </div>
+                            </div>
+
+                            <div className="flex items-start gap-2 min-w-0">
+                              <span className="text-base shrink-0 select-none">
+                                {getStepEmoji(innerStep.type)}
+                              </span>
+                              <div className="min-w-0 space-y-1">
+                                <h3 className="font-bold text-sm text-foreground leading-snug">
+                                  {innerStep.activity}
+                                </h3>
+                                {placeObj && (
+                                  <div className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
+                                    <MapPin className="h-3 w-3 text-primary shrink-0" />
+                                    <span className="font-semibold text-foreground truncate">{placeObj.name}</span>
+                                  </div>
+                                )}
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>
-              </div>
-            );
+              );
+            } else {
+              // COLLAPSED GROUP CARD REPRESENTATION (Visual card displaying summary and order)
+              return (
+                <div key={node.id} className="relative py-2">
+                  {showConnectorLine && (
+                    <div className="absolute left-[17px] top-8 bottom-[-8px] w-px bg-border" />
+                  )}
+
+                  <div
+                    onClick={() => handleGroupClick(node.id)}
+                    className={cn(
+                      "relative w-full text-left rounded-xl border border-l-[6px] p-4 transition-all cursor-pointer flex flex-col space-y-2.5 shadow-[0_2px_4px_rgba(0,0,0,0.03)] bg-gradient-to-r from-background to-muted/10",
+                      theme.border,
+                      isNodeSelected ? cn("ring-2 shadow-md bg-card", theme.glow) : "border-border hover:bg-muted/15"
+                    )}
+                  >
+                    <div className="flex items-center justify-between">
+                      <Badge variant="outline" className={cn("text-[9.5px] font-mono font-bold bg-background border-none", theme.badge)}>
+                        ⏱️ {startTime} - {endTime}
+                      </Badge>
+
+                      {/* Small chevron in the corner to toggle expand directly */}
+                      <Button
+                        size="sm"
+                        variant="ghost"
+                        onClick={(e) => toggleGroupExpand(e, node.id)}
+                        className={cn("h-6 w-6 p-0 hover:bg-background/20", theme.text)}
+                        title="Desplegar actividades del grupo"
+                      >
+                        <ChevronDown className="h-4 w-4" />
+                      </Button>
+                    </div>
+
+                    <div className="flex items-start gap-2.5 min-w-0">
+                      <span className="text-base shrink-0 select-none bg-background/80 p-1.5 rounded-lg border">
+                        📦
+                      </span>
+                      <div className="min-w-0 flex-1">
+                        <div className="flex items-center gap-1.5">
+                          <span className="text-xs font-extrabold uppercase tracking-wider text-muted-foreground">Grupo {theme.name.split(' ')[0]}</span>
+                          <Badge className={cn("text-[9.5px] py-0 h-4 border-none font-bold shrink-0", theme.badge)}>
+                            {acts.length} actividades
+                          </Badge>
+                        </div>
+                        <h3 className="font-bold text-sm text-foreground leading-snug mt-1 truncate">
+                          {groupTitle}
+                        </h3>
+                        <p className="text-[10.5px] text-muted-foreground mt-0.5 truncate">
+                          {emojis} {acts.map(a => a.activity.replace('Visita a ', '').replace('Almuerzo ', '')).join(' → ')}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            }
           }
 
           // SINGLE NODE (either mobility step or activity step)
           const step = node.step!;
 
           if (step.type === 'movilidad') {
-            // MOBILITY / CONNECTOR STEP
-            let effectiveMode = step.transportMode || 'Uber';
-            const selectedAltId = selectedTransport[step.id];
-            if (step.transportAlternatives && step.transportAlternatives.length > 0) {
-              const alt = step.transportAlternatives.find((a) => a.id === selectedAltId)
-                || step.transportAlternatives.find((a) => a.isRecommended)
-                || step.transportAlternatives[0];
-              if (alt) effectiveMode = alt.mode;
-            }
-            const TransportIcon = transportIcons[effectiveMode] || Car;
-            const modeName = transportNames[effectiveMode] || 'Traslado';
+            const details = getEffectiveTransportDetails(step, selectedTransport);
+            const TransportIcon = transportIcons[details.mode] || Car;
+            const modeName = details.label;
 
             return (
               <div key={step.id} className="relative py-1">
@@ -509,7 +711,6 @@ export default function ItineraryTimeline({
                       : 'hover:bg-muted/10'
                   )}
                 >
-                  {/* Transport Icon */}
                   <div className={cn(
                     'absolute left-2.5 top-2 w-5 h-5 rounded-full flex items-center justify-center border transition-all text-[10px]',
                     isNodeSelected ? 'bg-primary border-primary text-primary-foreground scale-105 shadow-sm' : 'bg-muted/30 border-border text-muted-foreground'
@@ -523,14 +724,14 @@ export default function ItineraryTimeline({
                     <span className="font-semibold text-foreground">
                       {modeName}
                     </span>
-                    {step.transportDuration && (
+                    {details.duration && (
                       <span className="inline-flex items-center gap-0.5 text-muted-foreground">
-                        ⏱️ {step.transportDuration}
+                        ⏱️ {details.duration}
                       </span>
                     )}
-                    {step.transportCost && (
+                    {details.cost && details.cost !== 'Gratis' && (
                       <span className="inline-flex items-center gap-0.5 text-primary/80 font-mono font-bold">
-                        💵 {step.transportCost}
+                        💵 {details.cost}
                       </span>
                     )}
                   </div>
@@ -539,8 +740,7 @@ export default function ItineraryTimeline({
             );
           }
 
-          // DESTINATION STEP (Actividad, Comida, Compra, Info, Espera)
-          // Find its index in activitiesOnly to pass the correct indexes for drag & drop reordering
+          // DESTINATION STEP
           const actIdx = activitiesOnly.findIndex((a) => a.id === step.id);
           const place = resolvePlace(step.placeId, selectedAlternatives);
           const isReplacing = activeReplacementStepId === step.id;
@@ -563,9 +763,7 @@ export default function ItineraryTimeline({
                   "group transition-all duration-200"
                 )}
               >
-                {/* Header row: Time adjustment + Replace / Delete actions */}
                 <div className="flex items-center justify-between">
-                  {/* Time badge / Inline Editor */}
                   {editingTimeIdx === actIdx ? (
                     <Input
                       value={step.time}
@@ -589,7 +787,6 @@ export default function ItineraryTimeline({
                     </Badge>
                   )}
 
-                  {/* Actions buttons */}
                   <div className="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity focus-within:opacity-100">
                     <Button
                       size="sm"
@@ -602,7 +799,6 @@ export default function ItineraryTimeline({
                         "h-6 px-1.5 text-[10px] font-bold gap-1 border-primary/20 text-primary hover:bg-primary/5",
                         isReplacing && "bg-primary text-primary-foreground border-primary"
                       )}
-                      title="Reemplazar esta actividad por otra"
                     >
                       <RefreshCw className={cn("h-3 w-3", isReplacing && "animate-spin")} />
                       Reemplazar
@@ -615,14 +811,12 @@ export default function ItineraryTimeline({
                         handleRemoveActivity(actIdx);
                       }}
                       className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive hover:bg-destructive/10"
-                      title="Eliminar"
                     >
                       <Trash2 className="h-3 w-3" />
                     </Button>
                   </div>
                 </div>
 
-                {/* Body: Emoji + Activity title */}
                 <div className="flex items-start gap-2 min-w-0">
                   <span className="text-base shrink-0 select-none">
                     {getStepEmoji(step.type)}
@@ -646,7 +840,6 @@ export default function ItineraryTimeline({
                   </div>
                 </div>
 
-                {/* Subtitle / Notes input */}
                 <Input
                   value={step.notes || ''}
                   onChange={(e) => {
@@ -667,9 +860,8 @@ export default function ItineraryTimeline({
         })}
       </div>
 
-      {/* Tip explaining drag and click to replacement */}
       <div className="text-[10.5px] text-muted-foreground/80 leading-relaxed bg-muted/40 border border-border/50 rounded-xl p-3">
-        💡 <span className="font-bold text-foreground">Tip:</span> Actividades contiguas a pie se agrupan automáticamente. Haz clic sobre el grupo para ver su detalle, o haz doble click (o click en la esquina de la tarjeta 📦) para expandir.
+        💡 <span className="font-bold text-foreground">Tip:</span> Actividades contiguas a pie se agrupan automáticamente por colores. Haz clic en la cabecera del grupo o chevron 📦 para colapsar y expandir.
       </div>
     </div>
   );

@@ -144,31 +144,41 @@ export default function Home() {
 
   // Select transport mode and update the map route in real-time (Requested)
   const handleSelectTransportMode = (idx: number, mode: any) => {
-    const planId = getOrCreateActiveCustomPlan();
     const state = useTravelStore.getState();
-    const currentPlan = state.customPlans.find((p) => p.id === planId);
-    if (!currentPlan) return;
+    const stepsToUse = activeCustomPlan ? activeCustomPlan.steps : (dayPlan?.plan || []);
+    const step = stepsToUse[idx];
+    if (!step) return;
 
-    const updatedSteps = currentPlan.steps.map((s, sIdx) => {
-      if (sIdx === idx) {
-        return {
-          ...s,
-          transportMode: mode,
-          transportDuration: undefined,
-          transportCost: undefined,
-        };
+    if (activeCustomPlanId) {
+      const updatedSteps = activeCustomPlan.steps.map((s, sIdx) => {
+        if (sIdx === idx) {
+          return {
+            ...s,
+            transportMode: mode,
+            transportDuration: undefined,
+            transportCost: undefined,
+          };
+        }
+        return s;
+      });
+
+      const finalSteps = recomputeCustomPlanSteps(updatedSteps);
+      updateCustomPlan(activeCustomPlanId, { steps: finalSteps });
+
+      // Update map route dynamically in the store
+      const updatedStep = finalSteps[idx];
+      if (updatedStep && updatedStep.fromPlaceId && updatedStep.toPlaceId) {
+        const gmapsMode = toGoogleMapsMode(mode);
+        state.setRoute(updatedStep.fromPlaceId, updatedStep.toPlaceId, gmapsMode);
       }
-      return s;
-    });
+    } else {
+      // On default day plan: do NOT clone or create custom plan! Just store selection in state
+      state.setSelectedTransport(step.id, mode);
 
-    const finalSteps = recomputeCustomPlanSteps(updatedSteps);
-    updateCustomPlan(planId, { steps: finalSteps });
-
-    // Update map route dynamically in the store
-    const updatedStep = finalSteps[idx];
-    if (updatedStep && updatedStep.fromPlaceId && updatedStep.toPlaceId) {
-      const gmapsMode = toGoogleMapsMode(mode);
-      state.setRoute(updatedStep.fromPlaceId, updatedStep.toPlaceId, gmapsMode);
+      if (step.fromPlaceId && step.toPlaceId) {
+        const gmapsMode = toGoogleMapsMode(mode);
+        state.setRoute(step.fromPlaceId, step.toPlaceId, gmapsMode);
+      }
     }
   };
 
@@ -532,10 +542,10 @@ export default function Home() {
                           <div className="flex items-start justify-between gap-2">
                             <div>
                               <span className="text-[10px] font-extrabold uppercase tracking-wider text-emerald-700 flex items-center gap-1">
-                                📦 Resumen de Grupo
+                                📦 Resumen del Grupo
                               </span>
                               <CardTitle className="text-base font-bold mt-1 text-[#2D6A4F]">
-                                Agenda Peatonal de la Zona
+                                Resumen y Orden de Actividades
                               </CardTitle>
                             </div>
                             <Button
@@ -548,10 +558,7 @@ export default function Home() {
                             </Button>
                           </div>
                         </CardHeader>
-                        <CardContent className="p-4 space-y-4 max-h-[300px] overflow-y-auto custom-scroll">
-                          <p className="text-xs text-muted-foreground leading-relaxed">
-                            Actividades continuas en el mismo sector. Planificadas para recorrerse a pie sin necesidad de transporte público o privado.
-                          </p>
+                        <CardContent className="p-4 space-y-4 max-h-[400px] overflow-y-auto custom-scroll">
                           <div className="space-y-4 pt-1">
                             {selectedGroupNode.map((act) => {
                               const placeObj = act.placeId ? getPlaceById(act.placeId) : null;

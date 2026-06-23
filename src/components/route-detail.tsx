@@ -4,9 +4,12 @@ import { useMemo } from 'react';
 import {
   getPlaceById,
   getDistance,
+  getEffectiveTransportMode,
+  getEffectiveTransportDetails,
   type PlanStep,
   type TransportMode
 } from '@/lib/travel-data';
+import { useTravelStore } from '@/lib/travel-store';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -23,6 +26,19 @@ import {
   Navigation
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+
+function parseMin(durationStr: string | undefined): number {
+  if (!durationStr) return 0;
+  const numbers = durationStr.match(/\d+/g);
+  if (!numbers || numbers.length === 0) return 0;
+  if (numbers.length === 2) {
+    const val1 = parseInt(numbers[0], 10);
+    const val2 = parseInt(numbers[1], 10);
+    return Math.round((val1 + val2) / 2);
+  }
+  return parseInt(numbers[0], 10);
+}
+
 
 interface RouteDetailProps {
   step: PlanStep;
@@ -103,7 +119,34 @@ export default function RouteDetail({
     return list;
   }, [fromPlace, toPlace, distance]);
 
-  const currentMode = step.transportMode || 'Uber';
+  const selectedTransport = useTravelStore((s) => s.selectedTransport);
+
+  const currentMode = useMemo(() => {
+    return getEffectiveTransportMode(step, selectedTransport);
+  }, [step, selectedTransport]);
+
+  const recommendedMode = useMemo(() => {
+    if (step.transportAlternatives && step.transportAlternatives.length > 0) {
+      const rec = step.transportAlternatives.find((a) => a.isRecommended) || step.transportAlternatives[0];
+      return rec.mode;
+    }
+    return step.transportMode || 'Uber';
+  }, [step]);
+
+  const recommendedDuration = useMemo(() => {
+    if (step.transportAlternatives && step.transportAlternatives.length > 0) {
+      const rec = step.transportAlternatives.find((a) => a.isRecommended) || step.transportAlternatives[0];
+      return rec.duration;
+    }
+    return step.transportDuration || '15 min';
+  }, [step]);
+
+  const delayMinutes = useMemo(() => {
+    const selDetails = getEffectiveTransportDetails(step, selectedTransport);
+    const recMin = parseMin(recommendedDuration);
+    const selMin = parseMin(selDetails.duration);
+    return selMin > recMin + 5 ? selMin - recMin : 0;
+  }, [step, selectedTransport, recommendedDuration]);
 
   if (!fromPlace || !toPlace) {
     return (
@@ -172,6 +215,27 @@ export default function RouteDetail({
             </Badge>
           </div>
         </div>
+
+        {/* Delay warning alert box */}
+        {delayMinutes > 0 && (
+          <div className="bg-amber-500/10 border border-amber-500/30 text-amber-800 dark:text-amber-300 p-3 rounded-xl text-xs flex items-start gap-2 animate-pulse">
+            <span className="text-sm shrink-0">⚠️</span>
+            <div className="space-y-0.5 flex-1">
+              <p className="font-bold">Alerta de retraso</p>
+              <p className="leading-normal">
+                Esta opción sumará aproximadamente <span className="font-extrabold">{delayMinutes} minutos</span> al tiempo de traslado de hoy.
+              </p>
+              <Button
+                variant="link"
+                className="p-0 h-auto text-[11px] text-amber-800 dark:text-amber-300 underline font-bold mt-1.5 hover:opacity-80"
+                onClick={() => onSelectTransport(stepIdx, recommendedMode)}
+              >
+                Restaurar medio recomendado ({recommendedMode})
+              </Button>
+            </div>
+          </div>
+        )}
+
 
         {/* Alternatives transport list */}
         <div className="space-y-2">

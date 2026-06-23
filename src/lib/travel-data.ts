@@ -1405,3 +1405,158 @@ export const reconstructSteps = (activitiesOnly: PlanStep[]): PlanStep[] => {
   }
   return recomputeCustomPlanSteps(result);
 };
+
+export function getEffectiveTransportMode(
+  step: PlanStep,
+  selectedTransport: Record<string, string>
+): TransportMode {
+  const selection = selectedTransport[step.id];
+  if (selection) {
+    if (['TM', 'SITP', 'Uber', 'Cabify', 'Carro', 'Caminata', 'Tren', 'Taxi', 'Teleferico', 'Espera', 'Interno'].includes(selection)) {
+      return selection as TransportMode;
+    }
+    if (step.transportAlternatives) {
+      const alt = step.transportAlternatives.find((a) => a.id === selection || a.mode === selection);
+      if (alt) return alt.mode;
+    }
+  }
+  if (step.transportAlternatives && step.transportAlternatives.length > 0) {
+    const recommended = step.transportAlternatives.find((a) => a.isRecommended) || step.transportAlternatives[0];
+    return recommended.mode;
+  }
+  return step.transportMode || 'Uber';
+}
+
+export function isSameZone(
+  fromPlaceId: string | undefined,
+  toPlaceId: string | undefined,
+  step: PlanStep,
+  selectedTransport: Record<string, string>
+): boolean {
+  if (!fromPlaceId || !toPlaceId) return false;
+  const fromPlace = getPlaceById(fromPlaceId);
+  const toPlace = getPlaceById(toPlaceId);
+  if (!fromPlace || !toPlace) return false;
+
+  const mode = getEffectiveTransportMode(step, selectedTransport);
+  if (mode === 'Caminata' || mode === 'Interno') {
+    return true;
+  }
+
+  const distance = getDistance(fromPlace.coords, toPlace.coords);
+  if (distance < 2.0) {
+    const hasMotorizedOverride = ['TM', 'SITP', 'Uber', 'Cabify', 'Carro', 'Taxi', 'Tren'].includes(selectedTransport[step.id] || '');
+    if (!hasMotorizedOverride) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+export const transportNames: Record<TransportMode, string> = {
+  TM: 'TransMilenio 🟥',
+  SITP: 'SITP 🟦',
+  Tren: 'Tren de la Sabana 🚂',
+  Uber: 'Uber / Cabify 🚗',
+  Cabify: 'Cabify 🚗',
+  Carro: 'Vehículo Particular 🚗',
+  Taxi: 'Taxi Oficial 🚖',
+  Teleferico: 'Teleférico Monserrate 🚠',
+  Caminata: 'Caminata Peatonal 🚶',
+  Espera: 'Tiempo de Espera ⏱️',
+  Interno: 'Traslado Interno 🚶',
+};
+
+export interface TransportDetails {
+  mode: TransportMode;
+  duration: string;
+  cost: string;
+  label: string;
+}
+
+export function getEffectiveTransportDetails(
+  step: PlanStep,
+  selectedTransport: Record<string, string>
+): TransportDetails {
+  const mode = getEffectiveTransportMode(step, selectedTransport);
+  const selection = selectedTransport[step.id];
+
+  if (step.transportAlternatives) {
+    const alt = step.transportAlternatives.find((a) => a.id === selection || a.mode === selection);
+    if (alt) {
+      return {
+        mode: alt.mode,
+        duration: alt.duration,
+        cost: alt.cost,
+        label: alt.label,
+      };
+    }
+    const recommended = step.transportAlternatives.find((a) => a.isRecommended) || step.transportAlternatives[0];
+    if (recommended && recommended.mode === mode) {
+      return {
+        mode: recommended.mode,
+        duration: recommended.duration,
+        cost: recommended.cost,
+        label: recommended.label,
+      };
+    }
+  }
+
+  if (mode === step.transportMode) {
+    return {
+      mode,
+      duration: step.transportDuration || '15 min',
+      cost: step.transportCost || 'Gratis',
+      label: transportNames[mode] || mode,
+    };
+  }
+
+  const fromPlace = step.fromPlaceId ? getPlaceById(step.fromPlaceId) : null;
+  const toPlace = step.toPlaceId ? getPlaceById(step.toPlaceId) : null;
+  if (fromPlace && toPlace) {
+    const dist = getDistance(fromPlace.coords, toPlace.coords);
+    if (mode === 'Caminata' || mode === 'Interno') {
+      const durationMin = Math.round(dist * 12 + 3);
+      return {
+        mode,
+        duration: `${durationMin} min`,
+        cost: 'Gratis',
+        label: transportNames[mode] || mode,
+      };
+    } else if (mode === 'TM' || mode === 'SITP') {
+      const durationMin = Math.round(dist * 4.5 + 12);
+      return {
+        mode,
+        duration: `${durationMin} min`,
+        cost: '$3.550 c/u',
+        label: transportNames[mode] || mode,
+      };
+    } else if (mode === 'Tren') {
+      return {
+        mode,
+        duration: '60 min',
+        cost: '$96.000 c/u',
+        label: transportNames[mode] || mode,
+      };
+    } else {
+      const durationMin = Math.round(dist * 3.5 + 4);
+      const costK = Math.round(8 + dist * 2.2);
+      return {
+        mode,
+        duration: `${durationMin} min`,
+        cost: `$${costK}.000`,
+        label: transportNames[mode] || mode,
+      };
+    }
+  }
+
+  return {
+    mode,
+    duration: step.transportDuration || '15 min',
+    cost: step.transportCost || 'Gratis',
+    label: transportNames[mode] || mode,
+  };
+}
+
+
