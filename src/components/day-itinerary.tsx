@@ -1,39 +1,59 @@
 'use client';
 
 import { useMemo } from 'react';
-import { dayPlans, getPlaceById, places } from '@/lib/travel-data';
+import { dayPlans, getPlaceById, resolvePlace, type TransportMode } from '@/lib/travel-data';
 import { useTravelStore } from '@/lib/travel-store';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Separator } from '@/components/ui/separator';
-import { cn } from '@/lib/utils';
 import {
-  Calendar,
+  CalendarOff,
+  AlertTriangle,
+  Sparkles,
   Clock,
   MapPin,
-  AlertTriangle,
-  CalendarOff,
-  Sparkles,
+  Navigation,
+  Bus,
+  Car,
+  Footprints,
+  Train,
+  ArrowRight,
+  CheckCircle2,
+  Circle,
 } from 'lucide-react';
+import { cn } from '@/lib/utils';
+
+const transportIcons: Record<TransportMode, { icon: typeof Bus; label: string; color: string }> = {
+  TM: { icon: Bus, label: 'TransMilenio', color: 'text-orange-600' },
+  Tren: { icon: Train, label: 'Tren', color: 'text-blue-600' },
+  Uber: { icon: Car, label: 'Uber', color: 'text-gray-700' },
+  Cabify: { icon: Car, label: 'Cabify', color: 'text-gray-700' },
+  Carro: { icon: Car, label: 'Carro', color: 'text-gray-700' },
+  Taxi: { icon: Car, label: 'Taxi', color: 'text-gray-700' },
+  Teleferico: { icon: Car, label: 'Teleférico', color: 'text-gray-700' },
+  Caminata: { icon: Footprints, label: 'Caminata', color: 'text-green-700' },
+  Espera: { icon: Clock, label: 'Espera', color: 'text-gray-500' },
+  Interno: { icon: MapPin, label: 'Interno', color: 'text-gray-500' },
+};
 
 export default function DayItinerary() {
   const selectedDay = useTravelStore((s) => s.selectedDay);
   const selectedAlternatives = useTravelStore((s) => s.selectedAlternatives);
   const setSelectedPlaceId = useTravelStore((s) => s.setSelectedPlaceId);
   const setSelectedView = useTravelStore((s) => s.setSelectedView);
+  const setSelectedStepId = useTravelStore((s) => s.setSelectedStepId);
+  const selectedStepId = useTravelStore((s) => s.selectedStepId);
+  const setRoute = useTravelStore((s) => s.setRoute);
 
   const dayPlan = useMemo(() => dayPlans.find((d) => d.day === selectedDay), [selectedDay]);
 
-  // Build the list of place IDs to highlight on the map for this day
-  // Including alternatives selected by user
   const routePlaceIds = useMemo(() => {
     if (!dayPlan) return [];
     const ids: string[] = [];
     dayPlan.plan.forEach((item) => {
-      if (item.placeId) {
-        const place = getPlaceById(item.placeId);
-        // If this is a restaurant with a category, check if user selected an alternative
+      const placeId = item.placeId || item.toPlaceId || item.fromPlaceId;
+      if (placeId) {
+        const place = getPlaceById(placeId);
         if (place?.restaurantCategory) {
           const altId = selectedAlternatives[place.restaurantCategory];
           if (altId) {
@@ -41,7 +61,7 @@ export default function DayItinerary() {
             return;
           }
         }
-        ids.push(item.placeId);
+        ids.push(placeId);
       }
     });
     return ids;
@@ -55,8 +75,8 @@ export default function DayItinerary() {
       <Card className={cn('overflow-hidden', dayPlan.isFeriado && 'border-amber-400')}>
         <CardHeader className="pb-3">
           <div className="flex items-start justify-between gap-2">
-            <div>
-              <div className="flex items-center gap-2 mb-1.5">
+            <div className="flex-1">
+              <div className="flex items-center gap-2 mb-1.5 flex-wrap">
                 <Badge variant="secondary" className="text-xs">
                   Día {dayPlan.day} · {dayPlan.weekday} {dayPlan.date}
                 </Badge>
@@ -74,7 +94,7 @@ export default function DayItinerary() {
               <CardTitle className="text-lg leading-tight">{dayPlan.title}</CardTitle>
               <p className="text-sm text-muted-foreground mt-1">{dayPlan.subtitle}</p>
             </div>
-            <div className="text-right">
+            <div className="text-right shrink-0">
               <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Costo 2 pers.</div>
               <div className="text-sm font-bold text-primary">{dayPlan.estimatedCost}</div>
             </div>
@@ -82,73 +102,163 @@ export default function DayItinerary() {
         </CardHeader>
       </Card>
 
-      {/* Timeline */}
+      {/* Timeline with clickable segments */}
       <Card>
         <CardHeader className="pb-3">
           <CardTitle className="text-sm flex items-center gap-2">
             <Clock className="h-4 w-4 text-primary" />
             Itinerario paso a paso
           </CardTitle>
+          <p className="text-[11px] text-muted-foreground mt-1">
+            Clic en cualquier paso para ver la ruta en el mapa y los detalles del lugar
+          </p>
         </CardHeader>
         <CardContent className="pt-0">
           <div className="space-y-0">
-            {dayPlan.plan.map((item, idx) => {
-              // Resolve place: if restaurant with category, check for alternative
-              let place = item.placeId ? getPlaceById(item.placeId) : undefined;
-              if (place?.restaurantCategory) {
-                const altId = selectedAlternatives[place.restaurantCategory];
-                if (altId) {
-                  place = getPlaceById(altId);
+            {dayPlan.plan.map((step, idx) => {
+              const isActive = selectedStepId === step.id;
+              const place = resolvePlace(step.placeId, selectedAlternatives);
+              const fromPlace = resolvePlace(step.fromPlaceId, selectedAlternatives);
+              const toPlace = resolvePlace(step.toPlaceId, selectedAlternatives);
+              const isMovement = !!step.isMovement;
+              const transport = step.transportMode ? transportIcons[step.transportMode] : null;
+              const TransportIcon = transport?.icon || MapPin;
+
+              const handleStepClick = () => {
+                setSelectedStepId(step.id);
+
+                if (isMovement && fromPlace && toPlace) {
+                  // Set the route on the map
+                  const mode = step.transportMode;
+                  let gmapsMode: 'driving' | 'transit' | 'walking' | 'bicycling' = 'driving';
+                  if (mode === 'TM' || mode === 'Tren') gmapsMode = 'transit';
+                  else if (mode === 'Caminata') gmapsMode = 'walking';
+                  setRoute(fromPlace.id, toPlace.id, gmapsMode);
+                  setSelectedPlaceId(toPlace.id);
+                } else if (place) {
+                  setSelectedPlaceId(place.id);
+                  useTravelStore.getState().clearRoute();
                 }
-              }
+                setSelectedView('mapa');
+              };
 
               return (
-                <div key={idx} className="relative flex gap-3 pb-4 last:pb-0">
+                <div key={step.id} className="relative flex gap-3 pb-3 last:pb-0">
                   {/* Timeline line */}
                   {idx < dayPlan.plan.length - 1 && (
-                    <div className="absolute left-[7px] top-5 bottom-0 w-px bg-border" />
+                    <div className={cn(
+                      'absolute left-[11px] top-7 bottom-0 w-0.5',
+                      isMovement ? 'bg-primary/30' : 'bg-border'
+                    )} />
                   )}
 
-                  {/* Time dot */}
-                  <div className="relative shrink-0">
-                    <div
-                      className={cn(
-                        'w-3.5 h-3.5 rounded-full border-2 mt-1',
-                        place
-                          ? 'bg-primary border-primary'
-                          : 'bg-background border-muted-foreground/40'
-                      )}
-                    />
-                  </div>
+                  {/* Step dot/icon */}
+                  <button
+                    onClick={handleStepClick}
+                    className={cn(
+                      'relative shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center transition-all',
+                      isActive
+                        ? 'bg-primary border-primary text-primary-foreground scale-110 shadow-md'
+                        : isMovement
+                        ? 'bg-card border-primary/50 text-primary hover:border-primary'
+                        : 'bg-card border-muted-foreground/40 text-muted-foreground hover:border-primary'
+                    )}
+                  >
+                    {isMovement ? (
+                      <TransportIcon className="h-3 w-3" />
+                    ) : isActive ? (
+                      <CheckCircle2 className="h-3.5 w-3.5" />
+                    ) : (
+                      <Circle className="h-2.5 w-2.5 fill-current" />
+                    )}
+                  </button>
 
                   {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="text-[11px] font-mono font-semibold text-primary mb-0.5">
-                      {item.time}
+                  <button
+                    onClick={handleStepClick}
+                    className={cn(
+                      'flex-1 min-w-0 text-left rounded-lg p-2.5 transition-all',
+                      isActive
+                        ? 'bg-primary/10 ring-1 ring-primary'
+                        : 'hover:bg-muted/50'
+                    )}
+                  >
+                    {/* Time + transport mode badge */}
+                    <div className="flex items-center gap-2 mb-1 flex-wrap">
+                      <span className="text-[11px] font-mono font-bold text-primary">
+                        {step.time}
+                      </span>
+                      {transport && (
+                        <Badge
+                          variant="outline"
+                          className={cn(
+                            'text-[10px] py-0 h-4 gap-0.5',
+                            transport.color,
+                            'border-current/30'
+                          )}
+                        >
+                          <TransportIcon className="h-2.5 w-2.5" />
+                          {transport.label}
+                          {step.transportDuration && ` · ${step.transportDuration}`}
+                        </Badge>
+                      )}
                     </div>
-                    {place ? (
-                      <button
-                        onClick={() => {
-                          setSelectedPlaceId(place!.id);
-                          setSelectedView('mapa');
-                        }}
-                        className="text-left group w-full"
-                      >
-                        <div className="font-medium text-sm text-foreground group-hover:text-primary transition-colors flex items-center gap-1">
-                          <MapPin className="h-3 w-3 text-primary" />
-                          {place.name}
-                        </div>
-                        <div className="text-xs text-muted-foreground mt-0.5">{item.activity}</div>
+
+                    {/* Activity description */}
+                    <div className={cn(
+                      'text-sm text-foreground',
+                      isMovement && 'font-medium'
+                    )}>
+                      {step.activity}
+                    </div>
+
+                    {/* Place name (resolved with alternative) */}
+                    {place && (
+                      <div className="flex items-center gap-1 mt-1 text-xs">
+                        <MapPin className="h-3 w-3 text-primary shrink-0" />
+                        <span className="font-medium text-foreground truncate">{place.name}</span>
                         {place.priceRange && (
-                          <div className="text-[11px] text-primary font-medium mt-0.5">{place.priceRange}</div>
+                          <span className="text-[11px] text-primary font-medium ml-1">
+                            · {place.priceRange.split(' por')[0]}
+                          </span>
                         )}
-                      </button>
-                    ) : (
-                      <div>
-                        <div className="text-sm text-foreground">{item.activity}</div>
                       </div>
                     )}
-                  </div>
+
+                    {/* Movement: from → to */}
+                    {isMovement && fromPlace && toPlace && (
+                      <div className="flex items-center gap-1.5 mt-1.5 text-xs text-muted-foreground">
+                        <span className="font-medium text-foreground truncate">{fromPlace.name}</span>
+                        <ArrowRight className="h-3 w-3 shrink-0" />
+                        <span className="font-medium text-foreground truncate">{toPlace.name}</span>
+                        {step.transportCost && (
+                          <span className="text-primary font-medium ml-1">· {step.transportCost}</span>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Transport notes */}
+                    {step.transportNotes && (
+                      <div className="text-[11px] text-muted-foreground italic mt-1 leading-snug">
+                        {step.transportNotes}
+                      </div>
+                    )}
+
+                    {/* Step notes */}
+                    {step.notes && !step.transportNotes && (
+                      <div className="text-[11px] text-muted-foreground italic mt-1 leading-snug">
+                        {step.notes}
+                      </div>
+                    )}
+
+                    {/* Active indicator */}
+                    {isActive && (
+                      <div className="flex items-center gap-1 mt-1.5 text-[10px] text-primary font-semibold">
+                        <Navigation className="h-2.5 w-2.5" />
+                        Mostrando ruta en el mapa →
+                      </div>
+                    )}
+                  </button>
                 </div>
               );
             })}
@@ -200,13 +310,13 @@ export default function DayItinerary() {
       <Card className="bg-muted/30 border-dashed">
         <CardContent className="pt-4 grid grid-cols-3 gap-2 text-center">
           <div>
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Paradas</div>
-            <div className="text-lg font-bold text-foreground">{routePlaceIds.length}</div>
+            <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Pasos</div>
+            <div className="text-lg font-bold text-foreground">{dayPlan.plan.length}</div>
           </div>
           <div>
-            <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Lugares</div>
+            <div className="text-[10px] uppercase tracking-wider text-muted-foreground font-semibold">Trayectos</div>
             <div className="text-lg font-bold text-foreground">
-              {routePlaceIds.filter((id, i, arr) => arr.indexOf(id) === i).length}
+              {dayPlan.plan.filter((s) => s.isMovement).length}
             </div>
           </div>
           <div>

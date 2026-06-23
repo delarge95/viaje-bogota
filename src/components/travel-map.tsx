@@ -1,208 +1,225 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
-import L from 'leaflet';
-import { places, getPlaceById, type Place, type LatLng } from '@/lib/travel-data';
+import { useMemo } from 'react';
+import {
+  places,
+  getPlaceById,
+  resolvePlace,
+  toGoogleMapsMode,
+  type Place,
+  type LatLng,
+} from '@/lib/travel-data';
 import { useTravelStore } from '@/lib/travel-store';
-
-// Fix for default marker icons in Leaflet with bundlers
-delete (L.Icon.Default.prototype as { _getIconUrl?: unknown })._getIconUrl;
-L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon-2x.png',
-  iconUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png',
-  shadowUrl: 'https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png',
-});
-
-const categoryConfig: Record<string, { color: string; symbol: string; label: string }> = {
-  alojamiento: { color: '#C2410C', symbol: '⌂', label: 'Alojamiento' },
-  cultura: { color: '#C2410C', symbol: '◆', label: 'Cultura' },
-  naturaleza: { color: '#166534', symbol: '▲', label: 'Naturaleza' },
-  restaurante: { color: '#B45309', symbol: '●', label: 'Restaurante' },
-  mercado: { color: '#B45309', symbol: '◆', label: 'Mercado' },
-  transporte: { color: '#6B7280', symbol: '■', label: 'Transporte' },
-  compras: { color: '#C2410C', symbol: '●', label: 'Compras' },
-};
-
-function createCustomIcon(place: Place, isActive: boolean, isAlternative: boolean) {
-  const config = categoryConfig[place.category] || categoryConfig.restaurante;
-  const size = isActive ? 36 : 28;
-  const opacity = isAlternative ? 0.65 : 1;
-  const border = isAlternative ? 'dashed' : 'solid';
-
-  return L.divIcon({
-    className: 'custom-marker',
-    html: `
-      <div style="
-        width: ${size}px;
-        height: ${size}px;
-        border-radius: 50% 50% 50% 0;
-        background: ${config.color};
-        transform: rotate(-45deg);
-        border: 2px ${border} white;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
-        opacity: ${opacity};
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        ${isActive ? 'z-index: 1000; transform: rotate(-45deg) scale(1.15);' : ''}
-      ">
-        <div style="
-          transform: rotate(45deg);
-          color: white;
-          font-size: ${size * 0.45}px;
-          font-weight: bold;
-          line-height: 1;
-        ">${config.symbol}</div>
-      </div>
-    `,
-    iconSize: [size, size],
-    iconAnchor: [size / 2, size],
-    popupAnchor: [0, -size],
-  });
-}
-
-function MapBoundsFitter({ placesToFit }: { placesToFit: LatLng[] }) {
-  const map = useMap();
-  useEffect(() => {
-    if (placesToFit.length === 0) return;
-    if (placesToFit.length === 1) {
-      map.setView(placesToFit[0], 14, { animate: true });
-    } else {
-      const bounds = L.latLngBounds(placesToFit);
-      map.fitBounds(bounds, { padding: [60, 60], maxZoom: 14, animate: true });
-    }
-  }, [placesToFit, map]);
-  return null;
-}
+import { Button } from '@/components/ui/button';
+import { ExternalLink, Navigation, MapPin } from 'lucide-react';
 
 interface TravelMapProps {
   highlightedPlaceIds?: string[];
-  routePlaceIds?: string[];
-  showAll?: boolean;
   height?: string;
 }
 
+/**
+ * Mapa interactivo usando Google Maps Embed (sin API key necesaria).
+ * Muestra:
+ * - Vista general de todos los lugares con marcadores (modo "place")
+ * - Ruta real entre origen y destino cuando el usuario selecciona un segmento (modo "directions")
+ *
+ * El iframe de Google Maps Embed funciona sin API key usando el formato:
+ * https://www.google.com/maps?saddr=...&daddr=...&dirflg=r (transit) | b (bicycling) | w (walking)
+ * o con el parámetro output=embed para mostrar el mapa embebido.
+ */
 export default function TravelMap({
   highlightedPlaceIds = [],
-  routePlaceIds = [],
-  showAll = false,
   height = '500px',
 }: TravelMapProps) {
   const selectedPlaceId = useTravelStore((s) => s.selectedPlaceId);
-  const setSelectedPlaceId = useTravelStore((s) => s.setSelectedPlaceId);
+  const selectedAlternatives = useTravelStore((s) => s.selectedAlternatives);
+  const routeOriginId = useTravelStore((s) => s.routeOriginId);
+  const routeDestinationId = useTravelStore((s) => s.routeDestinationId);
+  const routeMode = useTravelStore((s) => s.routeMode);
+  const clearRoute = useTravelStore((s) => s.clearRoute);
 
-  // Determine which places to show
-  const visiblePlaces = useMemo(() => {
-    if (showAll) return places;
-    const idsToShow = new Set<string>([...highlightedPlaceIds, ...routePlaceIds, 'alojamiento']);
-    return places.filter((p) => idsToShow.has(p.id));
-  }, [showAll, highlightedPlaceIds, routePlaceIds]);
+  // Resolve origin and destination places (considering alternatives)
+  const originPlace = useMemo(
+    () => resolvePlace(routeOriginId, selectedAlternatives),
+    [routeOriginId, selectedAlternatives]
+  );
+  const destinationPlace = useMemo(
+    () => resolvePlace(routeDestinationId, selectedAlternatives),
+    [routeDestinationId, selectedAlternatives]
+  );
 
-  // Build route polyline from routePlaceIds
-  const routePoints: LatLng[] = useMemo(() => {
-    return routePlaceIds
-      .map((id) => getPlaceById(id))
-      .filter((p): p is Place => !!p)
-      .map((p) => p.coords);
-  }, [routePlaceIds]);
+  // Build the Google Maps embed URL
+  const mapEmbedUrl = useMemo(() => {
+    // If we have a route, show directions
+    if (originPlace && destinationPlace) {
+      const origin = `${originPlace.coords[0]},${originPlace.coords[1]}`;
+      const destination = `${destinationPlace.coords[0]},${destinationPlace.coords[1]}`;
+      // dirflg: r = transit (TransMilenio/tren), w = walking, b = bicycling, d = driving (default)
+      let dirflg = '';
+      switch (routeMode) {
+        case 'transit':
+          dirflg = 'r';
+          break;
+        case 'walking':
+          dirflg = 'w';
+          break;
+        case 'bicycling':
+          dirflg = 'b';
+          break;
+        default:
+          dirflg = 'd';
+      }
+      return `https://www.google.com/maps?saddr=${origin}&daddr=${destination}&dirflg=${dirflg}&output=embed&hl=es`;
+    }
 
-  // Places to fit in view
-  const placesToFit = useMemo(() => {
-    if (visiblePlaces.length === 0) return [[4.6760, -74.0520] as LatLng]; // default Calle 94
-    return visiblePlaces.map((p) => p.coords);
-  }, [visiblePlaces]);
+    // If a place is selected, center on it
+    if (selectedPlaceId) {
+      const place = resolvePlace(selectedPlaceId, selectedAlternatives);
+      if (place) {
+        const [lat, lng] = place.coords;
+        return `https://www.google.com/maps?q=${lat},${lng}&z=15&output=embed&hl=es`;
+      }
+    }
+
+    // Default: show overview of all highlighted places or all places
+    const idsToShow = highlightedPlaceIds.length > 0 ? highlightedPlaceIds : places.map((p) => p.id);
+    const placesToShow = idsToShow
+      .map((id) => resolvePlace(id, selectedAlternatives))
+      .filter((p): p is Place => !!p);
+
+    if (placesToShow.length === 0) {
+      // Fallback: center on Bogotá
+      return `https://www.google.com/maps?q=Bogotá,Colombia&z=12&output=embed&hl=es`;
+    }
+
+    // If only one place, center on it
+    if (placesToShow.length === 1) {
+      const [lat, lng] = placesToShow[0].coords;
+      return `https://www.google.com/maps?q=${lat},${lng}&z=15&output=embed&hl=es`;
+    }
+
+    // Multiple places: use the first as center and create a bounding box via search
+    // Google Maps embed doesn't support multiple markers without API key,
+    // so we center between the extremes and show a search for the first place
+    const lats = placesToShow.map((p) => p.coords[0]);
+    const lngs = placesToShow.map((p) => p.coords[1]);
+    const centerLat = (Math.min(...lats) + Math.max(...lats)) / 2;
+    const centerLng = (Math.min(...lngs) + Math.max(...lngs)) / 2;
+
+    // Calculate appropriate zoom based on spread
+    const latSpread = Math.max(...lats) - Math.min(...lats);
+    const lngSpread = Math.max(...lngs) - Math.min(...lngs);
+    const maxSpread = Math.max(latSpread, lngSpread);
+    let zoom = 12;
+    if (maxSpread > 0.15) zoom = 10;
+    else if (maxSpread > 0.08) zoom = 11;
+    else if (maxSpread > 0.04) zoom = 12;
+    else if (maxSpread > 0.02) zoom = 13;
+    else zoom = 14;
+
+    return `https://www.google.com/maps?q=${centerLat},${centerLng}&z=${zoom}&output=embed&hl=es`;
+  }, [originPlace, destinationPlace, selectedPlaceId, highlightedPlaceIds, selectedAlternatives, routeMode]);
+
+  // Build a link to open in Google Maps (new tab) with the same route
+  const openInGoogleMapsUrl = useMemo(() => {
+    if (originPlace && destinationPlace) {
+      const origin = `${originPlace.coords[0]},${originPlace.coords[1]}`;
+      const destination = `${destinationPlace.coords[0]},${destinationPlace.coords[1]}`;
+      let mode = 'driving';
+      switch (routeMode) {
+        case 'transit':
+          mode = 'transit';
+          break;
+        case 'walking':
+          mode = 'walking';
+          break;
+        case 'bicycling':
+          mode = 'bicycling';
+          break;
+      }
+      return `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&travelmode=${mode}&hl=es`;
+    }
+    if (selectedPlaceId) {
+      const place = resolvePlace(selectedPlaceId, selectedAlternatives);
+      if (place) {
+        return `https://www.google.com/maps/search/?api=1&query=${place.coords[0]},${place.coords[1]}&hl=es`;
+      }
+    }
+    return 'https://www.google.com/maps/place/Bogotá/@4.6763,-74.0481,12z/data=!3m1!4b1!4m5!3m4!1s0x8e3f9bfd1da6cb15:0x68f5f4f7b9b5c9f5!8m2!3d4.711!4d-74.0721?hl=es';
+  }, [originPlace, destinationPlace, selectedPlaceId, selectedAlternatives, routeMode]);
+
+  // Determine display state
+  const isRouteActive = !!(originPlace && destinationPlace);
 
   return (
-    <div style={{ height, width: '100%' }} className="rounded-lg overflow-hidden border border-border">
-      <MapContainer
-        center={[4.6760, -74.0520]}
-        zoom={12}
-        style={{ height: '100%', width: '100%' }}
-        scrollWheelZoom={false}
-      >
-        <TileLayer
-          attribution='&copy; OpenStreetMap contributors'
-          url="https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png"
+    <div className="flex flex-col" style={{ height }}>
+      {/* Map iframe */}
+      <div className="flex-1 relative rounded-lg overflow-hidden border border-border bg-muted/40">
+        <iframe
+          key={mapEmbedUrl}
+          src={mapEmbedUrl}
+          width="100%"
+          height="100%"
+          style={{ border: 0, minHeight: '100%' }}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          allowFullScreen
+          title="Mapa Bogotá"
         />
 
-        <MapBoundsFitter placesToFit={placesToFit} />
-
-        {/* Route polyline */}
-        {routePoints.length > 1 && (
-          <Polyline
-            positions={routePoints}
-            pathOptions={{
-              color: '#C2410C',
-              weight: 3,
-              opacity: 0.85,
-              dashArray: '8, 6',
-            }}
-          />
-        )}
-
-        {/* Markers */}
-        {visiblePlaces.map((place) => {
-          const isActive = place.id === selectedPlaceId;
-          const isAlternative = !!place.isAlternative;
-          return (
-            <Marker
-              key={place.id}
-              position={place.coords}
-              icon={createCustomIcon(place, isActive, isAlternative)}
-              eventHandlers={{
-                click: () => setSelectedPlaceId(place.id),
-              }}
-            >
-              <Popup>
-                <div className="min-w-[200px]">
-                  <div className="font-semibold text-foreground text-sm mb-1">{place.name}</div>
-                  <div className="text-xs text-muted-foreground mb-1.5">{place.address}</div>
-                  {place.priceRange && (
-                    <div className="text-xs font-medium text-primary mb-1">{place.priceRange}</div>
-                  )}
-                  {place.hours && (
-                    <div className="text-xs text-muted-foreground mb-1.5">
-                      <span className="font-medium">Horario:</span> {place.hours}
-                    </div>
-                  )}
-                  {place.rating && place.rating.score > 0 && (
-                    <div className="text-xs mb-1.5">
-                      <span className="font-medium">⭐ {place.rating.score}/5</span>
-                      <span className="text-muted-foreground"> ({place.rating.reviews} reseñas · {place.rating.source})</span>
-                      {place.meetsCriteria && (
-                        <span className="ml-1 text-green-700 text-xs font-medium">✓ cumple criterio</span>
-                      )}
-                    </div>
-                  )}
-                  {place.web && (
-                    <a
-                      href={place.web}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs text-primary hover:underline"
-                    >
-                      Ver sitio web →
-                    </a>
-                  )}
-                  {place.googleMapsUrl && (
-                    <div>
-                      <a
-                        href={place.googleMapsUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-primary hover:underline"
-                      >
-                        Abrir en Google Maps →
-                      </a>
-                    </div>
-                  )}
+        {/* Overlay info when route is active */}
+        {isRouteActive && (
+          <div className="absolute top-3 left-3 right-3 bg-card/95 backdrop-blur-sm border border-border rounded-lg p-3 shadow-lg">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex-1 min-w-0">
+                <div className="flex items-center gap-2 mb-1.5">
+                  <Navigation className="h-4 w-4 text-primary shrink-0" />
+                  <span className="text-xs font-bold uppercase tracking-wide text-primary">
+                    Ruta activa · {routeMode === 'transit' ? 'TransMilenio' : routeMode === 'walking' ? 'Caminata' : routeMode === 'bicycling' ? 'Bicicleta' : 'Carro/Uber/Taxi'}
+                  </span>
                 </div>
-              </Popup>
-            </Marker>
-          );
-        })}
-      </MapContainer>
+                <div className="space-y-1">
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
+                    <span className="font-medium text-foreground truncate">{originPlace.name}</span>
+                  </div>
+                  <div className="flex items-center gap-2 text-xs">
+                    <span className="w-2 h-2 rounded-full bg-primary shrink-0" />
+                    <span className="font-medium text-foreground truncate">{destinationPlace.name}</span>
+                  </div>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-7 text-xs shrink-0"
+                onClick={clearRoute}
+              >
+                ✕ Cerrar ruta
+              </Button>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Footer with link to open in Google Maps */}
+      <div className="mt-2 flex items-center justify-between gap-2 px-1">
+        <div className="text-[11px] text-muted-foreground flex items-center gap-1.5">
+          <MapPin className="h-3 w-3" />
+          {isRouteActive
+            ? 'Ruta con direcciones reales (caminata, TM, carro)'
+            : selectedPlaceId
+            ? 'Lugar seleccionado'
+            : `${highlightedPlaceIds.length || places.length} lugares en el itinerario`}
+        </div>
+        <Button variant="outline" size="sm" className="h-7 text-xs" asChild>
+          <a href={openInGoogleMapsUrl} target="_blank" rel="noopener noreferrer">
+            <ExternalLink className="h-3 w-3 mr-1" />
+            Abrir en Google Maps
+          </a>
+        </Button>
+      </div>
     </div>
   );
 }

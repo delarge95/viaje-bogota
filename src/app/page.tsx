@@ -1,7 +1,7 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
-import { dayPlans, getPlaceById, places } from '@/lib/travel-data';
+import { useMemo } from 'react';
+import { dayPlans, getPlaceById, resolvePlace, places } from '@/lib/travel-data';
 import { useTravelStore } from '@/lib/travel-store';
 import dynamic from 'next/dynamic';
 import PlaceDetail from '@/components/place-detail';
@@ -21,10 +21,11 @@ import {
   Compass,
   Clock,
   Phone,
+  MapPin,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
-// Dynamically import TravelMap with ssr:false to avoid window not defined
+// Dynamically import TravelMap with ssr:false (Google Maps iframe needs browser)
 const TravelMap = dynamic(() => import('@/components/travel-map'), {
   ssr: false,
   loading: () => (
@@ -45,38 +46,29 @@ export default function Home() {
   const setSelectedView = useTravelStore((s) => s.setSelectedView);
   const selectedPlaceId = useTravelStore((s) => s.selectedPlaceId);
   const selectedAlternatives = useTravelStore((s) => s.selectedAlternatives);
+  const routeOriginId = useTravelStore((s) => s.routeOriginId);
+  const routeDestinationId = useTravelStore((s) => s.routeDestinationId);
 
   const dayPlan = useMemo(() => dayPlans.find((d) => d.day === selectedDay), [selectedDay]);
 
-  // Build route place IDs for the map - considering selected alternatives
-  const routePlaceIds = useMemo(() => {
-    if (!dayPlan) return [];
-    const ids: string[] = [];
-    dayPlan.plan.forEach((item) => {
-      if (item.placeId) {
-        const place = getPlaceById(item.placeId);
-        if (place?.restaurantCategory) {
-          const altId = selectedAlternatives[place.restaurantCategory];
-          if (altId) {
-            ids.push(altId);
-            return;
-          }
-        }
-        ids.push(item.placeId);
-      }
-    });
-    return ids;
-  }, [dayPlan, selectedAlternatives]);
-
-  // Highlighted place IDs (route + alternatives for this day)
+  // Build place IDs that appear in this day's plan (considering alternatives)
   const highlightedPlaceIds = useMemo(() => {
-    const ids = new Set<string>(routePlaceIds);
-    dayPlan?.alternatives?.forEach((alt) => alt.placeIds.forEach((id) => ids.add(id)));
+    if (!dayPlan) return [];
+    const ids = new Set<string>();
+    dayPlan.plan.forEach((step) => {
+      [step.placeId, step.fromPlaceId, step.toPlaceId].forEach((pid) => {
+        if (pid) ids.add(pid);
+      });
+    });
+    dayPlan.alternatives?.forEach((alt) => alt.placeIds.forEach((id) => ids.add(id)));
     return Array.from(ids);
-  }, [routePlaceIds, dayPlan]);
+  }, [dayPlan]);
 
-  // Selected place (for detail panel)
-  const selectedPlace = selectedPlaceId ? getPlaceById(selectedPlaceId) : null;
+  // Selected place (for detail panel) - resolve with alternatives
+  const selectedPlace = selectedPlaceId ? resolvePlace(selectedPlaceId, selectedAlternatives) : null;
+
+  // Is a route currently active?
+  const isRouteActive = !!(routeOriginId && routeDestinationId);
 
   // Quick stats
   const totalPlaces = places.length;
@@ -163,8 +155,8 @@ export default function Home() {
             'space-y-4',
             selectedView === 'itinerario' && 'lg:col-span-5',
             selectedView === 'mapa' && 'lg:col-span-5',
-            selectedView === 'restaurantes' && 'lg:col-span-8',
-            selectedView === 'info' && 'lg:col-span-8',
+            selectedView === 'restaurantes' && 'lg:col-span-12',
+            selectedView === 'info' && 'lg:col-span-12',
           )}>
             {selectedView === 'itinerario' && <DayItinerary />}
             {selectedView === 'mapa' && (
@@ -175,7 +167,7 @@ export default function Home() {
                   <Card className="border-dashed">
                     <CardContent className="pt-6 text-center text-sm text-muted-foreground">
                       <MapIcon className="h-8 w-8 mx-auto mb-2 opacity-40" />
-                      Selecciona un marcador en el mapa para ver detalles del lugar
+                      Selecciona un paso del itinerario o un lugar del mapa para ver detalles y rutas
                     </CardContent>
                   </Card>
                 )}
@@ -186,50 +178,42 @@ export default function Home() {
             {selectedView === 'info' && <InfoPanel />}
           </div>
 
-          {/* RIGHT COLUMN - Map (always visible on mapa view; sticky on others) */}
+          {/* RIGHT COLUMN - Map (always visible on itinerario and mapa views; sticky) */}
           {(selectedView === 'itinerario' || selectedView === 'mapa') && (
             <div className="lg:col-span-7 lg:sticky lg:top-24 lg:self-start space-y-3">
               <Card className="overflow-hidden p-0 border-border">
                 <div className="px-3 py-2 border-b border-border bg-muted/40 flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <MapIcon className="h-4 w-4 text-primary" />
-                    <span className="text-sm font-semibold">
-                      {selectedView === 'itinerario' && `Mapa · Día ${selectedDay} · ${dayPlan?.weekday}`}
-                      {selectedView === 'mapa' && `Mapa interactivo · ${highlightedPlaceIds.length} lugares`}
+                  <div className="flex items-center gap-2 min-w-0">
+                    <MapIcon className="h-4 w-4 text-primary shrink-0" />
+                    <span className="text-sm font-semibold truncate">
+                      {isRouteActive
+                        ? `Ruta · Día ${selectedDay}`
+                        : `Mapa · Día ${selectedDay} · ${dayPlan?.weekday}`}
                     </span>
                   </div>
                   <Button
                     variant="ghost"
                     size="sm"
-                    className="text-xs h-7"
+                    className="text-xs h-7 shrink-0"
                     onClick={() => setSelectedView('mapa')}
                   >
                     Ver mapa completo →
                   </Button>
                 </div>
-                <TravelMap
-                  highlightedPlaceIds={highlightedPlaceIds}
-                  routePlaceIds={routePlaceIds}
-                  showAll={selectedView === 'mapa' && !selectedPlaceId}
-                  height="560px"
-                />
+                <div className="p-3">
+                  <TravelMap
+                    highlightedPlaceIds={highlightedPlaceIds}
+                    height="560px"
+                  />
+                </div>
               </Card>
 
-              {/* Legend */}
-              <Card className="p-3">
-                <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-[11px]">
-                  <span className="font-semibold text-muted-foreground">Leyenda:</span>
-                  <LegendDot color="#C2410C" label="Cultura / Alojamiento" />
-                  <LegendDot color="#166534" label="Naturaleza" />
-                  <LegendDot color="#B45309" label="Restaurantes / Mercado" />
-                  <LegendDot color="#6B7280" label="Transporte" />
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-3 h-3 rounded-full border-2 border-dashed border-foreground/60" />
-                    <span className="text-muted-foreground">Alternativa</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <div className="w-4 h-0.5 bg-primary" style={{ backgroundImage: 'linear-gradient(90deg, #C2410C 60%, transparent 60%)', backgroundSize: '8px 2px' }} />
-                    <span className="text-muted-foreground">Ruta del día</span>
+              {/* Tip card */}
+              <Card className="p-3 bg-primary/5 border-primary/20">
+                <div className="flex items-start gap-2 text-[11px] text-muted-foreground">
+                  <MapPin className="h-3.5 w-3.5 text-primary shrink-0 mt-0.5" />
+                  <div>
+                    <span className="font-semibold text-foreground">Tip:</span> Clic en cualquier paso del itinerario (ícono de bus, carro o caminata) para ver la ruta exacta en el mapa. El modo de transporte (TransMilenio, Uber, caminata) se aplica automáticamente a Google Maps.
                   </div>
                 </div>
               </Card>
@@ -254,18 +238,6 @@ export default function Home() {
           </div>
         </div>
       </footer>
-    </div>
-  );
-}
-
-function LegendDot({ color, label }: { color: string; label: string }) {
-  return (
-    <div className="flex items-center gap-1.5">
-      <div
-        className="w-3 h-3 rounded-full"
-        style={{ background: color, border: '1.5px solid white', boxShadow: '0 0 0 1px ' + color }}
-      />
-      <span className="text-muted-foreground">{label}</span>
     </div>
   );
 }

@@ -56,13 +56,30 @@ export interface Place {
   googleMapsUrl?: string;
 }
 
+export type TransportMode = 'TM' | 'Uber' | 'Cabify' | 'Carro' | 'Caminata' | 'Tren' | 'Taxi' | 'Teleferico' | 'Espera' | 'Interno';
+
 export interface RouteSegment {
   from: string; // place id
   to: string; // place id
-  mode: 'TM' | 'Uber' | 'Carro' | 'Caminata' | 'Tren' | 'Taxi';
+  mode: TransportMode;
   duration: string;
   cost: string;
   notes?: string;
+}
+
+export interface PlanStep {
+  id: string; // unique within day
+  time: string;
+  placeId?: string;          // place where activity happens
+  fromPlaceId?: string;      // if movement: origin
+  toPlaceId?: string;        // if movement: destination
+  transportMode?: TransportMode; // if movement: mode of transport
+  transportDuration?: string;    // e.g. "45 min"
+  transportCost?: string;        // e.g. "$3.550 c/u" or "$25-35k"
+  transportNotes?: string;       // route tips
+  activity: string;
+  notes?: string;
+  isMovement?: boolean;      // true if this step is primarily a transport between places
 }
 
 export interface DayPlan {
@@ -73,12 +90,7 @@ export interface DayPlan {
   subtitle: string;
   isFeriado?: boolean;
   isRestriccionMedica?: boolean;
-  plan: {
-    time: string;
-    placeId?: string;
-    activity: string;
-    notes?: string;
-  }[];
+  plan: PlanStep[];
   alternatives?: {
     label: string;
     description: string;
@@ -505,6 +517,38 @@ export const places: Place[] = [
           { name: 'Mercado Floral Colombia (Local 87056)', description: 'flores mayorista y detalle', price: 'variable' },
           { name: 'Empanadas Don Camilo (Local 80074)', description: 'empanadas', price: '$3-5k c/u' },
           { name: 'Donde Coca (Local 80138)', description: 'cocina tradicional colombiana', price: '$10-18k' },
+        ],
+      },
+    ],
+  },
+  {
+    id: 'lechoneria-dona-rosalba',
+    name: 'Lechonería Doña Rosalba',
+    category: 'restaurante',
+    restaurantCategory: 'lechona',
+    coords: [4.6188, -74.0848],
+    address: 'Local 80228, Plaza de Mercado Paloquemao, Av. Calle 19 # 25-04, Bogotá',
+    phone: '310 629 1837 / 310 258 9581 (tamales con anticipación)',
+    instagram: '@lechoneria_dona_rosalba',
+    hours: 'L-S 07:00-16:00 · D y Festivos 07:00-14:00 (abre festivos 20 julio)',
+    notes: '50 años de tradición en Paloquemao. Lechona bogotana (con arroz) vs tolimense (sin arroz): preguntar opción disponible. Pedido de tamales requiere anticipación (llamar 3102589581 o 3106291837). Llevar efectivo en billetes pequeños.',
+    priceRange: '$15.000 - $30.000 por persona',
+    menu: [
+      {
+        title: 'LECHONA Y TAMALES TOLIMENSES',
+        items: [
+          { name: 'Lechona bogotana (con arroz) por libra', description: 'cerdo relleno de arroz y arveja, cuerito crocante', price: 'consultar (~$20-25k/libra)' },
+          { name: 'Lechona tolimense (sin arroz)', description: 'receta tradicional del Tolima', price: 'consultar' },
+          { name: 'Porción individual de lechona', description: 'con arepa y cuero', price: '$12.000-15.000' },
+          { name: 'Tamal tolimense', description: 'pedir con anticipación', price: '$8.000-12.000' },
+          { name: 'Mixto Especial (Tamal + Lechona 850g + Arepa)', description: 'combo tradicional', price: '$16.000' },
+          { name: 'Mixto Corriente (Tamal + Lechona 600g)', description: 'combo económico', price: '$12.000' },
+        ],
+      },
+      {
+        title: 'BEBIDAS',
+        items: [
+          { name: 'Gaseosas (Postobón/Hit)', description: 'varios tamaños', price: '$3.000-8.000' },
         ],
       },
     ],
@@ -972,14 +1016,16 @@ export const dayPlans: DayPlan[] = [
     title: 'Llegada + Universidad Nacional (Nacho)',
     subtitle: 'Aeropuerto → Calle 94 → Tarde en campus + Parkway',
     plan: [
-      { time: '10:00 AM', placeId: 'aeropuerto', activity: 'Llegada Aeropuerto El Dorado. Taxi oficial $35-50k.' },
-      { time: '10:40-11:30', placeId: 'alojamiento', activity: 'Traslado a alojamiento Calle 94. Check-in.' },
-      { time: '11:30-12:00', activity: 'Comprar TuLlave personalizada en estación Calle 100-Marketmedios (2× $8.000 + $20.000 recarga = $56.000).' },
-      { time: '12:00-12:50', placeId: 'unal', activity: 'TM Calle 100 → Universidad Nacional (troncal B → E). ~40-55 min.' },
-      { time: '1:00-2:00 PM', activity: 'Almuerzo: Comedor "Chucho León" UNAL o buffet Calle 44 #15-14 (~$11k c/u).' },
-      { time: '2:00-5:00', placeId: 'unal', activity: 'Recorrido arquitectónico: Plaza Che → Auditorio León de Greiff → Museo Arquitectura Rother → Residencias → Edificio Salmona.' },
-      { time: '5:00-7:00', placeId: 'parkway', activity: 'Salida por Calle 45 hacia Parkway. Cena en Matrona, Oliveto o Casa Obrador.' },
-      { time: '7:30-8:30', placeId: 'alojamiento', activity: 'Regreso Calle 94.' },
+      { id: 'd1-1', time: '10:00 AM', placeId: 'aeropuerto', activity: 'Llegada Aeropuerto El Dorado. Migración, maletas.', notes: 'Taxi oficial aeropuerto disponible en terminal.' },
+      { id: 'd1-2', time: '10:00-10:40', fromPlaceId: 'aeropuerto', toPlaceId: 'alojamiento', transportMode: 'Taxi', transportDuration: '25-40 min', transportCost: '$35.000-50.000', transportNotes: 'Taxi oficial del aeropuerto (tiquete con precio exacto). NO usar Uber dentro del aeropuerto por restricciones.', isMovement: true, activity: 'Traslado Aeropuerto → Alojamiento Calle 94' },
+      { id: 'd1-3', time: '10:40-11:30', placeId: 'alojamiento', activity: 'Check-in, dejar maletas, cambio de ropa.' },
+      { id: 'd1-4', time: '11:30-12:00', placeId: 'alojamiento', activity: 'Comprar tarjeta TuLlave personalizada en estación Calle 100-Marketmedios. 2× $8.000 + $20.000 recarga = $56.000. Llevar pasaporte.', notes: 'Estación a 600m del alojamiento (puente peatonal Calle 94).' },
+      { id: 'd1-5', time: '12:00-12:50', fromPlaceId: 'alojamiento', toPlaceId: 'unal', transportMode: 'TM', transportDuration: '40-55 min', transportCost: '$3.550 c/u', transportNotes: 'TM Calle 100 (troncal B) → transbordo en estación Av. El Dorado o Salitre El Greco → troncal E (NQS) → estación Universidad Nacional. Tarifa integrada con TuLlave.', isMovement: true, activity: 'TransMilenio Calle 94 → Universidad Nacional' },
+      { id: 'd1-6', time: '1:00-2:00 PM', placeId: 'unal', activity: 'Almuerzo: intentar en Comedor "Chucho León" (reabrió sep-2025, preguntar portería externos) o buffet Calle 44 #15-14 (~$11k c/u).' },
+      { id: 'd1-7', time: '2:00-5:00', placeId: 'unal', activity: 'Recorrido arquitectónico campus: Plaza Che → Auditorio León de Greiff → Museo Arquitectura Leopoldo Rother → Residencias Bloques 1-3 → Edificio Posgrados Salmona → Biblioteca Central.' },
+      { id: 'd1-8', time: '5:00-5:20', fromPlaceId: 'unal', toPlaceId: 'parkway', transportMode: 'Caminata', transportDuration: '15 min', transportCost: '$0', transportNotes: 'Salir por portería Cra 45, caminar por Calle 45 hasta Cra 24 (Parkway). Alameda arbolada.', isMovement: true, activity: 'Caminata UNAL → Parkway (Teusaquillo)' },
+      { id: 'd1-9', time: '5:00-7:00', placeId: 'parkway', activity: 'Cena en Parkway: Matrona (colombiana gourmet), Oliveto (italiano), Casa Obrador (criolla económica), KoronKo.' },
+      { id: 'd1-10', time: '7:30-8:30', fromPlaceId: 'parkway', toPlaceId: 'alojamiento', transportMode: 'Uber', transportDuration: '25 min', transportCost: '$18.000-25.000', transportNotes: 'Alternativa: TM estación Universidad Nacional → Calle 100 ($3.550 c/u).', isMovement: true, activity: 'Regreso Parkway → Calle 94' },
     ],
     estimatedCost: '$165-235k + taxi $35-50k',
   },
@@ -990,14 +1036,20 @@ export const dayPlans: DayPlan[] = [
     title: 'La Candelaria: Ajiaco, Changua, Cementerio, Planetario',
     subtitle: 'Día cultural completo en centro histórico · 4 de los 10 planes principales',
     plan: [
-      { time: '7:30 AM', placeId: 'alojamiento', activity: 'Salida Calle 94. TM Calle 100 → Las Aguas. 45-60 min.' },
-      { time: '8:30-9:30', placeId: 'la-puerta-falsa', activity: 'Desayuno La Puerta Falsa: Changua bogotana + chocolate + tamal. ~$25k 2 pers.' },
-      { time: '9:30-11:30', activity: 'Caminata La Candelaria: Plaza de Bolívar, Catedral, Casa de Nariño (exterior).' },
-      { time: '11:30-12:30', placeId: 'cementerio', activity: 'Traslado a Cementerio Central. Visita diurna GRATUITA (Monumento Nacional).' },
-      { time: '1:00-2:30 PM', placeId: 'la-puerta-falsa', activity: 'Almuerzo ajiaco La Puerta Falsa o La Puerta de la Catedral.' },
-      { time: '2:30-5:00', placeId: 'museo-oro', activity: 'Museo del Oro. Jueves $5.000 c/u. 2-3 horas recorrido.' },
-      { time: '6:00-7:30', placeId: 'planetario', activity: 'Planetario Bogotá. Jueves show láser Pink Floyd 6pm (verificar cartelera julio 2026).' },
-      { time: '8:00-9:00', placeId: 'alojamiento', activity: 'Regreso Calle 94.' },
+      { id: 'd2-1', time: '7:30 AM', placeId: 'alojamiento', activity: 'Salida Calle 94.' },
+      { id: 'd2-2', time: '7:30-8:30', fromPlaceId: 'alojamiento', toPlaceId: 'la-puerta-falsa', transportMode: 'TM', transportDuration: '45-60 min', transportCost: '$3.550 c/u', transportNotes: 'TM Calle 100 (troncal B) → transbordo → troncal A (Caracas) → estación Las Aguas. 5 min a pie hasta La Puerta Falsa.', isMovement: true, activity: 'TransMilenio Calle 94 → La Candelaria' },
+      { id: 'd2-3', time: '8:30-9:30', placeId: 'la-puerta-falsa', activity: 'Desayuno La Puerta Falsa: Changua bogotana + chocolate santafereño + tamal. ~$25k 2 pers. Sin reserva, fila 15-45 min.' },
+      { id: 'd2-4', time: '9:30-11:30', placeId: 'la-puerta-falsa', activity: 'Caminata La Candelaria: Plaza de Bolívar, Catedral Primada, Casa de Nariño (exterior), Capilla del Sagrario, callejones históricos, arte callejero.' },
+      { id: 'd2-5', time: '11:30-12:00', fromPlaceId: 'la-puerta-falsa', toPlaceId: 'cementerio', transportMode: 'Uber', transportDuration: '8 min', transportCost: '$8.000-12.000', transportNotes: '15 min en Uber o 25 min caminando. Alternativa: TM estación Las Aguas → estación CAD o Paloquemao.', isMovement: true, activity: 'Traslado La Candelaria → Cementerio Central' },
+      { id: 'd2-6', time: '11:30-12:30', placeId: 'cementerio', activity: 'Visita Cementerio Central. Diurna GRATUITA (Monumento Nacional). Si agendaste Etnias Andantes (+57 320 287 5066), seguir su itinerario.' },
+      { id: 'd2-7', time: '12:30-1:00', fromPlaceId: 'cementerio', toPlaceId: 'la-puerta-falsa', transportMode: 'Uber', transportDuration: '8 min', transportCost: '$8.000-12.000', transportNotes: 'Regreso a La Candelaria para almuerzo.', isMovement: true, activity: 'Traslado Cementerio → La Candelaria' },
+      { id: 'd2-8', time: '1:00-2:30 PM', placeId: 'la-puerta-falsa', activity: 'Almuerzo ajiaco La Puerta Falsa o La Puerta de la Catedral (a 30m). Ajiaco $38-40k c/u.' },
+      { id: 'd2-9', time: '2:30-2:40', fromPlaceId: 'la-puerta-falsa', toPlaceId: 'museo-oro', transportMode: 'Caminata', transportDuration: '10-15 min', transportCost: '$0', transportNotes: 'Caminata por La Candelaria: La Puerta Falsa (Cl 11 #6-50) → Museo del Oro (Cra 6 #15-88). Plaza de Bolívar de por medio.', isMovement: true, activity: 'Caminata La Puerta Falsa → Museo del Oro' },
+      { id: 'd2-10', time: '2:30-5:00', placeId: 'museo-oro', activity: 'Museo del Oro. Jueves $5.000 c/u. 2-3 horas recorrido. Casilleros piso 2. Sin flash.' },
+      { id: 'd2-11', time: '5:00-6:00', placeId: 'museo-oro', activity: 'Pausa café: Café San Alberto (Plaza de Bolívar) o Juan Valdez La Candelaria.' },
+      { id: 'd2-12', time: '5:30-5:45', fromPlaceId: 'museo-oro', toPlaceId: 'planetario', transportMode: 'Caminata', transportDuration: '10-15 min', transportCost: '$0', transportNotes: 'Caminata Museo del Oro → Planetario (Calle 26B #5-93). Por Parque de la Independencia.', isMovement: true, activity: 'Caminata Museo Oro → Planetario' },
+      { id: 'd2-13', time: '6:00-7:30', placeId: 'planetario', activity: 'Planetario de Bogotá. Jueves show láser Pink Floyd 6pm (verificar cartelera julio 2026). Comprar por Tuboleta.' },
+      { id: 'd2-14', time: '8:00-9:00', fromPlaceId: 'planetario', toPlaceId: 'alojamiento', transportMode: 'TM', transportDuration: '50-60 min', transportCost: '$3.550 c/u', transportNotes: 'TM estación Las Aguas → Calle 100. Alternativa: Uber $25-35k.', isMovement: true, activity: 'Regreso Planetario → Calle 94' },
     ],
     alternatives: [
       {
@@ -1016,11 +1068,17 @@ export const dayPlans: DayPlan[] = [
     subtitle: 'Mañana tranquila, exámenes oftalmológicos, tarde con pupilas dilatadas',
     isRestriccionMedica: true,
     plan: [
-      { time: '7:30-8:30 AM', activity: 'Desayuno ligero cercano: Juan Valdez, Pan Pa\' Ya, Atlanta Pastry.' },
-      { time: '9:00-12:00', activity: 'Cita oftalmológica en clínica cerca de Calle 98. Llevar gafas de sol.' },
-      { time: '12:30-1:30 PM', placeId: 'vitto', activity: 'Almuerzo Zona G: Vitto, Prudencia, Mesa Franca. Evitar restaurantes oscuros.' },
-      { time: '2:00-5:00', placeId: 'parque-sb', activity: 'Plan tarde compatible: Parque de la 93 (sombras) o Parque Simón Bolívar.' },
-      { time: '7:00-9:30', placeId: 'vitto', activity: 'Cena Vitto (Zona G). Visión recuperada.' },
+      { id: 'd3-1', time: '7:30-8:30 AM', placeId: 'alojamiento', activity: 'Desayuno ligero cercano: Juan Valdez, Pan Pa\' Ya (Calle 94A con Cra 13), Atlanta Pastry.' },
+      { id: 'd3-2', time: '9:00-12:00', placeId: 'alojamiento', activity: 'Cita oftalmológica en clínica cerca de Calle 98. Llevar gafas de sol para después del examen.' },
+      { id: 'd3-3', time: '12:00-12:15', fromPlaceId: 'alojamiento', toPlaceId: 'vitto', transportMode: 'Uber', transportDuration: '10-15 min', transportCost: '$12.000-18.000', transportNotes: 'Uber corto Calle 94 → Zona G (Calle 69 con Cra 4). Alternativa: TM Calle 100 → Calle 85 + 10 min a pie.', isMovement: true, activity: 'Traslado Calle 94 → Zona G (Vitto)' },
+      { id: 'd3-4', time: '12:30-1:30 PM', placeId: 'vitto', activity: 'Almuerzo Zona G: Vitto, Prudencia, Mesa Franca. Evitar restaurantes muy oscuros con pupilas dilatadas.' },
+      { id: 'd3-5', time: '1:30-2:00', fromPlaceId: 'vitto', toPlaceId: 'parque-sb', transportMode: 'Uber', transportDuration: '20-30 min', transportCost: '$15.000-22.000', transportNotes: 'Uber Zona G → Parque Simón Bolívar. Plan aire libre compatible con pupilas dilatadas.', isMovement: true, activity: 'Traslado Zona G → Parque Simón Bolívar' },
+      { id: 'd3-6', time: '2:00-5:00', placeId: 'parque-sb', activity: 'Plan tarde compatible: Parque Simón Bolívar (sombras, aire libre, gratuito). Alternativa: Parque de la 93 o descanso alojamiento.' },
+      { id: 'd3-7', time: '5:00-6:00', fromPlaceId: 'parque-sb', toPlaceId: 'parque-93', transportMode: 'Uber', transportDuration: '20-25 min', transportCost: '$15.000-22.000', transportNotes: 'Uber Parque Simón Bolívar → Parque de la 93.', isMovement: true, activity: 'Traslado Parque SB → Parque 93' },
+      { id: 'd3-8', time: '5:00-6:00', placeId: 'parque-93', activity: 'Café o merienda: Juan Valdez, Café Velvet, Hommus. La sensibilidad a la luz empieza a ceder.' },
+      { id: 'd3-9', time: '6:30-6:45', fromPlaceId: 'parque-93', toPlaceId: 'vitto', transportMode: 'Uber', transportDuration: '10-15 min', transportCost: '$12.000-18.000', transportNotes: 'Uber Parque 93 → Vitto Zona G para cena.', isMovement: true, activity: 'Traslado Parque 93 → Vitto' },
+      { id: 'd3-10', time: '7:00-9:30', placeId: 'vitto', activity: 'Cena Vitto (Zona G). Visión recuperada. WhatsApp +57 310 309 9727.' },
+      { id: 'd3-11', time: '9:30-10:00', fromPlaceId: 'vitto', toPlaceId: 'alojamiento', transportMode: 'Uber', transportDuration: '10-15 min', transportCost: '$12.000-18.000', transportNotes: 'Regreso a Calle 94.', isMovement: true, activity: 'Regreso Vitto → Calle 94' },
     ],
     estimatedCost: '$80-140k',
   },
@@ -1031,11 +1089,15 @@ export const dayPlans: DayPlan[] = [
     title: 'Día Libre: 4 Opciones con Tren de la Sabana',
     subtitle: 'Plan eco recomendado: JBB + Chigüiro + Parque Simón Bolívar',
     plan: [
-      { time: '8:30 AM', placeId: 'alojamiento', activity: 'Salida Calle 94. Uber directo $15-22k, 20-30 min.' },
-      { time: '9:00-11:30', placeId: 'jbb', activity: 'Jardín Botánico. Entrada nacional 2× $6.600 = $13.200. Combo Tropicario opcional.' },
-      { time: '11:30-1:30 PM', placeId: 'parque-sb', activity: 'Parque Simón Bolívar (gratis). Lago, Biblioteca Virgilio Barco (Salmona).' },
-      { time: '2:00-4:00', placeId: 'chiguiro-parrilla', activity: 'Almuerzo Chigüiro Parrilla Bar (Cra 70 #55-97). Chigüiro $43.200 c/u.' },
-      { time: '5:00-8:00', placeId: 'alojamiento', activity: 'Regreso Calle 94. Cena en La 93.' },
+      { id: 'd4-1', time: '8:30 AM', placeId: 'alojamiento', activity: 'Salida Calle 94.' },
+      { id: 'd4-2', time: '8:30-9:00', fromPlaceId: 'alojamiento', toPlaceId: 'jbb', transportMode: 'Uber', transportDuration: '20-30 min', transportCost: '$15.000-22.000', transportNotes: 'Uber directo Calle 94 → Jardín Botánico (Av. Calle 63 #68-95). Alternativa: TM Calle 100 → Avenida Chile + 10 min a pie.', isMovement: true, activity: 'Traslado Calle 94 → Jardín Botánico' },
+      { id: 'd4-3', time: '9:00-11:30', placeId: 'jbb', activity: 'Jardín Botánico. Entrada nacional 2× $6.600 = $13.200. Combo Tropicario opcional 2× $15.600. Llevar efectivo.' },
+      { id: 'd4-4', time: '11:30-11:40', fromPlaceId: 'jbb', toPlaceId: 'parque-sb', transportMode: 'Caminata', transportDuration: '5-10 min', transportCost: '$0', transportNotes: 'Caminata corta: JBB y Parque Simón Bolívar son adyacentes.', isMovement: true, activity: 'Caminata JBB → Parque Simón Bolívar' },
+      { id: 'd4-5', time: '11:30-1:30 PM', placeId: 'parque-sb', activity: 'Parque Simón Bolívar (gratis). Lago, alquiler lanchas $8k, Plaza de Eventos, Biblioteca Virgilio Barco (Salmona, gratis).' },
+      { id: 'd4-6', time: '1:30-1:40', fromPlaceId: 'parque-sb', toPlaceId: 'chiguiro-parrilla', transportMode: 'Uber', transportDuration: '5-10 min', transportCost: '$8.000-12.000', transportNotes: 'Uber corto Parque SB → Chigüiro Parrilla Bar (Cra 70 #55-97, Normandía).', isMovement: true, activity: 'Traslado Parque SB → Chigüiro Parrilla Bar' },
+      { id: 'd4-7', time: '2:00-4:00', placeId: 'chiguiro-parrilla', activity: 'Almuerzo Chigüiro Parrilla Bar. Chigüiro $43.200 c/u. WhatsApp +57 314 220 1925.' },
+      { id: 'd4-8', time: '4:00-4:30', fromPlaceId: 'chiguiro-parrilla', toPlaceId: 'alojamiento', transportMode: 'Uber', transportDuration: '15-20 min', transportCost: '$15.000-20.000', transportNotes: 'Regreso a Calle 94.', isMovement: true, activity: 'Regreso Chigüiro → Calle 94' },
+      { id: 'd4-9', time: '5:00-8:00', placeId: 'parque-93', activity: 'Cena en La 93.' },
     ],
     alternatives: [
       {
@@ -1058,16 +1120,21 @@ export const dayPlans: DayPlan[] = [
     title: 'Paloquemao + Planetario + Museo del Oro (con Huevito)',
     subtitle: 'Mañana con Huevito en carro · Tarde cultural en La Candelaria',
     plan: [
-      { time: '7:00 AM', placeId: 'alojamiento', activity: 'Salida con Huevito en carro. Ruta Av. NQS sur. 25-35 min.' },
-      { time: '7:30-8:00', placeId: 'paloquemao', activity: 'Llegada Paloquemao. Parqueo $5-10k.' },
-      { time: '8:00-9:00', activity: 'Desayuno en mercado: caldo de costilla, chocolate con tamal, jugo natural.' },
-      { time: '9:00-11:30', activity: 'Recorrido mercado: frutas exóticas, Mercado de Flores, Especias para Colombia (Local 81102).' },
-      { time: '11:30-1:00', activity: 'Compras + almuerzo ligero: lechona Doña Rosalba, frutas, flores.' },
-      { time: '1:30 PM', placeId: 'paloquemao', activity: 'Salida Paloquemao (asumir cierre 2:30pm conservador).' },
-      { time: '2:00-4:30', placeId: 'museo-oro', activity: 'Museo del Oro. DOMINGO ENTRADA GRATUITA. Cierre 5pm.' },
-      { time: '4:30-6:00', placeId: 'la-puerta-falsa', activity: 'Caminata La Candelaria. Onces en La Puerta Falsa (domingo 7am-6pm).' },
-      { time: '6:00-7:30', placeId: 'planetario', activity: 'Planetario show láser (verificar cartelera julio 2026).' },
-      { time: '8:00-9:00', placeId: 'alojamiento', activity: 'Regreso Calle 94.' },
+      { id: 'd5-1', time: '7:00 AM', placeId: 'alojamiento', activity: 'Salida Calle 94 con Huevito en carro.' },
+      { id: 'd5-2', time: '7:00-7:30', fromPlaceId: 'alojamiento', toPlaceId: 'paloquemao', transportMode: 'Carro', transportDuration: '25-35 min', transportCost: 'Parqueo $5-10k', transportNotes: 'Ruta: Av. Calle 94 → Av. NQS sur → Av. Calle 19 → Cra 25. Pico y placa NO aplica domingos. Ciclovía 7am-2pm pero no afecta trayecto principal.', isMovement: true, activity: 'Carro con Huevito Calle 94 → Paloquemao' },
+      { id: 'd5-3', time: '7:30-8:00', placeId: 'paloquemao', activity: 'Llegada Paloquemao. Parqueo propio ($5-10k efectivo). Entrada libre.' },
+      { id: 'd5-4', time: '8:00-9:00', placeId: 'paloquemao', activity: 'Desayuno en mercado: caldo de costilla, chocolate con tamal, jugo natural.' },
+      { id: 'd5-5', time: '9:00-11:00', placeId: 'paloquemao', activity: 'Recorrido mercado: frutas exóticas (lulo, guanábana, chontaduro, feijoa, granadilla, pitahaya, borojó), Mercado de Flores (Av 19 #25-02), Especias para Colombia (Local 81102, abre domingos 8am-3pm).' },
+      { id: 'd5-6', time: '11:00-11:10', fromPlaceId: 'paloquemao', toPlaceId: 'lechoneria-dona-rosalba', transportMode: 'Caminata', transportDuration: '2 min', transportCost: '$0', transportNotes: 'Lechonería Doña Rosalba está dentro de Paloquemao (Local 80228).', isMovement: true, activity: 'Caminata dentro de Paloquemao → Lechonería Doña Rosalba' },
+      { id: 'd5-7', time: '11:00-1:00', placeId: 'lechoneria-dona-rosalba', activity: 'Compras + almuerzo: lechona tolimense Doña Rosalba, frutas, flores, especias. Presupuesto 2 pers: $100-210k.' },
+      { id: 'd5-8', time: '1:30 PM', placeId: 'paloquemao', activity: 'Salida Paloquemao (asumir cierre 2:30pm versión conservadora).' },
+      { id: 'd5-9', time: '1:30-1:50', fromPlaceId: 'paloquemao', toPlaceId: 'museo-oro', transportMode: 'Carro', transportDuration: '15-20 min', transportCost: 'Incluido (Huevito)', transportNotes: 'Carro con Huevito Paloquemao → Museo del Oro (La Candelaria). 15-20 min sin tráfico domingo.', isMovement: true, activity: 'Carro con Huevito Paloquemao → Museo del Oro' },
+      { id: 'd5-10', time: '2:00-4:30', placeId: 'museo-oro', activity: 'Museo del Oro. DOMINGO ENTRADA GRATUITA. Último ingreso 4pm. Cierre 5pm. 2-3 horas recorrido.' },
+      { id: 'd5-11', time: '4:30-4:40', fromPlaceId: 'museo-oro', toPlaceId: 'la-puerta-falsa', transportMode: 'Caminata', transportDuration: '10 min', transportCost: '$0', transportNotes: 'Caminata Museo del Oro → La Puerta Falsa (Cl 11 #6-50). Por Plaza de Bolívar.', isMovement: true, activity: 'Caminata Museo Oro → La Puerta Falsa' },
+      { id: 'd5-12', time: '4:30-6:00', placeId: 'la-puerta-falsa', activity: 'Caminata La Candelaria. Onces en La Puerta Falsa (domingo 7am-6pm, chocolate $9-17k) o La Puerta de la Catedral.' },
+      { id: 'd5-13', time: '5:45-6:00', fromPlaceId: 'la-puerta-falsa', toPlaceId: 'planetario', transportMode: 'Caminata', transportDuration: '10-15 min', transportCost: '$0', transportNotes: 'Caminata La Puerta Falsa → Planetario (Calle 26B #5-93).', isMovement: true, activity: 'Caminata La Puerta Falsa → Planetario' },
+      { id: 'd5-14', time: '6:00-7:30', placeId: 'planetario', activity: 'Planetario show láser (verificar cartelera julio 2026). Si no hay show: caminar Parque de la Independencia.' },
+      { id: 'd5-15', time: '8:00-9:00', fromPlaceId: 'planetario', toPlaceId: 'alojamiento', transportMode: 'TM', transportDuration: '50-60 min', transportCost: '$3.550 c/u', transportNotes: 'TM estación Las Aguas → Calle 100. Alternativa: Uber $25-35k.', isMovement: true, activity: 'Regreso Planetario → Calle 94' },
     ],
     estimatedCost: '$160-295k',
   },
@@ -1079,10 +1146,13 @@ export const dayPlans: DayPlan[] = [
     subtitle: 'Feriado nacional: Museo del Oro CIERRA, otros abren con horario reducido',
     isFeriado: true,
     plan: [
-      { time: '7:30 AM', placeId: 'alojamiento', activity: 'Plan A recomendado: Monserrate temprano + Parque de la 93' },
-      { time: '8:30-11:00', placeId: 'monserrate', activity: 'Monserrate. Festivos 6:30am-5pm. Teleférico $35.000 c/u.' },
-      { time: '12:00-2:00', placeId: 'alt-casa-santa-clara', activity: 'Almuerzo Casa Santa Clara (cima Monserrate) o regreso Calle 94.' },
-      { time: '3:00-6:00', placeId: 'parque-93', activity: 'Tarde tranquila Parque de la 93.' },
+      { id: 'd6-1', time: '7:30 AM', placeId: 'alojamiento', activity: 'Plan A recomendado: Monserrate temprano + Parque de la 93' },
+      { id: 'd6-2', time: '7:30-8:15', fromPlaceId: 'alojamiento', toPlaceId: 'monserrate', transportMode: 'Uber', transportDuration: '35-45 min', transportCost: '$25.000-35.000', transportNotes: 'Uber Calle 94 → base teleférico Monserrate. Mejor temprano (8am) para evitar aglomeraciones.', isMovement: true, activity: 'Traslado Calle 94 → Monserrate (base teleférico)' },
+      { id: 'd6-3', time: '8:30-11:00', placeId: 'monserrate', activity: 'Monserrate. Festivos 6:30am-5pm. Teleférico $35.000 c/u ida y regreso. Iglesia, vista, Café Bistró Santa Clara.' },
+      { id: 'd6-4', time: '11:00-11:15', fromPlaceId: 'monserrate', toPlaceId: 'alt-casa-santa-clara', transportMode: 'Caminata', transportDuration: '5 min', transportCost: '$0', transportNotes: 'Casa Santa Clara está en la cima de Monserrate, junto a la iglesia.', isMovement: true, activity: 'Caminata cima Monserrate → Casa Santa Clara' },
+      { id: 'd6-5', time: '12:00-2:00', placeId: 'alt-casa-santa-clara', activity: 'Almuerzo Casa Santa Clara (cima Monserrate). Reservas: reservas@restaurantesmonserrate.com' },
+      { id: 'd6-6', time: '2:30-3:15', fromPlaceId: 'monserrate', toPlaceId: 'parque-93', transportMode: 'Uber', transportDuration: '35-45 min', transportCost: '$25.000-35.000', transportNotes: 'Regreso a zona norte. Teleférico bajada + Uber a Parque 93.', isMovement: true, activity: 'Traslado Monserrate → Parque 93' },
+      { id: 'd6-7', time: '3:00-6:00', placeId: 'parque-93', activity: 'Tarde tranquila Parque de la 93. Café, descanso.' },
     ],
     alternatives: [
       {
@@ -1115,12 +1185,14 @@ export const dayPlans: DayPlan[] = [
     title: 'Edelweiss (almuerzo) + Vitto (cena) + Taquería Huevito',
     subtitle: 'Día de cierre con planes gastronómicos + encuentros sociales',
     plan: [
-      { time: '10:00 AM', activity: 'Reserva Edelweiss WhatsApp +57 311 541 1241. Confirmar horario.' },
-      { time: '11:00', placeId: 'alojamiento', activity: 'Salida Calle 94 → Edelweiss Cajicá. Uber 45-60 min, $80-120k.' },
-      { time: '12:00-2:30', placeId: 'edelweiss', activity: 'Almuerzo Edelweiss: codillo, salchichas, sauerkraut, pretzel, strudel.' },
-      { time: '2:30-4:00', placeId: 'alojamiento', activity: 'Regreso Bogotá. Uber $80-120k.' },
-      { time: '6:30-7:30', placeId: 'taqueria-huevito', activity: 'Taquería de Huevito (Calle 90 con Cra 11). Encuentro con Huevito y amigos.' },
-      { time: '8:00-10:30', placeId: 'vitto', activity: 'Cena Vitto (Calle 69 #4-97, Zona G). WhatsApp +57 310 309 9727.' },
+      { id: 'd7-1', time: '10:00 AM', placeId: 'alojamiento', activity: 'Reserva Edelweiss WhatsApp +57 311 541 1241. Confirmar horario.' },
+      { id: 'd7-2', time: '11:00-12:00', fromPlaceId: 'alojamiento', toPlaceId: 'edelweiss', transportMode: 'Uber', transportDuration: '45-60 min', transportCost: '$80.000-120.000', transportNotes: 'Uber Calle 94 → Edelweiss (Km 1 vía Cajicá-Zipaquirá). Autopista Norte, salida Cajicá.', isMovement: true, activity: 'Traslado Calle 94 → Edelweiss (Cajicá)' },
+      { id: 'd7-3', time: '12:00-2:30', placeId: 'edelweiss', activity: 'Almuerzo Edelweiss: codillo Schweinshaxe, salchichas, sauerkraut, pretzel, strudel. Cervezas casa (confirmar activa).' },
+      { id: 'd7-4', time: '2:30-3:30', fromPlaceId: 'edelweiss', toPlaceId: 'alojamiento', transportMode: 'Uber', transportDuration: '45-60 min', transportCost: '$80.000-120.000', transportNotes: 'Regreso Cajicá → Bogotá Calle 94.', isMovement: true, activity: 'Regreso Edelweiss → Calle 94' },
+      { id: 'd7-5', time: '6:30-7:30', placeId: 'taqueria-huevito', activity: 'Taquería de Huevito (Calle 90 con Cra 11, 5 min caminando). Encuentro con Huevito y amigos. Ronda compartida.' },
+      { id: 'd7-6', time: '7:30-7:45', fromPlaceId: 'taqueria-huevito', toPlaceId: 'vitto', transportMode: 'Uber', transportDuration: '10-15 min', transportCost: '$12.000-18.000', transportNotes: 'Uber Taquería Huevito (Cl 90 c/ Cra 11) → Vitto (Calle 69 #4-97, Zona G).', isMovement: true, activity: 'Traslado Taquería Huevito → Vitto' },
+      { id: 'd7-7', time: '8:00-10:30', placeId: 'vitto', activity: 'Cena Vitto (Zona G). WhatsApp +57 310 309 9727 con 24h anticipación.' },
+      { id: 'd7-8', time: '10:30-10:45', fromPlaceId: 'vitto', toPlaceId: 'alojamiento', transportMode: 'Uber', transportDuration: '10-15 min', transportCost: '$12.000-18.000', transportNotes: 'Regreso Vitto → Calle 94.', isMovement: true, activity: 'Regreso Vitto → Calle 94' },
     ],
     alternatives: [
       {
@@ -1138,19 +1210,60 @@ export const dayPlans: DayPlan[] = [
     title: 'Salida · Vuelo de Regreso (5:00 a.m.)',
     subtitle: 'Traslado al aeropuerto El Dorado · Checklist de cierre',
     plan: [
-      { time: '3:30 AM', activity: 'Despertador. Ducha, revisión maletas, checkout.' },
-      { time: '4:00', placeId: 'alojamiento', activity: 'Taxi en puerta. Taxis Libres WhatsApp +57 310 2111111 (reservar martes 21).' },
-      { time: '4:40', placeId: 'aeropuerto', activity: 'Llegada Aeropuerto El Dorado. Check-in.' },
-      { time: '5:00', activity: 'Vuelo de regreso.' },
+      { id: 'd8-1', time: '3:30 AM', placeId: 'alojamiento', activity: 'Despertador. Ducha, revisión maletas, checkout.' },
+      { id: 'd8-2', time: '4:00 AM', placeId: 'alojamiento', activity: 'Taxi en puerta. Taxis Libres WhatsApp +57 310 2111111 (reservar martes 21).' },
+      { id: 'd8-3', time: '4:00-4:40', fromPlaceId: 'alojamiento', toPlaceId: 'aeropuerto', transportMode: 'Taxi', transportDuration: '25-40 min', transportCost: '$35.000-50.000', transportNotes: 'TM NO opera antes de 4am. Taxi oficial del aeropuerto reservado con anticipación. Uber $30-45k como alternativa.', isMovement: true, activity: 'Taxi Calle 94 → Aeropuerto El Dorado (madrugada)' },
+      { id: 'd8-4', time: '4:40 AM', placeId: 'aeropuerto', activity: 'Llegada Aeropuerto El Dorado. Check-in counters abren 3h antes del vuelo.' },
+      { id: 'd8-5', time: '5:00 AM', placeId: 'aeropuerto', activity: 'Vuelo de regreso. Fin del viaje.' },
     ],
     estimatedCost: '$60-95k',
   },
 ];
 
+
 // ============ HELPER FUNCTIONS ============
 
 export function getPlaceById(id: string): Place | undefined {
   return places.find((p) => p.id === id);
+}
+
+/**
+ * Resolve a place by id, but if it's a restaurant with a category and the user
+ * selected an alternative for that category, return the alternative instead.
+ */
+export function resolvePlace(
+  placeId: string | undefined,
+  selectedAlternatives: Record<string, string>
+): Place | undefined {
+  if (!placeId) return undefined;
+  const place = getPlaceById(placeId);
+  if (!place) return undefined;
+  if (place.restaurantCategory && selectedAlternatives[place.restaurantCategory]) {
+    const alt = getPlaceById(selectedAlternatives[place.restaurantCategory]);
+    if (alt) return alt;
+  }
+  return place;
+}
+
+/**
+ * Maps a TransportMode to the Google Maps Directions API travel mode.
+ */
+export function toGoogleMapsMode(mode: TransportMode | undefined): 'driving' | 'transit' | 'walking' | 'bicycling' {
+  switch (mode) {
+    case 'TM':
+    case 'Tren':
+      return 'transit';
+    case 'Caminata':
+      return 'walking';
+    case 'Uber':
+    case 'Cabify':
+    case 'Carro':
+    case 'Taxi':
+    case 'Teleferico':
+      return 'driving';
+    default:
+      return 'driving';
+  }
 }
 
 export function getAlternativesByCategory(category: RestaurantCategory): Place[] {
